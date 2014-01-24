@@ -1,0 +1,28 @@
+\name{computeSeasonal}
+\alias{computeSeasonal}
+\title{Compute sine and cosine terms for dates to use as seasonal terms in data analysis}
+\usage{
+computeSeasonal(df, date, return.var)
+}
+\arguments{
+  \item{df}{dataframe with date included}
+
+  \item{date}{string column name of date to convert in
+  POSIXlt format}
+
+  \item{return.var}{string prefix for variable names to
+  return}
+}
+\value{
+df
+}
+\description{
+Function to compute seasonal sin and cosine terms from
+POSIXlt variable
+}
+\examples{
+sampleData <- sampleData
+sampleData$bpdate <- as.POSIXlt(sampleData$Hbpdate) #convert from POSIXct to POSIXlt
+computeSeasonal(df=sampleData,date="bpdate",return.var="bdate")
+}
+

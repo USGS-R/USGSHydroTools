@@ -1,0 +1,47 @@
+\name{LoadInstantaneous}
+\alias{LoadInstantaneous}
+\title{LoadInstantaneous}
+\usage{
+LoadInstantaneous(df.samples, Conc, sample.time, Conc2liters, df.Q, Q, Q.time,
+  Q2liters)
+}
+\arguments{
+  \item{df.samples}{dataframe with discrete sample results
+  and dates/times}
+
+  \item{Conc}{string column name in df.samples with the
+  concentration results}
+
+  \item{sample.time}{string column name in df.samples with
+  sample dates/times in POSIXct format}
+
+  \item{Conc2liters}{numeric conversion factor that
+  converts the concentrations to a units/liter}
+
+  \item{df.Q}{dataframe with Q and date/time}
+
+  \item{Q}{string name of column in dfQ with Q}
+
+  \item{Q.time}{string name of column in dfQ with date/time
+  in POSIXct format}
+
+  \item{Q2liters}{numeric conversion factor that converts
+  flow to rate per liters}
+}
+\value{
+df.load
+}
+\description{
+Computation of loadings for individual discrete samples.
+Results in added columns to the concentration data frame
+that represent the maximum flow in the original flow units,
+volumes in the original volume units from the flow
+variable, and loadings in the original mass units from the
+concentration variable.
+}
+\examples{
+WQdata <- WQdata
+flowData <- flowData
+LoadInstantaneous(df.samples=WQdata,Conc="Total_P",sample.time="dateTime",Conc2liters=1,df.Q=flowData,Q="Q",Q.time="pdate",Q2liters=28.3168466)
+}
+

@@ -1,0 +1,83 @@
+\name{TSstats}
+\alias{TSstats}
+\title{TSstats}
+\usage{
+TSstats(df, date = "date", varnames, dates, starttime = "psdate",
+  times = c(1, 2), units = "hours", stats.return = c("mean"),
+  subdfvar = "", subdfvalue = "", subdatesvar = "", subdatesvalue = "",
+  out.varname = "")
+}
+\arguments{
+  \item{df}{dataframe Unit values file}
+
+  \item{date}{string Date column in POSIX format in unit
+  values file}
+
+  \item{varnames}{string Column name with unit values}
+
+  \item{dates}{dataframe File with sample dates}
+
+  \item{starttime}{string Column in sample dates file with
+  dates in POSIX format, defaults to "psdate"}
+
+  \item{times}{vector to define desired processing times.
+  Zero indicates then nearest or nearest previous value.
+  Default is hours, but can be specified using "units"
+  variable}
+
+  \item{units}{string Units of times vector. Can be any of
+  the following:
+  "minutes","min","mins","hours","hr","hrs","day","days","week","weeks"}
+
+  \item{stats.return}{string Options include
+  "mean","max","min","median","sum","sd","maxdiff","difference",nearest","nearprev"
+  maxdiff is the maximum value minus the minimum value for
+  the time period, difference is the latest minus the first
+  value, nearest is the closest value in time, nearprev is
+  the closest value previous to the specified time, nearest
+  and nearprev require a 0 in the times vector,}
+
+  \item{subdfvar}{string column name in UVdf with names of
+  parameters, default is ""}
+
+  \item{subdfvalue}{string Optional: value of varname to
+  use in subsetting df, default is ""}
+
+  \item{subdatesvar}{string Optional: subset dates data
+  frame by a value in this column, default is ""}
+
+  \item{subdatesvalue}{string Optional: value to use in
+  subsetting}
+
+  \item{out.varname}{string}
+}
+\value{
+dates dataframe
+}
+\description{
+Compute various stats for time series data over a period of
+time Originally scripted for NOAA Great Lakes model from
+GDP for given set of dates and time periods, but could be
+used for any time series. File format must include the
+POSIX formatted date (yyyy-mm-ddThh:mm:ssZ), and then
+columns of values with the time series data
+
+read date with format mm/dd/yy hh:mm (use %Y if the format
+includes YYYY instead of yy) koepkeSM$date <-
+as.POSIXct(koepkeSM$Date,"%m/%d/%y %H:%M")
+
+read date with format mm/dd/yyyy hh:mm cedardates$psdate <-
+as.POSIXct(cedardates$Startdate,"%m/%d/%Y %H:%M")
+cedardates$parfdate <-
+as.POSIXct(cedardates$Enddate,"%m/%d/%Y %H:%M")
+
+Subset the data by begin and end date (can also assign to a
+df if you like) then define min mean median and max for the
+subset. Do this for all date periods in the file.
+}
+\examples{
+flowData <- flowData
+sampleData <- sampleData
+TSstats(df=flowData,date="pdate",varnames="Q",dates=sampleData,starttime="Hbpdate",times=c(1,3,6,12,24),units="hrs",stats.return=c("mean","max","sd"),out.varname="Q")
+}
+

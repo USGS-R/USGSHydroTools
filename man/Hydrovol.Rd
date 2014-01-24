@@ -1,0 +1,50 @@
+\name{Hydrovol}
+\alias{Hydrovol}
+\title{Hydrovol}
+\usage{
+Hydrovol(dfQ, Q = "Q", time = "pdate", df.dates, bdate = "bpdate",
+  edate = "epdate", volume = "event.vol", Qmax = "Qmax",
+  duration = "Eduration")
+}
+\arguments{
+  \item{dfQ}{dataframe with Q and time}
+
+  \item{Q}{string name of column in dfQ with Q, defaults to
+  "Q"}
+
+  \item{time}{string name of column in dfQ with POSIXct
+  time, defaults to "pdate"}
+
+  \item{df.dates}{dataframe with begin and end dates/times
+  in POSIXct format}
+
+  \item{bdate}{string begin date in POSIXct column name,
+  defaults to "bpdate"}
+
+  \item{edate}{string end date in POSIXct column name,
+  defaults to "epdate"}
+
+  \item{volume}{string name of resulting volume variable,
+  defaults to "event.vol"}
+
+  \item{Qmax}{string name of Qmax variable, defaults to
+  "Qmax"}
+
+  \item{duration}{string name of resulting duration
+  variable, defaults to "Eduration"}
+}
+\value{
+df.dates2 dataframe
+}
+\description{
+Computes volumes and max discharge for hydrographs given
+the discharge time series and the begin and end dates and
+times of the hydrographs. Dates must be in POSIXct format.
+}
+\examples{
+sampleData <- sampleData
+flowData <- flowData
+Hydrovol(dfQ=flowData,Q="Q",time="pdate",
+         df.dates=sampleData,bdate="Hbpdate",edate="Hepdate")
+}
+

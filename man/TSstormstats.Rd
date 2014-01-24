@@ -1,0 +1,68 @@
+\name{TSstormstats}
+\alias{TSstormstats}
+\title{TSstormstats}
+\usage{
+TSstormstats(df, date = "pdate", varname, dates, starttime = "Ebpdate",
+  endtime = "Eepdate", stats.return = c("mean"), subdfvar = "",
+  subdfvalue = "", subdatesvar = "", subdatesvalue = "",
+  out.varname = "")
+}
+\arguments{
+  \item{df}{dataframe with unit values values and date/time
+  in POSIX}
+
+  \item{date}{string name of POSIX date column}
+
+  \item{varname}{string column with unit values in df}
+
+  \item{dates}{dataframe with sample dates}
+
+  \item{starttime}{string Column in sample dates data fram
+  with dates in POSIX format used for extracting summary
+  data from dates dataframe This date serves as the
+  beginning date of the summary period, default is
+  "psdate"}
+
+  \item{endtime}{string Column in sample dates data fram
+  with dates in POSIX format used for extracting summary
+  data from dates dataframe This date serves as the ending
+  date of the summary period, default is "pedate"}
+
+  \item{stats.return}{string vector Options include =
+  c("mean","max","min","median","sum") specification of
+  stats to apply to the time series data. Current options
+  include mean, max, min, median, sum, difference, nearest,
+  and nearprev. difference is the latest minus the first
+  value, nearest is the closest value in time to starttime,
+  nearprev is the closest value previous to starttime,
+  nearest and nearprev require a 0 in the times vector.}
+
+  \item{subdfvar}{string subset df data frame by a value in
+  this column}
+
+  \item{subdfvalue}{string value to use in subsetting df}
+
+  \item{subdatesvar}{string subset dates data frame by a
+  value in this column}
+
+  \item{subdatesvalue}{string value to use in subsetting}
+
+  \item{out.varname}{string variable name for resulting
+  column}
+}
+\value{
+dates dataframe
+}
+\description{
+Compute various stats for time series data over a period of
+time Can be used for time series data with equally spaced
+time increments. File format must include the POSIXct
+formatted date and columns of values with the time series
+data
+}
+\examples{
+flowData <- flowData
+sampleData <- sampleData
+TSstormstats(df=flowData,date="pdate",varname="Q",dates=sampleData,starttime="Hbpdate",endtime="Hepdate",stats.return=c("mean","max","sd"),out.varname="Q")
+}
+
