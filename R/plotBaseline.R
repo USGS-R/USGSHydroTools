@@ -42,11 +42,11 @@
 #'     instantFlow$dateTime <- as.POSIXct(strptime(instantFlow$dateTime, format="%Y-%m-%d %H:%M:%S"), tz="UTC")
 #'   }
 #' }
-#' plotBaseline(sampleDates,Daily,INFO,site,HYSEPReturn,
+#' plotBaseflow(sampleDates,Daily,INFO,site,HYSEPReturn,
 #'              baseflowColumns="flowConditionHYSEP_localMin",
 #'              HYSEPcolNames = "LocalMin",plotTitle=TRUE,
 #'              instantFlow=instantFlow,whatDischarge=whatDischarge,xlabel=FALSE)
-plotBaseline <- function(sampleDates,Daily,INFO,site,HYSEPReturn,
+plotBaseflow <- function(sampleDates,Daily,INFO,site,HYSEPReturn,
                               baseflowColumns="flowConditionHYSEP_localMin",
                               HYSEPcolNames = "LocalMin",
                               xlabel=TRUE, showLegend=TRUE,plotTitle=TRUE,
