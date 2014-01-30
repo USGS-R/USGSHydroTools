@@ -1,4 +1,4 @@
-#' TSstormstats
+#' Compute various time-series summary statistics between specified time periods
 #' 
 #' Compute various stats for time series data over a period of time
 #' Can be used for time series data with equally spaced time increments. 
@@ -34,25 +34,25 @@
 #' @export
 #' @return dates dataframe
 TSstormstats <- function(df,                #Unit values file
-                    date="pdate",           #Date column in POSIX format in unit values file
-                    varname,                #Column name with unit values
-                    dates,                  #File with sample dates
-                    starttime="Ebpdate",    #Column in sample dates file with start dates in POSIX format
-                    endtime="Eepdate",      #Column in sample dates file with end dates in POSIX format
-                    stats.return=c("mean"), #Options include "mean","max","min",
-                                            #"median","sum","sd","maxdiff","difference",
-                                            #"nearest","nearprev"
-                                            #maxdiff is the maximum value minus the minimum value for the time period
-                                            #difference is the latest minus the first value
-                                            #nearest is the closest value in time
-                                            #nearprev is the closest value previous to the specified time
-                                            #nearest and nearprev require a 0 in the times vector
-                    subdfvar="",            #variable in UVdf with names of parameters
-                    subdfvalue="",          #Optional: value of varname to use in subsetting df 
-                    subdatesvar="",         #Optional: subset dates data frame by a value in this column
-                    subdatesvalue="",       #Optional: value to use in subsetting
-                    out.varname="") {
-
+                         date="pdate",           #Date column in POSIX format in unit values file
+                         varname,                #Column name with unit values
+                         dates,                  #File with sample dates
+                         starttime="Ebpdate",    #Column in sample dates file with start dates in POSIX format
+                         endtime="Eepdate",      #Column in sample dates file with end dates in POSIX format
+                         stats.return=c("mean"), #Options include "mean","max","min",
+                         #"median","sum","sd","maxdiff","difference",
+                         #"nearest","nearprev"
+                         #maxdiff is the maximum value minus the minimum value for the time period
+                         #difference is the latest minus the first value
+                         #nearest is the closest value in time
+                         #nearprev is the closest value previous to the specified time
+                         #nearest and nearprev require a 0 in the times vector
+                         subdfvar="",            #variable in UVdf with names of parameters
+                         subdfvalue="",          #Optional: value of varname to use in subsetting df 
+                         subdatesvar="",         #Optional: subset dates data frame by a value in this column
+                         subdatesvalue="",       #Optional: value to use in subsetting
+                         out.varname="") {
+  
   
   #Initialize Statistical processes 
   stats.names <- c("mean","max","min","median","sum","sd","maxdiff","difference","nearest","nearprev")
@@ -78,13 +78,13 @@ TSstormstats <- function(df,                #Unit values file
   # Compute stats for all identified variables (columns)
   for(k in 1:length(varcols)){
     varname <- names(df)[varcols[k]]
-  
+    
     # Compute storm stats for specified periods for each date in the sample dates file
     for (i in 1:maxrows){
-    
-       subdata <- df[which(df[,date]>= dates[i,starttime]
-       & df[,date] <= dates[i,endtime]),]
-    
+      
+      subdata <- df[which(df[,date]>= dates[i,starttime]
+                          & df[,date] <= dates[i,endtime]),]
+      
       if(stats.get[,"mean"]) varstats[i,"mean"] <- mean(subdata[,varname],na.rm=T)
       if(stats.get[,"max"]) varstats[i,"max"] <- max(subdata[,varname],na.rm=T)
       if(stats.get[,"min"]) varstats[i,"min"] <- min(subdata[,varname],na.rm=T)
@@ -93,7 +93,7 @@ TSstormstats <- function(df,                #Unit values file
       if(stats.get[,"sd"]) varstats[i,"sd"] <- sd(subdata[,varname],na.rm=T)
       if(stats.get[,"maxdiff"]) varstats[i,"maxdiff"] <- max(subdata[,varname],na.rm=T)-min(subdata[,varname],na.rm=T)
       if(stats.get[,"difference"]) varstats[i,"difference"] <- subdata[nrow(subdata),varname] - subdata[1,varname]
-    
+      
       statsnames <- stats.return
     }
     rm(resultname)
@@ -103,7 +103,7 @@ TSstormstats <- function(df,                #Unit values file
     
     dates <- cbind(dates,varstats)
     varstats <- varstats[,-(1:length(varstats))]
-  
+    
   }
   return(dates)
 }

@@ -1,4 +1,4 @@
-#' WQcompos
+#' Combine multiple samples into one composite sample (loads and concentrations)
 #' 
 #' function to composite samples weighted by the associated volume
 #' the result is a volume-weighted concentration and summation of volumes
@@ -27,9 +27,8 @@ WQcompos <- function(df.samples,sampleID,parms,volume="Evolume"){
   for (i in 1:numrows){
     subdf <- subset(df.samples,df.samples[,sampleID]==ID[i])
     IDdf[i,volume] <- sum(subdf[,volume])
-#    IDdf <- cbind(subIDdf,volume)
+    #    IDdf <- cbind(subIDdf,volume)
     for (j in 1:length(parms)) IDdf[i,parms[j]] <- sum(subdf[,parms[j]]*subdf[,volume])/IDdf[i,volume]
   }
   return(IDdf)
 }
-
