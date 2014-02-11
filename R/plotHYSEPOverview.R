@@ -48,18 +48,18 @@ plotHYSEPOverview <- function(sampleDates,Daily,INFO,site,HYSEPReturn,
   
   par(mfrow=c(3,1),mar=c(1,4,0.5,1),oma=c(1,1,2,1)) 
   
-  plotBaseline(sampleDates,Daily,INFO,site,HYSEPReturn,
+  plotBaseflow(sampleDates,Daily,INFO,site,HYSEPReturn,
                baseflowColumns=baseflowColumns[1],
                HYSEPcolNames = HYSEPcolNames[1],plotTitle=TRUE,
                instantFlow=instantFlow,whatDischarge=whatDischarge,xlabel=FALSE)
   
-  plotBaseline(sampleDates,Daily,INFO,site,HYSEPReturn,
+  plotBaseflow(sampleDates,Daily,INFO,site,HYSEPReturn,
                baseflowColumns=baseflowColumns[2],
                HYSEPcolNames = HYSEPcolNames[2],
                instantFlow=instantFlow,whatDischarge=whatDischarge,showLegend=FALSE,
                plotTitle=FALSE,xlabel=FALSE)
   
-  plotBaseline(sampleDates,Daily,INFO,site,HYSEPReturn,
+  plotBaseflow(sampleDates,Daily,INFO,site,HYSEPReturn,
                baseflowColumns=baseflowColumns[3],
                HYSEPcolNames = HYSEPcolNames[3],
                instantFlow=instantFlow,whatDischarge=whatDischarge,showLegend=FALSE,
