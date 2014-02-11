@@ -39,23 +39,23 @@ NULL
 #' 
 NULL
 
-#' Great Lakes shapefiles from \url{http://dds.cr.usgs.gov/pub/data/nationalatlas/hydro0m_shp_nt00300.tar.gz} cropped to the Great Lakes Region
+#' Political boundaries near Great Lakes.
 #' 
-#' Raw shapefile data
+#' Great Lakes shapefiles from \url{http://dds.cr.usgs.gov/pub/data/nationalatlas/hydro0m_shp_nt00300.tar.gz} cropped to the Great Lakes Region
 #' @name shape_poliboundsClip
 #' @docType data
 #' @keywords station data
 NULL
-#' Great Lakes shapefiles from \url{http://dds.cr.usgs.gov/pub/data/nationalatlas/bound0m_shp_nt00298.tar.gz} cropped to the Great Lakes Region
+#' Rivers near Great Lakes.
 #' 
-#' Raw shapefile data
+#' Great Lakes shapefiles from \url{http://dds.cr.usgs.gov/pub/data/nationalatlas/bound0m_shp_nt00298.tar.gz} cropped to the Great Lakes Region
 #' @name shape_hydrolineClip
 #' @docType data
 #' @keywords station data
 NULL
-#' Great Lakes shapefiles from \url{http://dds.cr.usgs.gov/pub/data/nationalatlas/bound0m_shp_nt00298.tar.gz} cropped to the Great Lakes Region
+#' Lakes near and including the Great Lakes.
 #' 
-#' Raw shapefile data
+#' Great Lakes shapefiles from \url{http://dds.cr.usgs.gov/pub/data/nationalatlas/bound0m_shp_nt00298.tar.gz} cropped to the Great Lakes Region
 #' @name subShape_hydropolyClip
 #' @docType data
 #' @keywords station data
@@ -65,6 +65,15 @@ NULL
 #'
 #' Raw data pulled from NWIS
 #' @name stationINFO
+#' @docType data
+#' @keywords station data
+NULL
+
+#' Example USGS site information
+#'
+#' Station name, coordinates, label offsets, and line offsets for positioning
+#' the labels on a map and lines from the data points to the labels
+#' @name SI
 #' @docType data
 #' @keywords station data
 NULL

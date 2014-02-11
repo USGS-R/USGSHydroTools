@@ -1,0 +1,12 @@
+\docType{data}
+\name{SI}
+\alias{SI}
+\title{Example USGS site information}
+\description{
+Station name, coordinates, label offsets, and line offsets
+for positioning the labels on a map and lines from the data
+points to the labels
+}
+\keyword{data}
+\keyword{station}
+
