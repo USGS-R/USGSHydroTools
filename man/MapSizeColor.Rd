@@ -6,7 +6,8 @@ MapSizeColor(df, colorVar, sizeVar, latVar, lonVar, sizeThresh1, sizeThresh2,
   politicalBounds, hydroPolygons, hydroLines, xmin, xmax, ymin, ymax,
   col1 = "tan", col2 = "orange3", col3 = "orangered1",
   col4 = "orangered4", xleft, xright, ytop, ybottom, mainTitle = "",
-  units = 2, labels, offsetLat, offsetLon, offsetLineLat, offsetLineLon)
+  units = 2, includeLabels, labels = "", offsetLat = "", offsetLon = "",
+  offsetLineLat = "", offsetLineLon = "")
 }
 \arguments{
   \item{df}{Dataframe with 4 required columns that have
@@ -78,6 +79,9 @@ MapSizeColor(df, colorVar, sizeVar, latVar, lonVar, sizeThresh1, sizeThresh2,
   ng/L, pg/L respectively. 5-6 are for sediment
   concentration: mg/kg, ug/kg, ng/kg, pg/kg respectively.}
 
+  \item{includeLabels}{logical, if TRUE labels will be
+  included on plot.}
+
   \item{labels}{String variable in dataframe df with label
   names}
 
@@ -106,16 +110,12 @@ lon <-  SI$lon
 y <- runif(n=length(lat),min=0,max=50)
 count <- round(runif(n=length(lat),min=0,max=30),0)
 df <- data.frame(y=y, lat=lat,lon=lon,count=count)
-df <- merge(df, SI, by=c("lat","lon"))
+
 colorVar <- "y"
 sizeVar <- "count"
 latVar <- "lat"
 lonVar <- "lon"
-labelVar <- "Site"
-offsetLatVar <- "offsetLat"
-offsetLonVar <- "offsetLon"
-offsetLineLatVar <- "offsetLineLat"
-offsetLineLonVar <- "offsetLineLon"
+
 politicalBounds <- shape_poliboundsClip
 hydroPolygons <- subShape_hydropolyClip
 hydroLines <- shape_hydrolineClip
@@ -130,11 +130,33 @@ ytop <- 45.3
 sizeThresh1 <- 2
 sizeThresh2 <- 14
 mainTitle <- "Colors vary by concentration"
+
+# Without labels:
+
+#Example works best in a landscape view:
+pdf("GreatLakesExamplePlotNoLabels.pdf",width=11,height=8)
+MapSizeColor(df,colorVar,sizeVar,latVar,lonVar,sizeThresh1,sizeThresh2,
+             politicalBounds,hydroPolygons,hydroLines,
+             xmin,xmax,ymin,ymax,xleft=xleft,xright=xright,ytop=ytop,
+             ybottom=ybottom,mainTitle=mainTitle,includeLabels=FALSE)
+dev.off()
+#To view the produced plot, us the following command:
+\dontrun{shell.exec("GreatLakesExamplePlotNoLabels.pdf")}
+
+# With labels:
+
+df <- merge(df, SI, by=c("lat","lon"))
+labelVar <- "Site"
+offsetLatVar <- "offsetLat"
+offsetLonVar <- "offsetLon"
+offsetLineLatVar <- "offsetLineLat"
+offsetLineLonVar <- "offsetLineLon"
+
 #Example works best in a landscape view:
 pdf("GreatLakesExamplePlot.pdf",width=11,height=8)
 MapSizeColor(df,colorVar,sizeVar,latVar,lonVar,sizeThresh1,sizeThresh2,
              politicalBounds,hydroPolygons,hydroLines,
-             xmin,xmax,ymin,ymax,xleft=xleft,xright=xright,ytop=ytop,ybottom=ybottom,mainTitle=mainTitle,
+             xmin,xmax,ymin,ymax,xleft=xleft,xright=xright,ytop=ytop,ybottom=ybottom,mainTitle=mainTitle,includeLabels=TRUE,
              labels=labelVar, offsetLat=offsetLatVar, offsetLon=offsetLonVar,offsetLineLat=offsetLineLatVar,
              offsetLineLon=offsetLineLonVar)
 dev.off()

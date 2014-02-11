@@ -30,6 +30,7 @@
 #' @param mainTitle Text to be used as the title of the plot
 #' @param units 1-4 are for water concentration: mg/L, ug/L, ng/L, pg/L respectively.
 #' 5-6 are for sediment concentration: mg/kg, ug/kg, ng/kg, pg/kg respectively.
+#' @param includeLabels logical, if TRUE labels will be included on plot.
 #' @param labels String variable in dataframe df with label names
 #' @param offsetLat Variable in dataframe df for the offset from dataLat used 
 #' for label positioning
@@ -49,15 +50,10 @@
 #' lon <-  SI$lon
 #' y <- runif(n=length(lat),min=0,max=50)
 #' df <- data.frame(y=y, lat=lat,lon=lon)
-#' df <- merge(df, SI, by=c("lat","lon"))
 #' colorVar <- "y"
 #' latVar <- "lat"
 #' lonVar <- "lon"
-#' labelVar <- "Site"
-#' offsetLatVar <- "offsetLat"
-#' offsetLonVar <- "offsetLon"
-#' offsetLineLatVar <- "offsetLineLat"
-#' offsetLineLonVar <- "offsetLineLon"
+#' 
 #' politicalBounds <- shape_poliboundsClip
 #' hydroPolygons <- subShape_hydropolyClip
 #' hydroLines <- shape_hydrolineClip
@@ -70,11 +66,32 @@
 #' xright <- -90.8
 #' ytop <- 43.5
 #' mainTitle <- "OC Pesticides"
+#' 
+#' #Without labels
+#' 
+#' #Example works best in a landscape view:
+#' pdf("GreatLakesExamplePlotNoLabels.pdf",width=11,height=8)
+#' MapColor(df,colorVar,latVar,lonVar,
+#'          politicalBounds,hydroPolygons,hydroLines,
+#'          xmin,xmax,ymin,ymax,xleft=xleft,xright=xright,ytop=ytop,ybottom=ybottom,mainTitle=mainTitle,
+#'          includeLabels=FALSE)
+#'dev.off()
+#'#To view the produced plot, us the following command:
+#'\dontrun{shell.exec("GreatLakesExamplePlotNoLabels.pdf")}
+#'
+#'# With labels:
+#' df <- merge(df, SI, by=c("lat","lon"))
+#' labelVar <- "Site" 
+#' offsetLatVar <- "offsetLat"
+#' offsetLonVar <- "offsetLon"
+#' offsetLineLatVar <- "offsetLineLat"
+#' offsetLineLonVar <- "offsetLineLon"
+
 #' #Example works best in a landscape view:
 #' pdf("GreatLakesExamplePlot.pdf",width=11,height=8)
 #' MapColor(df,colorVar,latVar,lonVar,
 #'          politicalBounds,hydroPolygons,hydroLines,
-#'          xmin,xmax,ymin,ymax,xleft=xleft,xright=xright,ytop=ytop,ybottom=ybottom,mainTitle=mainTitle,
+#'          xmin,xmax,ymin,ymax,xleft=xleft,xright=xright,ytop=ytop,ybottom=ybottom,mainTitle=mainTitle,includeLabels=TRUE,
 #'          labels=labelVar, offsetLat=offsetLatVar, offsetLon=offsetLonVar,offsetLineLat=offsetLineLatVar,
 #'              offsetLineLon=offsetLineLonVar)
 #'dev.off()
@@ -84,8 +101,8 @@ MapColor <- function(df,colorVar,latVar,lonVar,
                      politicalBounds,hydroPolygons,hydroLines,
                      xmin,xmax,ymin,ymax,
                      col1="tan",col2="orange3",col3="orangered1",col4="orangered4",
-                     xleft,xright,ytop,ybottom,mainTitle="",units=2,
-                     labels,offsetLat,offsetLon,offsetLineLat,offsetLineLon){
+                     xleft,xright,ytop,ybottom,mainTitle="",units=2,includeLabels,
+                     labels="",offsetLat="",offsetLon="",offsetLineLat="",offsetLineLon=""){
   
   #set plot parameters
   par( mar=c(0,0,1,0), new = FALSE,xpd=NA)#,mgp=c(3,0.1,0))
@@ -104,7 +121,7 @@ MapColor <- function(df,colorVar,latVar,lonVar,
   lines(hydroLines,col="lightskyblue2",xlim=c(xmin,xmax),ylim=c(ymin,ymax))#
   plot(politicalBounds,add=TRUE)
   
-  if(ncol(df) > 3){
+  if(includeLabels){
     MapLabels(df=df,labels=labels,dataLat=latVar,dataLon=lonVar,
               offsetLat=offsetLat,offsetLon=offsetLon,
               offsetLineLat=offsetLineLat,
