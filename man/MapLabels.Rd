@@ -1,0 +1,78 @@
+\name{MapLabels}
+\alias{MapLabels}
+\title{Mapping data with variable color to define spatial data}
+\usage{
+MapLabels(df, labels, dataLat, dataLon, offsetLat, offsetLon, offsetLineLat,
+  offsetLineLon, ...)
+}
+\arguments{
+  \item{df}{Dataframe with a column that has data to define
+  latitude and longitude of points to be plotted, offset
+  for latitude and longitude for labels, and offset of
+  latitude and longitude for the ending point of lines
+  pointing to the labels if needed}
+
+  \item{labels}{String variable in dataframe df with label
+  names}
+
+  \item{dataLat}{Latitude of points that were plotted on
+  the map}
+
+  \item{dataLon}{Longitude of points that were plotted on
+  the map}
+
+  \item{offsetLat}{Variable in dataframe df for the offset
+  from dataLat used for label positioning}
+
+  \item{offsetLon}{Variable in dataframe df for the offset
+  from dataLon used for label positioning}
+
+  \item{offsetLineLat}{Variable in dataframe df for the
+  offset from dataLat used to position the end of the line
+  drawn to the label. Lines are optional.}
+
+  \item{offsetLineLon}{Variable in dataframe df for the
+  offset from dataLon used to position the end of the line
+  drawn to the label. Lines are optional.}
+
+  \item{\dots}{Optional graphical parameters.}
+}
+\description{
+Mapping routine that displays spatial data variability by
+color differences. over layers with political boundaries,
+hydrologic polygons, and hydrologic lines.
+}
+\examples{
+lat.dd <- SI$lat
+lon.dd <-  SI$lon
+y <- runif(n=length(lat.dd),min=0,max=50)
+df <- data.frame(y=y, lat.dd=lat.dd,lon.dd=lon.dd)
+colorVar <- "y"
+latVar <- "lat.dd"
+lonVar <- "lon.dd"
+politicalBounds <- shape_poliboundsClip
+hydroPolygons <- subShape_hydropolyClip
+hydroLines <- shape_hydrolineClip
+xmin <- -96.5
+xmax <- -72
+ymin <- 40.5
+ymax <- 49.5
+xleft <- -95
+ybottom <- 40.7
+xright <- -90.8
+ytop <- 43.5
+mainTitle <- "OC Pesticides"
+pdf("GreatLakesPlot.pdf", width=11, height=8)
+MapColor(df,colorVar,latVar,lonVar,
+          politicalBounds,hydroPolygons,hydroLines,
+          xmin,xmax,ymin,ymax,xleft=xleft,xright=xright,ytop=ytop,ybottom=ybottom,mainTitle=mainTitle)
+MapLabels(df=SI,labels="Site",dataLat="lat",dataLon="lon",
+  offsetLat="offsetLat",offsetLon="offsetLon",
+  offsetLineLat="offsetLineLat",
+  offsetLineLon="offsetLineLon",
+  cex=0.75)
+dev.off()
+# To see the created pdf, use the following commend:
+\dontrun{shell.exec("GreatLakesPlot.pdf")}
+}
+
