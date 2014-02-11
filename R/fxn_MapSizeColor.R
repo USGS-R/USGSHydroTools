@@ -3,8 +3,10 @@
 #' Mapping routine that displays spatial data variability by size and color differences.
 #' over layers with political boundaries, hydrologic polygons, and hydrologic lines.
 #' 
-#' @param df Dataframe with two columns that have data to define symbol size, color,
-#' latitude, and longitude of points to be plotted
+#' @param df Dataframe with 4 required columns that have data to define symbol size, color,
+#' latitude, and longitude of points to be plotted, and optionally 5 addtional columns: label names, 
+#' offset for latitude and longitude for labels, and offset of latitude and longitude for the ending
+#' point of lines pointing to the labels if needed
 #' @param colorVar Column name in df to define symbol color
 #' @param sizeVar Column name in df to define symbol size
 #' @param latVar Column name in df to define latitude
@@ -32,21 +34,36 @@
 #' @param mainTitle Text to be used as the title of the plot
 #' @param units 1-4 are for water concentration: mg/L, ug/L, ng/L, pg/L respectively.
 #' 5-6 are for sediment concentration: mg/kg, ug/kg, ng/kg, pg/kg respectively.
+#' @param labels String variable in dataframe df with label names
+#' @param offsetLat Variable in dataframe df for the offset from dataLat used 
+#' for label positioning
+#' @param offsetLon Variable in dataframe df for the offset from dataLon used 
+#' for label positioning
+#' @param offsetLineLat Variable in dataframe df for the offset from dataLat used to
+#' position the end of the line drawn to the label. Lines are optional.
+#' @param offsetLineLon Variable in dataframe df for the offset from dataLon used to
+#' position the end of the line drawn to the label. Lines are optional.
 #' @keywords map spatial size color
 #' @return NULL
 #' @import rgdal
 #' @import sp
 #' @export
 #' @examples
-#' lat.dd <- stationINFO$dec.lat.va
-#' lon.dd <-  stationINFO$dec.long.va
-#' y <- runif(n=length(lat.dd),min=0,max=50)
-#' count <- round(runif(n=length(lat.dd),min=0,max=30),0)
-#' df <- data.frame(y=y, lat.dd=lat.dd,lon.dd=lon.dd,count=count)
+#' lat <- SI$lat
+#' lon <-  SI$lon
+#' y <- runif(n=length(lat),min=0,max=50)
+#' count <- round(runif(n=length(lat),min=0,max=30),0)
+#' df <- data.frame(y=y, lat=lat,lon=lon,count=count)
+#' df <- merge(df, SI, by=c("lat","lon"))
 #' colorVar <- "y"
 #' sizeVar <- "count"
-#' latVar <- "lat.dd"
-#' lonVar <- "lon.dd"
+#' latVar <- "lat"
+#' lonVar <- "lon"
+#' labelVar <- "Site"
+#' offsetLatVar <- "offsetLat"
+#' offsetLonVar <- "offsetLon"
+#' offsetLineLatVar <- "offsetLineLat"
+#' offsetLineLonVar <- "offsetLineLon"
 #' politicalBounds <- shape_poliboundsClip
 #' hydroPolygons <- subShape_hydropolyClip
 #' hydroLines <- shape_hydrolineClip
@@ -58,22 +75,26 @@
 #' ybottom <- 40.4
 #' xright <- -90.8
 #' ytop <- 45.3
-#' col1 <- "tan"
-#' col2 <- "orange3"
-#' col3 <- "orangered1"
-#' col4 <- "orangered4"
 #' sizeThresh1 <- 2
 #' sizeThresh2 <- 14
 #' mainTitle <- "Colors vary by concentration"
+#' #Example works best in a landscape view:
+#' pdf("GreatLakesExamplePlot.pdf",width=11,height=8)
 #' MapSizeColor(df,colorVar,sizeVar,latVar,lonVar,sizeThresh1,sizeThresh2,
 #'              politicalBounds,hydroPolygons,hydroLines,
-#'              xmin,xmax,ymin,ymax,xleft=xleft,xright=xright,ytop=ytop,ybottom=ybottom,mainTitle=mainTitle)
+#'              xmin,xmax,ymin,ymax,xleft=xleft,xright=xright,ytop=ytop,ybottom=ybottom,mainTitle=mainTitle,
+#'              labels=labelVar, offsetLat=offsetLatVar, offsetLon=offsetLonVar,offsetLineLat=offsetLineLatVar,
+#'              offsetLineLon=offsetLineLonVar)
+#'dev.off()
+#'#To view the produced plot, us the following command:
+#'\dontrun{shell.exec("GreatLakesExamplePlot.pdf")}
 MapSizeColor <- function(df,colorVar,sizeVar,latVar,lonVar,
                          sizeThresh1,sizeThresh2,
                          politicalBounds,hydroPolygons,hydroLines,
                          xmin,xmax,ymin,ymax,
                          col1="tan",col2="orange3",col3="orangered1",col4="orangered4",
-                         xleft,xright,ytop,ybottom,mainTitle="",units=2){
+                         xleft,xright,ytop,ybottom,mainTitle="",units=2,
+                         labels,offsetLat,offsetLon,offsetLineLat,offsetLineLon){
   
   #set plot parameters
   par( mar=c(0,0,1,0), new = FALSE,xpd=NA)#,mgp=c(3,0.1,0))
@@ -90,9 +111,18 @@ MapSizeColor <- function(df,colorVar,sizeVar,latVar,lonVar,
   fillCol <- rep(col1,dim(df)[1])
   for (i in 1:length(binThresh)) fillCol <- ifelse(df[,colorVar] > binThresh[i],binCol[i],fillCol)
   plot(politicalBounds,col="gray90",xlim=c(xmin,xmax),ylim=c(ymin,ymax))
-  plot(hydroPolygons,col="lightskyblue2",xlim=c(xmin,xmax),ylim=c(ymin,ymax),add=TRUE)#
-  lines(hydroLines,col="lightskyblue2",xlim=c(xmin,xmax),ylim=c(ymin,ymax))#
+  plot(hydroPolygons,col="lightskyblue2",xlim=c(xmin,xmax),ylim=c(ymin,ymax),add=TRUE)
+  lines(hydroLines,col="lightskyblue2",xlim=c(xmin,xmax),ylim=c(ymin,ymax))
   plot(politicalBounds,add=TRUE)
+  
+  if(ncol(df) > 4){
+    MapLabels(df=df,labels=labels,dataLat=latVar,dataLon=lonVar,
+              offsetLat=offsetLat,offsetLon=offsetLon,
+              offsetLineLat=offsetLineLat,
+              offsetLineLon=offsetLineLon,
+              cex=0.75)
+  }
+  
   points(df[,lonVar], df[,latVar],pch=plotSymbol, col="black",cex=plotSize,bg=fillCol)
   mtext(mainTitle,side=3,line=-4,outer=TRUE,font=2,cex=1.3)
   
