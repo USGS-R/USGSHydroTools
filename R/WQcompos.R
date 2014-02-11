@@ -1,4 +1,4 @@
-#' WQcompos
+#' Combine multiple samples into one composite sample (loads and concentrations)
 #' 
 #' function to composite samples weighted by the associated volume
 #' the result is a volume-weighted concentration and summation of volumes

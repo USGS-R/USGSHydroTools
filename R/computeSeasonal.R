@@ -4,7 +4,7 @@
 #'
 #' @param df dataframe with date included
 #' @param date string column name of date to convert in POSIXlt format
-#' @param return.var string prefix for variable names to return
+#' @param return.var string suffix for variable names to return
 #' @return df
 #' @export
 #' @examples

@@ -74,7 +74,7 @@ MapSizeColor <- function(df,colorVar,sizeVar,latVar,lonVar,
                          xmin,xmax,ymin,ymax,
                          col1="tan",col2="orange3",col3="orangered1",col4="orangered4",
                          xleft,xright,ytop,ybottom,mainTitle="",units=2){
-
+  
   #set plot parameters
   par( mar=c(0,0,1,0), new = FALSE,xpd=NA)#,mgp=c(3,0.1,0))
   
@@ -98,7 +98,9 @@ MapSizeColor <- function(df,colorVar,sizeVar,latVar,lonVar,
   
   legendTextCex <- 0.9
   rect(xleft=xleft,ybottom=ybottom,xright=xright,ytop=ytop,col="white",)
-  legend(x=xleft+0.2,y=ytop-0.9,c("1-2 samples", "3-14 samples","> 14 samples"),bty="n",
+  legend(x=xleft+0.2,y=ytop-0.9,c(paste("1-",sizeThresh1," samples",sep=""),
+                                  paste((sizeThresh1+1),"-",sizeThresh2," samples",sep=""),
+                                  paste("> ",sizeThresh2," samples",sep="")),bty="n",
          #       title=expression(bold("Number of Samples")),
          pch=c(21),pt.cex=c(1,1.5,2),bg="white",pt.bg="orange3")
   binThresh <- round(binThresh,3)
@@ -124,7 +126,7 @@ MapSizeColor <- function(df,colorVar,sizeVar,latVar,lonVar,
   if(units==6) concText <- expression(bold(paste("concentration (",mu,"g/kg)",sep="")))
   if(units==7) concText <- expression(bold(paste("concentration (","ng/kg)",sep="")))
   if(units==8) concText <- expression(bold(paste("concentration (","pg/kg)",sep=""))) 
-   
+  
   text(concText,x=startText[1],y=startText[2]-0.6,font=2,cex=legendTextCex)
   
   legend(x=xleft+0.2,y=ytop-3.,legendText,pt.bg=c("tan",binCol),pch=plotSymbol,bg="white",pt.cex=1.5,bty="n")

@@ -1,6 +1,6 @@
 \name{WQcompos}
 \alias{WQcompos}
-\title{WQcompos}
+\title{Combine multiple samples into one composite sample (loads and concentrations)}
 \usage{
 WQcompos(df.samples, sampleID, parms, volume = "Evolume")
 }

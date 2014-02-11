@@ -1,6 +1,6 @@
 \name{TSstormstats}
 \alias{TSstormstats}
-\title{TSstormstats}
+\title{Compute various time-series summary statistics between specified time periods}
 \usage{
 TSstormstats(df, date = "pdate", varname, dates, starttime = "Ebpdate",
   endtime = "Eepdate", stats.return = c("mean"), subdfvar = "",

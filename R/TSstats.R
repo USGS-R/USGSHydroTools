@@ -1,4 +1,4 @@
-#' TSstats
+#' Compute various antecedent summary statistics from time series data for specified windows of time
 #' 
 #' @description
 #' Compute various stats for time series data over a period of time

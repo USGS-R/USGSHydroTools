@@ -10,7 +10,7 @@ computeSeasonal(df, date, return.var)
   \item{date}{string column name of date to convert in
   POSIXlt format}
 
-  \item{return.var}{string prefix for variable names to
+  \item{return.var}{string suffix for variable names to
   return}
 }
 \value{

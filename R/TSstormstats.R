@@ -1,4 +1,4 @@
-#' TSstormstats
+#' Compute various time-series summary statistics between specified time periods
 #' 
 #' Compute various stats for time series data over a period of time
 #' Can be used for time series data with equally spaced time increments. 
