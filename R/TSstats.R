@@ -49,19 +49,19 @@ TSstats <- function(df,                     #Unit values file
                     dates,                  #File with sample dates
                     starttime="psdate",     #Column in sample dates file with dates in POSIX format
                     times=c(1,2),           #Vector to define desired processing times
-                                            #Zero indicates then nearest or nearest previous value
-                                            #Default is hours, but can be specified
-                                            #using "units" variable
+                    #Zero indicates then nearest or nearest previous value
+                    #Default is hours, but can be specified
+                    #using "units" variable
                     units="hours",          #Units of times vector. Can be any of the following:
-                                            #"minutes","min","mins","hours","hr","hrs","day","days","week","weeks"
+                    #"minutes","min","mins","hours","hr","hrs","day","days","week","weeks"
                     stats.return=c("mean"), #Options include "mean","max","min",
-                                            #"median","sum","sd","maxdiff","difference",
-                                            #"nearest","nearprev"
-                                            #maxdiff is the maximum value minus the minimum value for the time period
-                                            #difference is the latest minus the first value
-                                            #nearest is the closest value in time
-                                            #nearprev is the closest value previous to the specified time
-                                            #nearest and nearprev require a 0 in the times vector
+                    #"median","sum","sd","maxdiff","difference",
+                    #"nearest","nearprev"
+                    #maxdiff is the maximum value minus the minimum value for the time period
+                    #difference is the latest minus the first value
+                    #nearest is the closest value in time
+                    #nearprev is the closest value previous to the specified time
+                    #nearest and nearprev require a 0 in the times vector
                     subdfvar="",            #variable in UVdf with names of parameters
                     subdfvalue="",          #Optional: value of varname to use in subsetting df 
                     subdatesvar="",         #Optional: subset dates data frame by a value in this column
@@ -104,19 +104,19 @@ TSstats <- function(df,                     #Unit values file
       
       # Compute antecedent stats for specified periods for each date in the sample dates file
       for (i in 1:maxrows){
-      
+        
         if(timeHrs[j]>0){
-        subdata <- df[which(df[,date]>= dates[i,"parfdate"]
-        & df[,date] < dates[i,starttime]),]
-      
-        if(stats.get[,"mean"]) varstats[i,"mean"] <- mean(subdata[,varname],na.rm=T)
-        if(stats.get[,"max"]) varstats[i,"max"] <- max(subdata[,varname],na.rm=T)
-        if(stats.get[,"min"]) varstats[i,"min"] <- min(subdata[,varname],na.rm=T)
-        if(stats.get[,"median"]) varstats[i,"median"] <- median(subdata[,varname],na.rm=T)
-        if(stats.get[,"sum"]) varstats[i,"sum"] <- sum(subdata[,varname],na.rm=T)
-        if(stats.get[,"sd"]) varstats[i,"sd"] <- sd(subdata[,varname],na.rm=T)
-        if(stats.get[,"maxdiff"]) varstats[i,"maxdiff"] <- max(subdata[,varname],na.rm=T)-min(subdata[,varname],na.rm=T)
-        if(stats.get[,"difference"]) varstats[i,"difference"] <- subdata[nrow(subdata),varname] - subdata[1,varname]
+          subdata <- df[which(df[,date]>= dates[i,"parfdate"]
+                              & df[,date] < dates[i,starttime]),]
+          
+          if(stats.get[,"mean"]) varstats[i,"mean"] <- mean(subdata[,varname],na.rm=T)
+          if(stats.get[,"max"]) varstats[i,"max"] <- max(subdata[,varname],na.rm=T)
+          if(stats.get[,"min"]) varstats[i,"min"] <- min(subdata[,varname],na.rm=T)
+          if(stats.get[,"median"]) varstats[i,"median"] <- median(subdata[,varname],na.rm=T)
+          if(stats.get[,"sum"]) varstats[i,"sum"] <- sum(subdata[,varname],na.rm=T)
+          if(stats.get[,"sd"]) varstats[i,"sd"] <- sd(subdata[,varname],na.rm=T)
+          if(stats.get[,"maxdiff"]) varstats[i,"maxdiff"] <- max(subdata[,varname],na.rm=T)-min(subdata[,varname],na.rm=T)
+          if(stats.get[,"difference"]) varstats[i,"difference"] <- subdata[nrow(subdata),varname] - subdata[1,varname]
         } else {
           if(stats.get[,"nearprev"]) {
             subdata <- df[which(df[,date] < dates[i,starttime]),]
@@ -129,7 +129,7 @@ TSstats <- function(df,                     #Unit values file
             varstats[i,"nearest"] <- df[nearest.data,varname]
           }
         }
-      
+        
       }
       
       if(timeHrs[j]==0){
@@ -144,7 +144,7 @@ TSstats <- function(df,                     #Unit values file
       
       if(length(statsnames)>0) {
         if(times[j]>0){
-         resultname <- paste(out.varname[k],"_",stats.return[statsnames],times[j],sep="")
+          resultname <- paste(out.varname[k],"_",stats.return[statsnames],times[j],sep="")
         }else resultname <- paste(out.varname[k],"_",stats.return[statsnames],sep="")
         
         names(varstats) <- resultname
