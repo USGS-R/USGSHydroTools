@@ -2,7 +2,7 @@
 \alias{computeSeasonal}
 \title{Compute sine and cosine terms for dates to use as seasonal terms in data analysis}
 \usage{
-computeSeasonal(df, date, return.var)
+  computeSeasonal(df, date, return.var)
 }
 \arguments{
   \item{df}{dataframe with date included}
@@ -14,11 +14,11 @@ computeSeasonal(df, date, return.var)
   return}
 }
 \value{
-df
+  df
 }
 \description{
-Function to compute seasonal sin and cosine terms from
-POSIXlt variable
+  Function to compute seasonal sin and cosine terms from
+  POSIXlt variable
 }
 \examples{
 sampleData <- sampleData

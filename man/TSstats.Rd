@@ -2,10 +2,11 @@
 \alias{TSstats}
 \title{Compute various antecedent summary statistics from time series data for specified windows of time}
 \usage{
-TSstats(df, date = "date", varnames, dates, starttime = "psdate",
-  times = c(1, 2), units = "hours", stats.return = c("mean"),
-  subdfvar = "", subdfvalue = "", subdatesvar = "", subdatesvalue = "",
-  out.varname = "")
+  TSstats(df, date = "date", varnames, dates,
+    starttime = "psdate", times = c(1, 2), units = "hours",
+    stats.return = c("mean"), subdfvar = "",
+    subdfvalue = "", subdatesvar = "", subdatesvalue = "",
+    out.varname = "")
 }
 \arguments{
   \item{df}{dataframe Unit values file}
@@ -52,28 +53,28 @@ TSstats(df, date = "date", varnames, dates, starttime = "psdate",
   \item{out.varname}{string}
 }
 \value{
-dates dataframe
+  dates dataframe
 }
 \description{
-Compute various stats for time series data over a period of
-time Originally scripted for NOAA Great Lakes model from
-GDP for given set of dates and time periods, but could be
-used for any time series. File format must include the
-POSIX formatted date (yyyy-mm-ddThh:mm:ssZ), and then
-columns of values with the time series data
+  Compute various stats for time series data over a period
+  of time Originally scripted for NOAA Great Lakes model
+  from GDP for given set of dates and time periods, but
+  could be used for any time series. File format must
+  include the POSIX formatted date (yyyy-mm-ddThh:mm:ssZ),
+  and then columns of values with the time series data
 
-read date with format mm/dd/yy hh:mm (use %Y if the format
-includes YYYY instead of yy) koepkeSM$date <-
-as.POSIXct(koepkeSM$Date,"%m/%d/%y %H:%M")
+  read date with format mm/dd/yy hh:mm (use %Y if the
+  format includes YYYY instead of yy) koepkeSM$date <-
+  as.POSIXct(koepkeSM$Date,"%m/%d/%y %H:%M")
 
-read date with format mm/dd/yyyy hh:mm cedardates$psdate <-
-as.POSIXct(cedardates$Startdate,"%m/%d/%Y %H:%M")
-cedardates$parfdate <-
-as.POSIXct(cedardates$Enddate,"%m/%d/%Y %H:%M")
+  read date with format mm/dd/yyyy hh:mm cedardates$psdate
+  <- as.POSIXct(cedardates$Startdate,"%m/%d/%Y %H:%M")
+  cedardates$parfdate <-
+  as.POSIXct(cedardates$Enddate,"%m/%d/%Y %H:%M")
 
-Subset the data by begin and end date (can also assign to a
-df if you like) then define min mean median and max for the
-subset. Do this for all date periods in the file.
+  Subset the data by begin and end date (can also assign to
+  a df if you like) then define min mean median and max for
+  the subset. Do this for all date periods in the file.
 }
 \examples{
 flowData <- flowData

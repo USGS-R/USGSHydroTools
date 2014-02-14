@@ -2,10 +2,11 @@
 \alias{TSstormstats}
 \title{Compute various time-series summary statistics between specified time periods}
 \usage{
-TSstormstats(df, date = "pdate", varname, dates, starttime = "Ebpdate",
-  endtime = "Eepdate", stats.return = c("mean"), subdfvar = "",
-  subdfvalue = "", subdatesvar = "", subdatesvalue = "",
-  out.varname = "")
+  TSstormstats(df, date = "pdate", varname, dates,
+    starttime = "Ebpdate", endtime = "Eepdate",
+    stats.return = c("mean"), subdfvar = "",
+    subdfvalue = "", subdatesvar = "", subdatesvalue = "",
+    out.varname = "")
 }
 \arguments{
   \item{df}{dataframe with unit values values and date/time
@@ -51,14 +52,14 @@ TSstormstats(df, date = "pdate", varname, dates, starttime = "Ebpdate",
   column}
 }
 \value{
-dates dataframe
+  dates dataframe
 }
 \description{
-Compute various stats for time series data over a period of
-time Can be used for time series data with equally spaced
-time increments. File format must include the POSIXct
-formatted date and columns of values with the time series
-data
+  Compute various stats for time series data over a period
+  of time Can be used for time series data with equally
+  spaced time increments. File format must include the
+  POSIXct formatted date and columns of values with the
+  time series data
 }
 \examples{
 flowData <- flowData

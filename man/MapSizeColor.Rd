@@ -2,12 +2,14 @@
 \alias{MapSizeColor}
 \title{Mapping data with variable size and color to define spatial data}
 \usage{
-MapSizeColor(df, colorVar, sizeVar, latVar, lonVar, sizeThresh1, sizeThresh2,
-  politicalBounds, hydroPolygons, hydroLines, xmin, xmax, ymin, ymax,
-  col1 = "tan", col2 = "orange3", col3 = "orangered1",
-  col4 = "orangered4", xleft, xright, ytop, ybottom, mainTitle = "",
-  units = 2, includeLabels, labels = "", offsetLat = "", offsetLon = "",
-  offsetLineLat = "", offsetLineLon = "")
+  MapSizeColor(df, colorVar, sizeVar, latVar, lonVar,
+    sizeThresh1, sizeThresh2, politicalBounds,
+    hydroPolygons, hydroLines, xmin, xmax, ymin, ymax,
+    col1 = "tan", col2 = "orange3", col3 = "orangered1",
+    col4 = "orangered4", xleft, xright, ytop, ybottom,
+    mainTitle = "", units = 2, includeLabels, labels = "",
+    offsetLat = "", offsetLon = "", offsetLineLat = "",
+    offsetLineLon = "")
 }
 \arguments{
   \item{df}{Dataframe with 4 required columns that have
@@ -99,10 +101,13 @@ MapSizeColor(df, colorVar, sizeVar, latVar, lonVar, sizeThresh1, sizeThresh2,
   offset from dataLon used to position the end of the line
   drawn to the label. Lines are optional.}
 }
+\value{
+  NULL
+}
 \description{
-Mapping routine that displays spatial data variability by
-size and color differences. over layers with political
-boundaries, hydrologic polygons, and hydrologic lines.
+  Mapping routine that displays spatial data variability by
+  size and color differences. over layers with political
+  boundaries, hydrologic polygons, and hydrologic lines.
 }
 \examples{
 lat <- SI$lat

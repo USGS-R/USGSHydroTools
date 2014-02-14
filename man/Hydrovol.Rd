@@ -2,9 +2,10 @@
 \alias{Hydrovol}
 \title{Hydrovol}
 \usage{
-Hydrovol(dfQ, Q = "Q", time = "pdate", df.dates, bdate = "bpdate",
-  edate = "epdate", volume = "event.vol", Qmax = "Qmax",
-  duration = "Eduration")
+  Hydrovol(dfQ, Q = "Q", time = "pdate", df.dates,
+    bdate = "bpdate", edate = "epdate",
+    volume = "event.vol", Qmax = "Qmax",
+    duration = "Eduration")
 }
 \arguments{
   \item{dfQ}{dataframe with Q and time}
@@ -34,12 +35,13 @@ Hydrovol(dfQ, Q = "Q", time = "pdate", df.dates, bdate = "bpdate",
   variable, defaults to "Eduration"}
 }
 \value{
-df.dates2 dataframe
+  df.dates2 dataframe
 }
 \description{
-Computes volumes and max discharge for hydrographs given
-the discharge time series and the begin and end dates and
-times of the hydrographs. Dates must be in POSIXct format.
+  Computes volumes and max discharge for hydrographs given
+  the discharge time series and the begin and end dates and
+  times of the hydrographs. Dates must be in POSIXct
+  format.
 }
 \examples{
 sampleData <- sampleData

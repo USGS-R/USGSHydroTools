@@ -2,11 +2,13 @@
 \alias{MapColor}
 \title{Mapping data with variable color to define spatial data}
 \usage{
-MapColor(df, colorVar, latVar, lonVar, politicalBounds, hydroPolygons,
-  hydroLines, xmin, xmax, ymin, ymax, col1 = "tan", col2 = "orange3",
-  col3 = "orangered1", col4 = "orangered4", xleft, xright, ytop, ybottom,
-  mainTitle = "", units = 2, includeLabels, labels = "", offsetLat = "",
-  offsetLon = "", offsetLineLat = "", offsetLineLon = "")
+  MapColor(df, colorVar, latVar, lonVar, politicalBounds,
+    hydroPolygons, hydroLines, xmin, xmax, ymin, ymax,
+    col1 = "tan", col2 = "orange3", col3 = "orangered1",
+    col4 = "orangered4", xleft, xright, ytop, ybottom,
+    mainTitle = "", units = 2, includeLabels, labels = "",
+    offsetLat = "", offsetLon = "", offsetLineLat = "",
+    offsetLineLon = "")
 }
 \arguments{
   \item{df}{Dataframe with 3 required columns to define
@@ -88,10 +90,13 @@ MapColor(df, colorVar, latVar, lonVar, politicalBounds, hydroPolygons,
   offset from dataLon used to position the end of the line
   drawn to the label. Lines are optional.}
 }
+\value{
+  NULL
+}
 \description{
-Mapping routine that displays spatial data variability by
-color differences. over layers with political boundaries,
-hydrologic polygons, and hydrologic lines.
+  Mapping routine that displays spatial data variability by
+  color differences. over layers with political boundaries,
+  hydrologic polygons, and hydrologic lines.
 }
 \examples{
 lat <- SI$lat

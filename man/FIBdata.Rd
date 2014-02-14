@@ -3,12 +3,13 @@
 \alias{FIBdata}
 \title{Example water quality data included in GSHydroTools}
 \description{
-Example data representing composite fecal indicator
-bacteria from the Menomonee River at Wauwatosa, Wisconsin
+  Example data representing composite fecal indicator
+  bacteria from the Menomonee River at Wauwatosa, Wisconsin
 }
 \author{
-Steve Corsi \email{srcorsi@usgs.gov}
+  Steve Corsi \email{srcorsi@usgs.gov}
 }
 \keyword{bacteria}
 \keyword{data}
+\keyword{datasets}
 

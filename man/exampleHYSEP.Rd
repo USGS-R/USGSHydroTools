@@ -3,10 +3,11 @@
 \alias{exampleHYSEP}
 \title{Example HYSEP output data.}
 \description{
-Example HYSEP output data. Needs more info.
+  Example HYSEP output data. Needs more info.
 }
 \author{
-Steve Corsi \email{srcorsi@usgs.gov}
+  Steve Corsi \email{srcorsi@usgs.gov}
 }
+\keyword{datasets}
 \keyword{instantaneous}
 
