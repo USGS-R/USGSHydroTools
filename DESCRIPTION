@@ -22,3 +22,20 @@ Depends:
     USGSwsBase
 LazyLoad: yes
 LazyData: yes
+Collate:
+    'Hydrovol.R'
+    'TSstats.R'
+    'TSstormstats.R'
+    'WQcompos.R'
+    'computeSeasonal.R'
+    'determineHYSEPEvents.R'
+    'findSampleQ.R'
+    'fxn_MapColor.R'
+    'fxn_MapLocations.R'
+    'fxn_MapSizeColor.R'
+    'fxn_mapLabels.R'
+    'getMaxStartEnd.R'
+    'loadInstantaneous.R'
+    'packageInfo.R'
+    'plotBaseline.R'
+    'plotHYSEPOverview.R'
