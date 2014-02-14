@@ -2,8 +2,8 @@
 \alias{MapLabels}
 \title{Mapping data with variable color to define spatial data}
 \usage{
-  MapLabels(df, labels, dataLat, dataLon, offsetLat,
-    offsetLon, offsetLineLat, offsetLineLon, ...)
+MapLabels(df, labels, dataLat, dataLon, offsetLat, offsetLon, offsetLineLat,
+  offsetLineLon, ...)
 }
 \arguments{
   \item{df}{Dataframe with a column that has data to define
@@ -38,9 +38,9 @@
   \item{\dots}{Optional graphical parameters.}
 }
 \description{
-  Mapping routine that displays spatial data variability by
-  color differences. over layers with political boundaries,
-  hydrologic polygons, and hydrologic lines.
+Mapping routine that displays spatial data variability by
+color differences. over layers with political boundaries,
+hydrologic polygons, and hydrologic lines.
 }
 \examples{
 lat.dd <- SI$lat

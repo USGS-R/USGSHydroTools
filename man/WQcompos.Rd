@@ -2,7 +2,7 @@
 \alias{WQcompos}
 \title{Combine multiple samples into one composite sample (loads and concentrations)}
 \usage{
-  WQcompos(df.samples, sampleID, parms, volume = "Evolume")
+WQcompos(df.samples, sampleID, parms, volume = "Evolume")
 }
 \arguments{
   \item{df.samples}{dataframe with sample results and
@@ -16,12 +16,12 @@
   \item{volume}{string, defaults to "Evolume"}
 }
 \value{
-  IDdf dataframe
+IDdf dataframe
 }
 \description{
-  function to composite samples weighted by the associated
-  volume the result is a volume-weighted concentration and
-  summation of volumes
+function to composite samples weighted by the associated
+volume the result is a volume-weighted concentration and
+summation of volumes
 }
 \examples{
 flowData <- flowData

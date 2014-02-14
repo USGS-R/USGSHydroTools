@@ -2,8 +2,8 @@
 \alias{LoadInstantaneous}
 \title{LoadInstantaneous}
 \usage{
-  LoadInstantaneous(df.samples, Conc, sample.time,
-    Conc2liters, df.Q, Q, Q.time, Q2liters)
+LoadInstantaneous(df.samples, Conc, sample.time, Conc2liters, df.Q, Q, Q.time,
+  Q2liters)
 }
 \arguments{
   \item{df.samples}{dataframe with discrete sample results
@@ -29,15 +29,15 @@
   flow to rate per liters}
 }
 \value{
-  df.load
+df.load
 }
 \description{
-  Computation of loadings for individual discrete samples.
-  Results in added columns to the concentration data frame
-  that represent the maximum flow in the original flow
-  units, volumes in the original volume units from the flow
-  variable, and loadings in the original mass units from
-  the concentration variable.
+Computation of loadings for individual discrete samples.
+Results in added columns to the concentration data frame
+that represent the maximum flow in the original flow units,
+volumes in the original volume units from the flow
+variable, and loadings in the original mass units from the
+concentration variable.
 }
 \examples{
 WQdata <- WQdata

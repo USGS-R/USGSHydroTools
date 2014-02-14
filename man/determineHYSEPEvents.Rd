@@ -2,8 +2,7 @@
 \alias{determineHYSEPEvents}
 \title{Determine baseflow and events from HYSEP output}
 \usage{
-  determineHYSEPEvents(HYSEPReturn, sampleDates,
-    percent = 0.8)
+determineHYSEPEvents(HYSEPReturn, sampleDates, percent = 0.8)
 }
 \arguments{
   \item{HYSEPReturn}{dataframe returned from hysep function
@@ -18,14 +17,14 @@
   baseflow, the sample time will be labeled an event.}
 }
 \value{
-  sampleDates dataframe
+sampleDates dataframe
 }
 \description{
-  Function to find the longest continuous start and end
-  dates from the Daily dataframe. Primary use case is to
-  find input value to use in a call to HYSEP (from package
-  DVstats). If there are gaps in the data, the function
-  will look for the largest continous gap.
+Function to find the longest continuous start and end dates
+from the Daily dataframe. Primary use case is to find input
+value to use in a call to HYSEP (from package DVstats). If
+there are gaps in the data, the function will look for the
+largest continous gap.
 }
 \examples{
 site <- "04085427"

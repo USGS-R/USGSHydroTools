@@ -2,11 +2,10 @@
 \alias{MapLocations}
 \title{Mapping locations of interst}
 \usage{
-  MapLocations(df, latVar, lonVar, politicalBounds,
-    hydroPolygons, hydroLines, xmin, xmax, ymin, ymax,
-    col1 = "tan", mainTitle = "", includeLabels,
-    labels = "", offsetLat = "", offsetLon = "",
-    offsetLineLat = "", offsetLineLon = "")
+MapLocations(df, latVar, lonVar, politicalBounds, hydroPolygons, hydroLines,
+  xmin, xmax, ymin, ymax, col1 = "tan", mainTitle = "", includeLabels,
+  labels = "", offsetLat = "", offsetLon = "", offsetLineLat = "",
+  offsetLineLon = "")
 }
 \arguments{
   \item{df}{Dataframe with 3 required columns to define
@@ -64,13 +63,10 @@
   offset from dataLon used to position the end of the line
   drawn to the label. Lines are optional.}
 }
-\value{
-  NULL
-}
 \description{
-  Mapping routine that displays locations of sites over
-  layers with political boundaries, hydrologic polygons,
-  and hydrologic lines.
+Mapping routine that displays locations of sites over
+layers with political boundaries, hydrologic polygons, and
+hydrologic lines.
 }
 \examples{
 lat <- SI$lat
