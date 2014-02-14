@@ -41,21 +41,21 @@ NULL
 
 #' Political boundaries near Great Lakes.
 #' 
-#' Great Lakes shapefiles from \url{http://dds.cr.usgs.gov/pub/data/nationalatlas/hydro0m_shp_nt00300.tar.gz} cropped to the Great Lakes Region
+#' Great Lakes shapefiles from \url{http://dds.cr.usgs.gov/pub/data/nationalatlas/bound0m_shp_nt00298.tar.gz} cropped to the Great Lakes Region
 #' @name shape_poliboundsClip
 #' @docType data
 #' @keywords station data
 NULL
 #' Rivers near Great Lakes.
 #' 
-#' Great Lakes shapefiles from \url{http://dds.cr.usgs.gov/pub/data/nationalatlas/bound0m_shp_nt00298.tar.gz} cropped to the Great Lakes Region
+#' Great Lakes shapefiles from \url{http://dds.cr.usgs.gov/pub/data/nationalatlas/hydro0m_shp_nt00300.tar.gz} cropped to the Great Lakes Region
 #' @name shape_hydrolineClip
 #' @docType data
 #' @keywords station data
 NULL
 #' Lakes near and including the Great Lakes.
 #' 
-#' Great Lakes shapefiles from \url{http://dds.cr.usgs.gov/pub/data/nationalatlas/bound0m_shp_nt00298.tar.gz} cropped to the Great Lakes Region
+#' Great Lakes shapefiles from \url{http://dds.cr.usgs.gov/pub/data/nationalatlas/hydro0m_shp_nt00300.tar.gz} cropped to the Great Lakes Region
 #' @name subShape_hydropolyClip
 #' @docType data
 #' @keywords station data
