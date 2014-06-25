@@ -12,7 +12,8 @@ Installation
 
 See [https://github.com/USGS-R/dataRetrieval](https://github.com/USGS-R/dataRetrieval) for information on the dependent package dataRetrieval
 
-  install.packages(c("rgdal","sp","zoo","XML","RCurl","plyr","reshape2"),
-          dependencies=TRUE)
-	install.packages(c("dataRetrieval","USGSwsBase"), repo="http://usgs-r.github.com")
-	install.packages("GSHydroTools", repo="http://usgs-r.github.com")
+	install.packages("GSHydroTools",
+	repos=c("http://usgs-r.github.com","http://cran.us.r-project.org"),
+	dependencies=TRUE,
+	type="source")
+
