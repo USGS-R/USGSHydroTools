@@ -79,7 +79,7 @@
 #' MapColor(df,colorVar,latVar,lonVar,
 #'          politicalBounds,hydroPolygons,hydroLines,
 #'          xmin,xmax,ymin,ymax,xleft=xleft,xright=xright,ytop=ytop,ybottom=ybottom,mainTitle=mainTitle,
-#'          includeLabels=FALSE,DL=DL)
+#'          includeLabels=FALSE,DL=DL, LegCex=LegCex)
 #'dev.off()
 #'#To view the produced plot, us the following command:
 #'\dontrun{shell.exec("GreatLakesExamplePlotNoLabels.pdf")}
