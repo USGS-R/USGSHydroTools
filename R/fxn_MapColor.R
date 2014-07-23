@@ -145,7 +145,7 @@ MapColor <- function(df,colorVar,latVar,lonVar,
     pt.bgCol <-c("white")
   } else {  
     legendText <- c(paste("ND","(",min(DL),"-",max(DL),")"),
-                    paste(min(DL),"-",binThresh[1]),
+                    paste(max(DL),"-",binThresh[1]),
                     paste(binThresh[1],"-",binThresh[2]),
                     paste(binThresh[2],"-",binThresh[3]),
                     paste(binThresh[3],"-",round(max(df[,colorVar],na.rm = TRUE),3)))
