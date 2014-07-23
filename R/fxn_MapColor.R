@@ -43,6 +43,7 @@
 #' @param LegCex size of the text and symbols in the legend as numeric. Assigns the
 #' pt.cex and cex arguments in legend() and text().
 #' @param DL numeric vector of detection limits
+#' @param titlePos position of title as numeric. Assigns the line() argument in mtext(). 
 #' @keywords map spatial color
 #' @return NULL
 #' @import rgdal
@@ -58,6 +59,7 @@
 #' lonVar <- "lon"
 #' DL <- c(rep(0.05,times=19),rep(0.04,times=10))
 #' LegCex <- 0.7
+#' titlePos <- -4
 #' 
 #' politicalBounds <- shape_poliboundsClip
 #' hydroPolygons <- subShape_hydropolyClip
@@ -79,7 +81,7 @@
 #' MapColor(df,colorVar,latVar,lonVar,
 #'          politicalBounds,hydroPolygons,hydroLines,
 #'          xmin,xmax,ymin,ymax,xleft=xleft,xright=xright,ytop=ytop,ybottom=ybottom,mainTitle=mainTitle,
-#'          includeLabels=FALSE,DL=DL, LegCex=LegCex)
+#'          includeLabels=FALSE,DL=DL, LegCex=LegCex,titlePos=titlePos)
 #'dev.off()
 #'#To view the produced plot, us the following command:
 #'\dontrun{shell.exec("GreatLakesExamplePlotNoLabels.pdf")}
@@ -107,7 +109,7 @@ MapColor <- function(df,colorVar,latVar,lonVar,
                      xmin,xmax,ymin,ymax,
                      col1="tan",col2="orange3",col3="orangered1",col4="orangered4",
                      xleft,xright,ytop,ybottom,mainTitle="",units=6,includeLabels=FALSE,
-                     labels="",offsetLat="",offsetLon="",offsetLineLat="",offsetLineLon="",DL,LegCex){
+                     labels="",offsetLat="",offsetLon="",offsetLineLat="",offsetLineLon="",DL,LegCex,titlePos){
   
   #set plot parameters
   par( mar=c(0,0,1,0), new = FALSE,xpd=NA)#,mgp=c(3,0.1,0))
@@ -136,7 +138,7 @@ MapColor <- function(df,colorVar,latVar,lonVar,
   }
   
   points(df[,lonVar], df[,latVar],pch=plotSymbol, col="black",bg=fillCol,cex=1.2)
-  mtext(mainTitle,side=3,line=-4,outer=TRUE,font=2,cex=1.3)
+  mtext(mainTitle,side=3,line=titlePos,outer=TRUE,font=2,cex=1.3)
   rect(xleft=xleft,ybottom=ybottom,xright=xright,ytop=ytop,col="white")
   binThresh <- round(binThresh,3)
   
