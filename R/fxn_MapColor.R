@@ -100,7 +100,7 @@
 #'          politicalBounds,hydroPolygons,hydroLines,
 #'          xmin,xmax,ymin,ymax,xleft=xleft,xright=xright,ytop=ytop,ybottom=ybottom,mainTitle=mainTitle,includeLabels=TRUE,
 #'          labels=labelVar, offsetLat=offsetLatVar, offsetLon=offsetLonVar,offsetLineLat=offsetLineLatVar,
-#'              offsetLineLon=offsetLineLonVar)
+#'              offsetLineLon=offsetLineLonVar,DL=DL,LegCex=LegCex,titlePos=titlePos)
 #'dev.off()
 #'#To view the produced plot, us the following command:
 #'\dontrun{shell.exec("GreatLakesExamplePlot.pdf")}
