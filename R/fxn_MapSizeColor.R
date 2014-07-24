@@ -44,6 +44,10 @@
 #' position the end of the line drawn to the label. Lines are optional.
 #' @param offsetLineLon Variable in dataframe df for the offset from dataLon used to
 #' position the end of the line drawn to the label. Lines are optional.
+#' @param LegCex size of the text and symbols in the legend as numeric. Assigns the
+#' pt.cex and cex arguments in legend() and text(). Does not change the size of the
+#' symbols representing number of samples per site.
+#' @param titlePos position of title as numeric. Assigns the line() argument in mtext(). 
 #' @keywords map spatial size color
 #' @return NULL
 #' @import rgdal
@@ -107,7 +111,7 @@
 #'              politicalBounds,hydroPolygons,hydroLines,
 #'              xmin,xmax,ymin,ymax,xleft=xleft,xright=xright,ytop=ytop,ybottom=ybottom,mainTitle=mainTitle,includeLabels=TRUE,
 #'              labels=labelVar, offsetLat=offsetLatVar, offsetLon=offsetLonVar,offsetLineLat=offsetLineLatVar,
-#'              offsetLineLon=offsetLineLonVar)
+#'              offsetLineLon=offsetLineLonVar,LegCex=LegCex,titlePos=titlePos)
 #'dev.off()
 #'#To view the produced plot, us the following command:
 #'\dontrun{shell.exec("GreatLakesExamplePlot.pdf")}
