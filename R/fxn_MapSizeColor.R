@@ -74,7 +74,10 @@
 #' ytop <- 45.3
 #' sizeThresh1 <- 2
 #' sizeThresh2 <- 14
+#' LegCex <- 0.9
 #' mainTitle <- "Colors vary by concentration"
+#' titlePos <- -2
+#' 
 #' 
 #'# Without labels:
 #' 
@@ -83,7 +86,8 @@
 #' MapSizeColor(df,colorVar,sizeVar,latVar,lonVar,sizeThresh1,sizeThresh2,
 #'              politicalBounds,hydroPolygons,hydroLines,
 #'              xmin,xmax,ymin,ymax,xleft=xleft,xright=xright,ytop=ytop,
-#'              ybottom=ybottom,mainTitle=mainTitle,includeLabels=FALSE)
+#'              ybottom=ybottom,mainTitle=mainTitle,includeLabels=FALSE,
+#'              LegCex=LegCex,titlePos=titlePos)
 #'dev.off()
 #'#To view the produced plot, us the following command:
 #'\dontrun{shell.exec("GreatLakesExamplePlotNoLabels.pdf")}
@@ -113,7 +117,7 @@ MapSizeColor <- function(df,colorVar,sizeVar,latVar,lonVar,
                          xmin,xmax,ymin,ymax,
                          col1="tan",col2="orange3",col3="orangered1",col4="orangered4",
                          xleft,xright,ytop,ybottom,mainTitle="",units=2,includeLabels,
-                         labels="",offsetLat="",offsetLon="",offsetLineLat="",offsetLineLon=""){
+                         labels="",offsetLat="",offsetLon="",offsetLineLat="",offsetLineLon="",LegCex, titlePos){
   
   #set plot parameters
   par( mar=c(0,0,1,0), new = FALSE,xpd=NA)#,mgp=c(3,0.1,0))
@@ -143,15 +147,15 @@ MapSizeColor <- function(df,colorVar,sizeVar,latVar,lonVar,
   }
   
   points(df[,lonVar], df[,latVar],pch=plotSymbol, col="black",cex=plotSize,bg=fillCol)
-  mtext(mainTitle,side=3,line=-4,outer=TRUE,font=2,cex=1.3)
+  mtext(mainTitle,side=3,line=titlePos,outer=TRUE,font=2,cex=1.3)
   
-  legendTextCex <- 0.9
+  legendTextCex <- LegCex
   rect(xleft=xleft,ybottom=ybottom,xright=xright,ytop=ytop,col="white",)
   legend(x=xleft+0.2,y=ytop-0.9,c(paste("1-",sizeThresh1," samples",sep=""),
                                   paste((sizeThresh1+1),"-",sizeThresh2," samples",sep=""),
                                   paste("> ",sizeThresh2," samples",sep="")),bty="n",
          #       title=expression(bold("Number of Samples")),
-         pch=c(21),pt.cex=c(1,1.5,2),bg="white",pt.bg="orange3")
+         pch=c(21),pt.cex=c(1,1.5,2),bg="white",pt.bg="orange3",cex=LegCex+.1)
   binThresh <- round(binThresh,3)
   legendText= c(paste("<",binThresh[1]),
                 paste(binThresh[1],"-",binThresh[2]),
@@ -178,6 +182,7 @@ MapSizeColor <- function(df,colorVar,sizeVar,latVar,lonVar,
   
   text(concText,x=startText[1],y=startText[2]-0.6,font=2,cex=legendTextCex)
   
-  legend(x=xleft+0.2,y=ytop-3.,legendText,pt.bg=c("tan",binCol),pch=plotSymbol,bg="white",pt.cex=1.5,bty="n")
+  legend(x=xleft+0.2,y=ytop-3.,legendText,pt.bg=c("tan",binCol),pch=plotSymbol,bg="white",
+         cex=legendTextCex, pt.cex=legendTextCex,bty="n")
 }
 
