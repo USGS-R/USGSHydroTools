@@ -30,6 +30,7 @@
 #' position the end of the line drawn to the label. Lines are optional.
 #' @param offsetLineLon Variable in dataframe df for the offset from dataLon used to
 #' position the end of the line drawn to the label. Lines are optional.
+#' @param titlePos position of title as numeric. Assigns the line() argument in mtext().
 #' @keywords map spatial color
 #' @return NULL
 #' @import rgdal
@@ -50,6 +51,7 @@
 #' ymin <- 40.5
 #' ymax <- 49.5
 #' mainTitle <- "Site Locations"
+#' titlePos <- -4
 #' 
 #' #Without labels
 #' 
@@ -58,7 +60,7 @@
 #' MapLocations(df,latVar,lonVar,
 #'              politicalBounds,hydroPolygons,hydroLines,
 #'              xmin,xmax,ymin,ymax,mainTitle=mainTitle,
-#'              includeLabels=FALSE)
+#'              includeLabels=FALSE,titlePos=titlePos)
 #'dev.off()
 #'#To view the produced plot, us the following command:
 #'\dontrun{shell.exec("GreatLakesExamplePlotNoLabels.pdf")}
@@ -77,7 +79,7 @@
 #'              politicalBounds,hydroPolygons,hydroLines,
 #'              xmin,xmax,ymin,ymax,mainTitle=mainTitle,includeLabels=TRUE,
 #'              labels=labelVar, offsetLat=offsetLatVar, offsetLon=offsetLonVar,offsetLineLat=offsetLineLatVar,
-#'              offsetLineLon=offsetLineLonVar)
+#'              offsetLineLon=offsetLineLonVar,titlePos=titlePos)
 #'dev.off()
 #'#To view the produced plot, us the following command:
 #'\dontrun{shell.exec("GreatLakesExamplePlot.pdf")}
@@ -86,7 +88,7 @@ MapLocations <- function(df,latVar,lonVar,
                          xmin,xmax,ymin,ymax,
                          col1="tan",
                          mainTitle="",includeLabels,
-                         labels="",offsetLat="",offsetLon="",offsetLineLat="",offsetLineLon=""){
+                         labels="",offsetLat="",offsetLon="",offsetLineLat="",offsetLineLon="",titlePos){
   
   #set plot parameters
   par( mar=c(0,0,1,0), new = FALSE,xpd=NA)#,mgp=c(3,0.1,0))
@@ -108,7 +110,7 @@ MapLocations <- function(df,latVar,lonVar,
   }
   
   points(df[,lonVar], df[,latVar],pch=plotSymbol, col="black",bg=col1,cex=1.2)
-  mtext(mainTitle,side=3,line=-4,outer=TRUE,font=2,cex=1.3)
+  mtext(mainTitle,side=3,line=titlePos,outer=TRUE,font=2,cex=1.3)
   
   
 }
