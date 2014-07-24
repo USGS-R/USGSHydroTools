@@ -6,7 +6,7 @@
 MapLocations(df, latVar, lonVar, politicalBounds, hydroPolygons, hydroLines,
   xmin, xmax, ymin, ymax, col1 = "tan", mainTitle = "", includeLabels,
   labels = "", offsetLat = "", offsetLon = "", offsetLineLat = "",
-  offsetLineLon = "")
+  offsetLineLon = "", titlePos)
 }
 \arguments{
 \item{df}{Dataframe with 3 required columns to define symbol color,
@@ -53,6 +53,8 @@ position the end of the line drawn to the label. Lines are optional.}
 
 \item{offsetLineLon}{Variable in dataframe df for the offset from dataLon used to
 position the end of the line drawn to the label. Lines are optional.}
+
+\item{titlePos}{position of title as numeric. Assigns the line() argument in mtext().}
 }
 \description{
 Mapping routine that displays locations of sites over layers with
@@ -73,6 +75,7 @@ xmax <- -72
 ymin <- 40.5
 ymax <- 49.5
 mainTitle <- "Site Locations"
+titlePos <- -4
 
 #Without labels
 
@@ -81,7 +84,7 @@ pdf("GreatLakesExamplePlotNoLabels.pdf",width=11,height=8)
 MapLocations(df,latVar,lonVar,
              politicalBounds,hydroPolygons,hydroLines,
              xmin,xmax,ymin,ymax,mainTitle=mainTitle,
-             includeLabels=FALSE)
+             includeLabels=FALSE,titlePos=titlePos)
 dev.off()
 #To view the produced plot, us the following command:
 \dontrun{shell.exec("GreatLakesExamplePlotNoLabels.pdf")}
@@ -99,7 +102,7 @@ MapLocations(df,latVar,lonVar,
              politicalBounds,hydroPolygons,hydroLines,
              xmin,xmax,ymin,ymax,mainTitle=mainTitle,includeLabels=TRUE,
              labels=labelVar, offsetLat=offsetLatVar, offsetLon=offsetLonVar,offsetLineLat=offsetLineLatVar,
-             offsetLineLon=offsetLineLonVar)
+             offsetLineLon=offsetLineLonVar,titlePos=titlePos)
 dev.off()
 #To view the produced plot, us the following command:
 \dontrun{shell.exec("GreatLakesExamplePlot.pdf")}

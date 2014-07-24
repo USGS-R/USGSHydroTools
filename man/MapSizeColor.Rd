@@ -8,7 +8,7 @@ MapSizeColor(df, colorVar, sizeVar, latVar, lonVar, sizeThresh1, sizeThresh2,
   col1 = "tan", col2 = "orange3", col3 = "orangered1",
   col4 = "orangered4", xleft, xright, ytop, ybottom, mainTitle = "",
   units = 2, includeLabels, labels = "", offsetLat = "", offsetLon = "",
-  offsetLineLat = "", offsetLineLon = "")
+  offsetLineLat = "", offsetLineLon = "", LegCex, titlePos)
 }
 \arguments{
 \item{df}{Dataframe with 4 required columns that have data to define symbol size, color,
@@ -81,6 +81,12 @@ position the end of the line drawn to the label. Lines are optional.}
 
 \item{offsetLineLon}{Variable in dataframe df for the offset from dataLon used to
 position the end of the line drawn to the label. Lines are optional.}
+
+\item{LegCex}{size of the text and symbols in the legend as numeric. Assigns the
+pt.cex and cex arguments in legend() and text(). Does not change the size of the
+symbols representing number of samples per site.}
+
+\item{titlePos}{position of title as numeric. Assigns the line() argument in mtext().}
 }
 \description{
 Mapping routine that displays spatial data variability by size and color differences.
@@ -111,7 +117,10 @@ xright <- -90.8
 ytop <- 45.3
 sizeThresh1 <- 2
 sizeThresh2 <- 14
+LegCex <- 0.9
 mainTitle <- "Colors vary by concentration"
+titlePos <- -2
+
 
 # Without labels:
 
@@ -120,7 +129,8 @@ pdf("GreatLakesExamplePlotNoLabels.pdf",width=11,height=8)
 MapSizeColor(df,colorVar,sizeVar,latVar,lonVar,sizeThresh1,sizeThresh2,
              politicalBounds,hydroPolygons,hydroLines,
              xmin,xmax,ymin,ymax,xleft=xleft,xright=xright,ytop=ytop,
-             ybottom=ybottom,mainTitle=mainTitle,includeLabels=FALSE)
+             ybottom=ybottom,mainTitle=mainTitle,includeLabels=FALSE,
+             LegCex=LegCex,titlePos=titlePos)
 dev.off()
 #To view the produced plot, us the following command:
 \dontrun{shell.exec("GreatLakesExamplePlotNoLabels.pdf")}
@@ -140,7 +150,7 @@ MapSizeColor(df,colorVar,sizeVar,latVar,lonVar,sizeThresh1,sizeThresh2,
              politicalBounds,hydroPolygons,hydroLines,
              xmin,xmax,ymin,ymax,xleft=xleft,xright=xright,ytop=ytop,ybottom=ybottom,mainTitle=mainTitle,includeLabels=TRUE,
              labels=labelVar, offsetLat=offsetLatVar, offsetLon=offsetLonVar,offsetLineLat=offsetLineLatVar,
-             offsetLineLon=offsetLineLonVar)
+             offsetLineLon=offsetLineLonVar,LegCex=LegCex,titlePos=titlePos)
 dev.off()
 #To view the produced plot, us the following command:
 \dontrun{shell.exec("GreatLakesExamplePlot.pdf")}

@@ -55,11 +55,15 @@ xleft <- -95
 ybottom <- 40.7
 xright <- -90.8
 ytop <- 43.5
+DL <- c(rep(0.05,times=19),rep(0.04,times=10))
+LegCex <- 0.7
+titlePos <- -4
 mainTitle <- "OC Pesticides"
 pdf("GreatLakesPlot.pdf", width=11, height=8)
 MapColor(df,colorVar,latVar,lonVar,
           politicalBounds,hydroPolygons,hydroLines,
-          xmin,xmax,ymin,ymax,xleft=xleft,xright=xright,ytop=ytop,ybottom=ybottom,mainTitle=mainTitle,includeLabels=FALSE)
+          xmin,xmax,ymin,ymax,xleft=xleft,xright=xright,ytop=ytop,ybottom=ybottom,mainTitle=mainTitle,includeLabels=FALSE,
+          DL=DL,LegCex=LegCex,titlePos=titlePos)
 MapLabels(df=SI,labels="Site",dataLat="lat",dataLon="lon",
   offsetLat="offsetLat",offsetLon="offsetLon",
   offsetLineLat="offsetLineLat",
