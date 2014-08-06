@@ -3,11 +3,10 @@
 \alias{MapColor}
 \title{Mapping data with variable color to define spatial data}
 \usage{
-MapColor(df, colorVar, latVar, lonVar, politicalBounds, hydroPolygons,
-  hydroLines, xmin, xmax, ymin, ymax, col1 = "tan", col2 = "orange3",
-  col3 = "orangered1", col4 = "orangered4", xleft, xright, ytop, ybottom,
-  mainTitle = "", units = 6, includeLabels = FALSE, labels = "",
-  offsetLat = "", offsetLon = "", offsetLineLat = "",
+MapColor(df, colorVar, latVar, lonVar, xmin, xmax, ymin, ymax, col1 = "tan",
+  col2 = "orange3", col3 = "orangered1", col4 = "orangered4", xleft,
+  xright, ytop, ybottom, mainTitle = "", units = 6, includeLabels = FALSE,
+  labels = "", offsetLat = "", offsetLon = "", offsetLineLat = "",
   offsetLineLon = "", DL, LegCex, titlePos)
 }
 \arguments{
@@ -20,15 +19,6 @@ offset for latitude and longitude for labels, and offset of latitude and longitu
 \item{latVar}{Column name in df to define latitude}
 
 \item{lonVar}{Column name in df to define longitude}
-
-\item{politicalBounds}{Shapefile of class "SpatialPolygonsDataFrame" for
-defining political boundaries}
-
-\item{hydroPolygons}{Shapefile of class "SpatialPolygonsDataFrame" for
-defining hydrologic polygons (lakes)}
-
-\item{hydroLines}{shapefile of class "SpatialLinesDataFrame" for
-defining hydrologic lines (rivers/streams)}
 
 \item{xmin}{Left longitudinal boundary for plotting}
 
@@ -98,9 +88,6 @@ DL <- c(rep(0.05,times=19),rep(0.04,times=10))
 LegCex <- 0.7
 titlePos <- -4
 
-politicalBounds <- shape_poliboundsClip
-hydroPolygons <- subShape_hydropolyClip
-hydroLines <- shape_hydrolineClip
 xmin <- -96.5
 xmax <- -72
 ymin <- 40.5
@@ -116,7 +103,6 @@ mainTitle <- "OC Pesticides"
 #Example works best in a landscape view:
 pdf("GreatLakesExamplePlotNoLabels.pdf",width=11,height=8)
 MapColor(df,colorVar,latVar,lonVar,
-         politicalBounds,hydroPolygons,hydroLines,
          xmin,xmax,ymin,ymax,xleft=xleft,xright=xright,ytop=ytop,ybottom=ybottom,mainTitle=mainTitle,
          includeLabels=FALSE,DL=DL, LegCex=LegCex,titlePos=titlePos)
 dev.off()
@@ -133,7 +119,6 @@ offsetLineLonVar <- "offsetLineLon"
 #Example works best in a landscape view:
 pdf("GreatLakesExamplePlot.pdf",width=11,height=8)
 MapColor(df,colorVar,latVar,lonVar,
-         politicalBounds,hydroPolygons,hydroLines,
          xmin,xmax,ymin,ymax,xleft=xleft,xright=xright,ytop=ytop,ybottom=ybottom,mainTitle=mainTitle,includeLabels=TRUE,
          labels=labelVar, offsetLat=offsetLatVar, offsetLon=offsetLonVar,offsetLineLat=offsetLineLatVar,
              offsetLineLon=offsetLineLonVar,DL=DL,LegCex=LegCex,titlePos=titlePos)
