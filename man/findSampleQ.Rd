@@ -21,6 +21,7 @@ retrieve that data, otherwise the Daily streamflow data will be used. If the sam
 and end time, the flow is the maximum flow in the range of the sample.
 }
 \examples{
+library(dataRetrieval)
 site <- "04085427"
 sampleDates <- sampleDates
 Start_extend <- as.character(as.Date(min(sampleDates$ActivityStartDateGiven, na.rm=TRUE))-60)

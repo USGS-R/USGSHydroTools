@@ -17,6 +17,7 @@ is to find input value to use in a call to HYSEP (from package DVStats). If ther
 the function will look for the largest continous gap.
 }
 \examples{
+library(dataRetrieval)
 site <- "04085427"
 sampleDates <- sampleDates
 Start_extend <- as.character(as.Date(min(sampleDates$ActivityStartDateGiven, na.rm=TRUE))-60)

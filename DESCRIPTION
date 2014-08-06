@@ -1,8 +1,8 @@
 Package: GSHydroTools
 Type: Package
 Title: Collection of functions for hydrological analysis.
-Version: 1.0.1
-Date: 2014-07-23
+Version: 1.0.2
+Date: 2014-08-06
 Author: Steve Corsi
 Maintainer: Steve Corsi <srcorsi@usgs.gov>
 Description: Collection of functions for storm volume computation (Hydrovol),
@@ -15,15 +15,15 @@ Copyright: This software is in the public domain because it contains materials
     official USGS copyright policy at
     http://www.usgs.gov/visual-id/credit_usgs.html#copyright
 Depends:
-    R (>= 3.0),
-    rgdal,
-    sp,
-    dataRetrieval,
-    USGSwsBase
+    R (>= 3.0)
 Imports:
     rgdal,
     sp,
     dataRetrieval,
-    USGSwsBase
+    USGSwsBase,
+    raster,
+    rgeos
+Suggests:
+    knitr
 LazyLoad: yes
 LazyData: yes
