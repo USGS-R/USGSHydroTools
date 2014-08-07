@@ -3,10 +3,9 @@
 \alias{MapLocations}
 \title{Mapping locations of interst}
 \usage{
-MapLocations(df, latVar, lonVar, politicalBounds, hydroPolygons, hydroLines,
-  xmin, xmax, ymin, ymax, col1 = "tan", mainTitle = "", includeLabels,
-  labels = "", offsetLat = "", offsetLon = "", offsetLineLat = "",
-  offsetLineLon = "", titlePos)
+MapLocations(df, latVar, lonVar, xmin, xmax, ymin, ymax, col1 = "tan",
+  mainTitle = "", includeLabels, labels = "", offsetLat = "",
+  offsetLon = "", offsetLineLat = "", offsetLineLon = "", titlePos)
 }
 \arguments{
 \item{df}{Dataframe with 3 required columns to define symbol color,
@@ -16,15 +15,6 @@ offset for latitude and longitude for labels, and offset of latitude and longitu
 \item{latVar}{Column name in df to define latitude}
 
 \item{lonVar}{Column name in df to define longitude}
-
-\item{politicalBounds}{Shapefile of class "SpatialPolygonsDataFrame" for
-defining political boundaries}
-
-\item{hydroPolygons}{Shapefile of class "SpatialPolygonsDataFrame" for
-defining hydrologic polygons (lakes)}
-
-\item{hydroLines}{shapefile of class "SpatialLinesDataFrame" for
-defining hydrologic lines (rivers/streams)}
 
 \item{xmin}{Left longitudinal boundary for plotting}
 
@@ -67,9 +57,6 @@ df <- data.frame(lat=lat,lon=lon)
 latVar <- "lat"
 lonVar <- "lon"
 
-politicalBounds <- shape_poliboundsClip
-hydroPolygons <- subShape_hydropolyClip
-hydroLines <- shape_hydrolineClip
 xmin <- -96.5
 xmax <- -72
 ymin <- 40.5
@@ -82,7 +69,6 @@ titlePos <- -4
 #Example works best in a landscape view:
 pdf("GreatLakesExamplePlotNoLabels.pdf",width=11,height=8)
 MapLocations(df,latVar,lonVar,
-             politicalBounds,hydroPolygons,hydroLines,
              xmin,xmax,ymin,ymax,mainTitle=mainTitle,
              includeLabels=FALSE,titlePos=titlePos)
 dev.off()
@@ -99,7 +85,6 @@ offsetLineLonVar <- "offsetLineLon"
 #Example works best in a landscape view:
 pdf("GreatLakesExamplePlot.pdf",width=11,height=8)
 MapLocations(df,latVar,lonVar,
-             politicalBounds,hydroPolygons,hydroLines,
              xmin,xmax,ymin,ymax,mainTitle=mainTitle,includeLabels=TRUE,
              labels=labelVar, offsetLat=offsetLatVar, offsetLon=offsetLonVar,offsetLineLat=offsetLineLatVar,
              offsetLineLon=offsetLineLonVar,titlePos=titlePos)

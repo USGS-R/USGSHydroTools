@@ -8,12 +8,6 @@
 #' offset for latitude and longitude for labels, and offset of latitude and longitude for the ending
 #' @param latVar Column name in df to define latitude
 #' @param lonVar Column name in df to define longitude
-#' @param politicalBounds Shapefile of class "SpatialPolygonsDataFrame" for 
-#' defining political boundaries
-#' @param hydroPolygons Shapefile of class "SpatialPolygonsDataFrame" for 
-#' defining hydrologic polygons (lakes)
-#' @param hydroLines shapefile of class "SpatialLinesDataFrame" for 
-#' defining hydrologic lines (rivers/streams)
 #' @param xmin Left longitudinal boundary for plotting
 #' @param xmax Right longitudinal boundary for plotting
 #' @param ymin Bottom latitudinal boundary for plotting
@@ -42,10 +36,7 @@
 #' df <- data.frame(lat=lat,lon=lon)
 #' latVar <- "lat"
 #' lonVar <- "lon"
-#' 
-#' politicalBounds <- shape_poliboundsClip
-#' hydroPolygons <- subShape_hydropolyClip
-#' hydroLines <- shape_hydrolineClip
+#'
 #' xmin <- -96.5
 #' xmax <- -72
 #' ymin <- 40.5
@@ -58,7 +49,6 @@
 #' #Example works best in a landscape view:
 #' pdf("GreatLakesExamplePlotNoLabels.pdf",width=11,height=8)
 #' MapLocations(df,latVar,lonVar,
-#'              politicalBounds,hydroPolygons,hydroLines,
 #'              xmin,xmax,ymin,ymax,mainTitle=mainTitle,
 #'              includeLabels=FALSE,titlePos=titlePos)
 #'dev.off()
@@ -76,7 +66,6 @@
 #' #Example works best in a landscape view:
 #' pdf("GreatLakesExamplePlot.pdf",width=11,height=8)
 #' MapLocations(df,latVar,lonVar,
-#'              politicalBounds,hydroPolygons,hydroLines,
 #'              xmin,xmax,ymin,ymax,mainTitle=mainTitle,includeLabels=TRUE,
 #'              labels=labelVar, offsetLat=offsetLatVar, offsetLon=offsetLonVar,offsetLineLat=offsetLineLatVar,
 #'              offsetLineLon=offsetLineLonVar,titlePos=titlePos)
@@ -84,7 +73,6 @@
 #'#To view the produced plot, us the following command:
 #'\dontrun{shell.exec("GreatLakesExamplePlot.pdf")}
 MapLocations <- function(df,latVar,lonVar,
-                         politicalBounds,hydroPolygons,hydroLines,
                          xmin,xmax,ymin,ymax,
                          col1="tan",
                          mainTitle="",includeLabels,
@@ -96,10 +84,9 @@ MapLocations <- function(df,latVar,lonVar,
   plotSymbol <- 21 
   
   fillCol <- rep(col1,dim(df)[1])
-  plot(politicalBounds,col="gray90",xlim=c(xmin,xmax),ylim=c(ymin,ymax))
-  plot(hydroPolygons,col="lightskyblue2",xlim=c(xmin,xmax),ylim=c(ymin,ymax),add=TRUE)#
-  lines(hydroLines,col="lightskyblue2",xlim=c(xmin,xmax),ylim=c(ymin,ymax))#
-  plot(politicalBounds,add=TRUE)
+  
+  retList <- clipShape(xmin,xmax,ymin,ymax)
+  plotBackgroundMap(retList)
   
   if(includeLabels){
     MapLabels(df=df,labels=labels,dataLat=latVar,dataLon=lonVar,
