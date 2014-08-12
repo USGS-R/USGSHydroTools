@@ -5,7 +5,7 @@
 \usage{
 MapLocations(df, latVar, lonVar, xmin, xmax, ymin, ymax, col1 = "tan",
   mainTitle = "", includeLabels, labels = "", offsetLat = "",
-  offsetLon = "", offsetLineLat = "", offsetLineLon = "", titlePos)
+  offsetLon = "", offsetLineLat = "", offsetLineLon = "", titlePos = -4)
 }
 \arguments{
 \item{df}{Dataframe with 3 required columns to define symbol color,
@@ -44,7 +44,7 @@ position the end of the line drawn to the label. Lines are optional.}
 \item{offsetLineLon}{Variable in dataframe df for the offset from dataLon used to
 position the end of the line drawn to the label. Lines are optional.}
 
-\item{titlePos}{position of title as numeric. Assigns the line() argument in mtext().}
+\item{titlePos}{position of title as numeric. Assigns the line() argument in mtext(). Default is -4.}
 }
 \description{
 Mapping routine that displays locations of sites over layers with

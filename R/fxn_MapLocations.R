@@ -24,7 +24,7 @@
 #' position the end of the line drawn to the label. Lines are optional.
 #' @param offsetLineLon Variable in dataframe df for the offset from dataLon used to
 #' position the end of the line drawn to the label. Lines are optional.
-#' @param titlePos position of title as numeric. Assigns the line() argument in mtext().
+#' @param titlePos position of title as numeric. Assigns the line() argument in mtext(). Default is -4.
 #' @keywords map spatial color
 #' @return NULL
 #' @import rgdal
@@ -76,7 +76,7 @@ MapLocations <- function(df,latVar,lonVar,
                          xmin,xmax,ymin,ymax,
                          col1="tan",
                          mainTitle="",includeLabels,
-                         labels="",offsetLat="",offsetLon="",offsetLineLat="",offsetLineLon="",titlePos){
+                         labels="",offsetLat="",offsetLon="",offsetLineLat="",offsetLineLon="",titlePos=-4){
   
   #set plot parameters
   par( mar=c(0,0,1,0), new = FALSE,xpd=NA)#,mgp=c(3,0.1,0))

@@ -7,7 +7,7 @@ MapColor(df, colorVar, latVar, lonVar, xmin, xmax, ymin, ymax, col1 = "tan",
   col2 = "orange3", col3 = "orangered1", col4 = "orangered4", xleft,
   xright, ytop, ybottom, mainTitle = "", units = 6, includeLabels = FALSE,
   labels = "", offsetLat = "", offsetLon = "", offsetLineLat = "",
-  offsetLineLon = "", DL, LegCex, titlePos)
+  offsetLineLon = "", DL = 0, LegCex = 0.9, titlePos = -4)
 }
 \arguments{
 \item{df}{Dataframe with 3 required columns to define symbol color,

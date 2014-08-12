@@ -97,7 +97,7 @@ MapColor <- function(df,colorVar,latVar,lonVar,
                      xmin,xmax,ymin,ymax,
                      col1="tan",col2="orange3",col3="orangered1",col4="orangered4",
                      xleft,xright,ytop,ybottom,mainTitle="",units=6,includeLabels=FALSE,
-                     labels="",offsetLat="",offsetLon="",offsetLineLat="",offsetLineLon="",DL,LegCex,titlePos){
+                     labels="",offsetLat="",offsetLon="",offsetLineLat="",offsetLineLon="",DL=0,LegCex=0.9,titlePos=-4){
   
   #set plot parameters
   par( mar=c(0,0,1,0), new = FALSE,xpd=NA)#,mgp=c(3,0.1,0))

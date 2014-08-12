@@ -46,8 +46,8 @@
 #' position the end of the line drawn to the label. Lines are optional.
 #' @param LegCex size of the text and symbols in the legend as numeric. Assigns the
 #' pt.cex and cex arguments in legend() and text(). Does not change the size of the
-#' symbols representing number of samples per site.
-#' @param titlePos position of title as numeric. Assigns the line() argument in mtext(). 
+#' symbols representing number of samples per site. Default is 0.9/
+#' @param titlePos position of title as numeric. Assigns the line() argument in mtext(). Default is -4.
 #' @keywords map spatial size color
 #' @return NULL
 #' @import rgdal
@@ -65,9 +65,6 @@
 #' latVar <- "lat"
 #' lonVar <- "lon"
 #' 
-#' politicalBounds <- shape_poliboundsClip
-#' hydroPolygons <- subShape_hydropolyClip
-#' hydroLines <- shape_hydrolineClip
 #' xmin <- -96.5
 #' xmax <- -72
 #' ymin <- 40.5
@@ -121,7 +118,7 @@ MapSizeColor <- function(df,colorVar,sizeVar,latVar,lonVar,
                          xmin,xmax,ymin,ymax,
                          col1="tan",col2="orange3",col3="orangered1",col4="orangered4",
                          xleft,xright,ytop,ybottom,mainTitle="",units=2,includeLabels,
-                         labels="",offsetLat="",offsetLon="",offsetLineLat="",offsetLineLon="",LegCex, titlePos){
+                         labels="",offsetLat="",offsetLon="",offsetLineLat="",offsetLineLon="",LegCex=0.9, titlePos=-4){
   
   #set plot parameters
   par( mar=c(0,0,1,0), new = FALSE,xpd=NA)#,mgp=c(3,0.1,0))
@@ -136,11 +133,11 @@ MapSizeColor <- function(df,colorVar,sizeVar,latVar,lonVar,
   plotSize <- ifelse(df[,sizeVar] >sizeThresh2,2,plotSize)
   
   fillCol <- rep(col1,dim(df)[1])
+  
   for (i in 1:length(binThresh)) fillCol <- ifelse(df[,colorVar] > binThresh[i],binCol[i],fillCol)
-  plot(politicalBounds,col="gray90",xlim=c(xmin,xmax),ylim=c(ymin,ymax))
-  plot(hydroPolygons,col="lightskyblue2",xlim=c(xmin,xmax),ylim=c(ymin,ymax),add=TRUE)
-  lines(hydroLines,col="lightskyblue2",xlim=c(xmin,xmax),ylim=c(ymin,ymax))
-  plot(politicalBounds,add=TRUE)
+
+  retList <- clipShape(xmin,xmax,ymin,ymax)
+  plotBackgroundMap(retList)
   
   if(includeLabels){
     MapLabels(df=df,labels=labels,dataLat=latVar,dataLon=lonVar,
