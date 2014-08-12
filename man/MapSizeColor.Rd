@@ -8,7 +8,7 @@ MapSizeColor(df, colorVar, sizeVar, latVar, lonVar, sizeThresh1, sizeThresh2,
   col1 = "tan", col2 = "orange3", col3 = "orangered1",
   col4 = "orangered4", xleft, xright, ytop, ybottom, mainTitle = "",
   units = 2, includeLabels, labels = "", offsetLat = "", offsetLon = "",
-  offsetLineLat = "", offsetLineLon = "", LegCex, titlePos)
+  offsetLineLat = "", offsetLineLon = "", LegCex = 0.9, titlePos = -4)
 }
 \arguments{
 \item{df}{Dataframe with 4 required columns that have data to define symbol size, color,
@@ -84,9 +84,9 @@ position the end of the line drawn to the label. Lines are optional.}
 
 \item{LegCex}{size of the text and symbols in the legend as numeric. Assigns the
 pt.cex and cex arguments in legend() and text(). Does not change the size of the
-symbols representing number of samples per site.}
+symbols representing number of samples per site. Default is 0.9/}
 
-\item{titlePos}{position of title as numeric. Assigns the line() argument in mtext().}
+\item{titlePos}{position of title as numeric. Assigns the line() argument in mtext(). Default is -4.}
 }
 \description{
 Mapping routine that displays spatial data variability by size and color differences.
@@ -104,9 +104,6 @@ sizeVar <- "count"
 latVar <- "lat"
 lonVar <- "lon"
 
-politicalBounds <- shape_poliboundsClip
-hydroPolygons <- subShape_hydropolyClip
-hydroLines <- shape_hydrolineClip
 xmin <- -96.5
 xmax <- -72
 ymin <- 40.5

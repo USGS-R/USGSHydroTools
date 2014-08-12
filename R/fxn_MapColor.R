@@ -9,12 +9,6 @@
 #' @param colorVar Column name in df to define symbol color
 #' @param latVar Column name in df to define latitude
 #' @param lonVar Column name in df to define longitude
-#' @param politicalBounds Shapefile of class "SpatialPolygonsDataFrame" for 
-#' defining political boundaries
-#' @param hydroPolygons Shapefile of class "SpatialPolygonsDataFrame" for 
-#' defining hydrologic polygons (lakes)
-#' @param hydroLines shapefile of class "SpatialLinesDataFrame" for 
-#' defining hydrologic lines (rivers/streams)
 #' @param xmin Left longitudinal boundary for plotting
 #' @param xmax Right longitudinal boundary for plotting
 #' @param ymin Bottom latitudinal boundary for plotting
@@ -61,9 +55,6 @@
 #' LegCex <- 0.7
 #' titlePos <- -4
 #' 
-#' politicalBounds <- shape_poliboundsClip
-#' hydroPolygons <- subShape_hydropolyClip
-#' hydroLines <- shape_hydrolineClip
 #' xmin <- -96.5
 #' xmax <- -72
 #' ymin <- 40.5
@@ -79,7 +70,6 @@
 #' #Example works best in a landscape view:
 #' pdf("GreatLakesExamplePlotNoLabels.pdf",width=11,height=8)
 #' MapColor(df,colorVar,latVar,lonVar,
-#'          politicalBounds,hydroPolygons,hydroLines,
 #'          xmin,xmax,ymin,ymax,xleft=xleft,xright=xright,ytop=ytop,ybottom=ybottom,mainTitle=mainTitle,
 #'          includeLabels=FALSE,DL=DL, LegCex=LegCex,titlePos=titlePos)
 #'dev.off()
@@ -97,7 +87,6 @@
 #' #Example works best in a landscape view:
 #' pdf("GreatLakesExamplePlot.pdf",width=11,height=8)
 #' MapColor(df,colorVar,latVar,lonVar,
-#'          politicalBounds,hydroPolygons,hydroLines,
 #'          xmin,xmax,ymin,ymax,xleft=xleft,xright=xright,ytop=ytop,ybottom=ybottom,mainTitle=mainTitle,includeLabels=TRUE,
 #'          labels=labelVar, offsetLat=offsetLatVar, offsetLon=offsetLonVar,offsetLineLat=offsetLineLatVar,
 #'              offsetLineLon=offsetLineLonVar,DL=DL,LegCex=LegCex,titlePos=titlePos)
@@ -105,11 +94,10 @@
 #'#To view the produced plot, us the following command:
 #'\dontrun{shell.exec("GreatLakesExamplePlot.pdf")}
 MapColor <- function(df,colorVar,latVar,lonVar,
-                     politicalBounds,hydroPolygons,hydroLines,
                      xmin,xmax,ymin,ymax,
                      col1="tan",col2="orange3",col3="orangered1",col4="orangered4",
                      xleft,xright,ytop,ybottom,mainTitle="",units=6,includeLabels=FALSE,
-                     labels="",offsetLat="",offsetLon="",offsetLineLat="",offsetLineLon="",DL,LegCex,titlePos){
+                     labels="",offsetLat="",offsetLon="",offsetLineLat="",offsetLineLon="",DL=0,LegCex=0.9,titlePos=-4){
   
   #set plot parameters
   par( mar=c(0,0,1,0), new = FALSE,xpd=NA)#,mgp=c(3,0.1,0))
@@ -124,10 +112,9 @@ MapColor <- function(df,colorVar,latVar,lonVar,
   fillCol <- rep(col1,dim(df)[1])
   for (i in 1:length(binThresh)) fillCol <- ifelse(df[,colorVar] > binThresh[i],binCol[i],fillCol)
   fillCol[which(is.na(fillCol)==TRUE)] <- "white"
-  plot(politicalBounds,col="gray90",xlim=c(xmin,xmax),ylim=c(ymin,ymax))
-  plot(hydroPolygons,col="lightskyblue2",xlim=c(xmin,xmax),ylim=c(ymin,ymax),add=TRUE)#
-  lines(hydroLines,col="lightskyblue2",xlim=c(xmin,xmax),ylim=c(ymin,ymax))#
-  plot(politicalBounds,add=TRUE)
+  
+  retList <- clipShape(xmin,xmax,ymin,ymax)
+  plotBackgroundMap(retList)
   
   if(includeLabels){
     MapLabels(df=df,labels=labels,dataLat=latVar,dataLon=lonVar,

@@ -44,9 +44,6 @@ df <- data.frame(y=y, lat.dd=lat.dd,lon.dd=lon.dd)
 colorVar <- "y"
 latVar <- "lat.dd"
 lonVar <- "lon.dd"
-politicalBounds <- shape_poliboundsClip
-hydroPolygons <- subShape_hydropolyClip
-hydroLines <- shape_hydrolineClip
 xmin <- -96.5
 xmax <- -72
 ymin <- 40.5
@@ -61,7 +58,6 @@ titlePos <- -4
 mainTitle <- "OC Pesticides"
 pdf("GreatLakesPlot.pdf", width=11, height=8)
 MapColor(df,colorVar,latVar,lonVar,
-          politicalBounds,hydroPolygons,hydroLines,
           xmin,xmax,ymin,ymax,xleft=xleft,xright=xright,ytop=ytop,ybottom=ybottom,mainTitle=mainTitle,includeLabels=FALSE,
           DL=DL,LegCex=LegCex,titlePos=titlePos)
 MapLabels(df=SI,labels="Site",dataLat="lat",dataLon="lon",
