@@ -44,6 +44,10 @@
 #' position the end of the line drawn to the label. Lines are optional.
 #' @param offsetLineLon Variable in dataframe df for the offset from dataLon used to
 #' position the end of the line drawn to the label. Lines are optional.
+#' @param LegCex size of the text and symbols in the legend as numeric. Assigns the
+#' pt.cex and cex arguments in legend() and text(). Does not change the size of the
+#' symbols representing number of samples per site. Default is 0.9/
+#' @param titlePos position of title as numeric. Assigns the line() argument in mtext(). Default is -4.
 #' @keywords map spatial size color
 #' @return NULL
 #' @import rgdal
@@ -61,9 +65,6 @@
 #' latVar <- "lat"
 #' lonVar <- "lon"
 #' 
-#' politicalBounds <- shape_poliboundsClip
-#' hydroPolygons <- subShape_hydropolyClip
-#' hydroLines <- shape_hydrolineClip
 #' xmin <- -96.5
 #' xmax <- -72
 #' ymin <- 40.5
@@ -74,7 +75,10 @@
 #' ytop <- 45.3
 #' sizeThresh1 <- 2
 #' sizeThresh2 <- 14
+#' LegCex <- 0.9
 #' mainTitle <- "Colors vary by concentration"
+#' titlePos <- -2
+#' 
 #' 
 #'# Without labels:
 #' 
@@ -83,7 +87,8 @@
 #' MapSizeColor(df,colorVar,sizeVar,latVar,lonVar,sizeThresh1,sizeThresh2,
 #'              politicalBounds,hydroPolygons,hydroLines,
 #'              xmin,xmax,ymin,ymax,xleft=xleft,xright=xright,ytop=ytop,
-#'              ybottom=ybottom,mainTitle=mainTitle,includeLabels=FALSE)
+#'              ybottom=ybottom,mainTitle=mainTitle,includeLabels=FALSE,
+#'              LegCex=LegCex,titlePos=titlePos)
 #'dev.off()
 #'#To view the produced plot, us the following command:
 #'\dontrun{shell.exec("GreatLakesExamplePlotNoLabels.pdf")}
@@ -103,7 +108,7 @@
 #'              politicalBounds,hydroPolygons,hydroLines,
 #'              xmin,xmax,ymin,ymax,xleft=xleft,xright=xright,ytop=ytop,ybottom=ybottom,mainTitle=mainTitle,includeLabels=TRUE,
 #'              labels=labelVar, offsetLat=offsetLatVar, offsetLon=offsetLonVar,offsetLineLat=offsetLineLatVar,
-#'              offsetLineLon=offsetLineLonVar)
+#'              offsetLineLon=offsetLineLonVar,LegCex=LegCex,titlePos=titlePos)
 #'dev.off()
 #'#To view the produced plot, us the following command:
 #'\dontrun{shell.exec("GreatLakesExamplePlot.pdf")}
@@ -113,7 +118,7 @@ MapSizeColor <- function(df,colorVar,sizeVar,latVar,lonVar,
                          xmin,xmax,ymin,ymax,
                          col1="tan",col2="orange3",col3="orangered1",col4="orangered4",
                          xleft,xright,ytop,ybottom,mainTitle="",units=2,includeLabels,
-                         labels="",offsetLat="",offsetLon="",offsetLineLat="",offsetLineLon=""){
+                         labels="",offsetLat="",offsetLon="",offsetLineLat="",offsetLineLon="",LegCex=0.9, titlePos=-4){
   
   #set plot parameters
   par( mar=c(0,0,1,0), new = FALSE,xpd=NA)#,mgp=c(3,0.1,0))
@@ -128,11 +133,11 @@ MapSizeColor <- function(df,colorVar,sizeVar,latVar,lonVar,
   plotSize <- ifelse(df[,sizeVar] >sizeThresh2,2,plotSize)
   
   fillCol <- rep(col1,dim(df)[1])
+  
   for (i in 1:length(binThresh)) fillCol <- ifelse(df[,colorVar] > binThresh[i],binCol[i],fillCol)
-  plot(politicalBounds,col="gray90",xlim=c(xmin,xmax),ylim=c(ymin,ymax))
-  plot(hydroPolygons,col="lightskyblue2",xlim=c(xmin,xmax),ylim=c(ymin,ymax),add=TRUE)
-  lines(hydroLines,col="lightskyblue2",xlim=c(xmin,xmax),ylim=c(ymin,ymax))
-  plot(politicalBounds,add=TRUE)
+
+  retList <- clipShape(xmin,xmax,ymin,ymax)
+  plotBackgroundMap(retList)
   
   if(includeLabels){
     MapLabels(df=df,labels=labels,dataLat=latVar,dataLon=lonVar,
@@ -143,15 +148,15 @@ MapSizeColor <- function(df,colorVar,sizeVar,latVar,lonVar,
   }
   
   points(df[,lonVar], df[,latVar],pch=plotSymbol, col="black",cex=plotSize,bg=fillCol)
-  mtext(mainTitle,side=3,line=-4,outer=TRUE,font=2,cex=1.3)
+  mtext(mainTitle,side=3,line=titlePos,outer=TRUE,font=2,cex=1.3)
   
-  legendTextCex <- 0.9
+  legendTextCex <- LegCex
   rect(xleft=xleft,ybottom=ybottom,xright=xright,ytop=ytop,col="white",)
   legend(x=xleft+0.2,y=ytop-0.9,c(paste("1-",sizeThresh1," samples",sep=""),
                                   paste((sizeThresh1+1),"-",sizeThresh2," samples",sep=""),
                                   paste("> ",sizeThresh2," samples",sep="")),bty="n",
          #       title=expression(bold("Number of Samples")),
-         pch=c(21),pt.cex=c(1,1.5,2),bg="white",pt.bg="orange3")
+         pch=c(21),pt.cex=c(1,1.5,2),bg="white",pt.bg="orange3",cex=LegCex+.1)
   binThresh <- round(binThresh,3)
   legendText= c(paste("<",binThresh[1]),
                 paste(binThresh[1],"-",binThresh[2]),
@@ -178,6 +183,7 @@ MapSizeColor <- function(df,colorVar,sizeVar,latVar,lonVar,
   
   text(concText,x=startText[1],y=startText[2]-0.6,font=2,cex=legendTextCex)
   
-  legend(x=xleft+0.2,y=ytop-3.,legendText,pt.bg=c("tan",binCol),pch=plotSymbol,bg="white",pt.cex=1.5,bty="n")
+  legend(x=xleft+0.2,y=ytop-3.,legendText,pt.bg=c("tan",binCol),pch=plotSymbol,bg="white",
+         cex=legendTextCex, pt.cex=legendTextCex,bty="n")
 }
 

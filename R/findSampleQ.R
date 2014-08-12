@@ -12,6 +12,7 @@
 #' @import USGSwsBase
 #' @export
 #' @examples
+#' library(dataRetrieval)
 #' site <- "04085427"
 #' sampleDates <- sampleDates
 #' Start_extend <- as.character(as.Date(min(sampleDates$ActivityStartDateGiven, na.rm=TRUE))-60)
@@ -26,7 +27,7 @@ findSampleQ <- function(site, sampleDates,localDaily){
   End <- as.character(as.Date(max(sampleDates$ActivityStartDateGiven, na.rm=TRUE)))
   
   if ("uv" %in% whatDischarge$service){
-    instantFlow <- retrieveUnitNWISData(site,"00060",Start,End)
+    instantFlow <- retrieveNWISunitData(site,"00060",Start,End)
     instantFlow <- renameColumns(instantFlow)
     instantFlow$dateTime <- as.POSIXct(strptime(instantFlow$dateTime, format="%Y-%m-%d %H:%M:%S"), tz="UTC")
     
