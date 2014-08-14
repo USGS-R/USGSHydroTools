@@ -14,9 +14,13 @@
 computeSeasonal <- function(df,date,return.var){
   
   jday <- df[,date]$yday+1
+  year <- df[,date]$year + 1900
   cos.var <- paste("cos_",return.var,sep="")
   sin.var <- paste("sin_",return.var,sep="")
-  df[,cos.var] <- cos(2*pi/365*jday)
-  df[,sin.var] <- sin(2*pi/365*jday)
+  
+  daysInYear <- ifelse((year%%4 == 0) & ((year%%100 != 0) | (year%%400 == 0)), 366,365)
+  
+  df[,cos.var] <- cos(2*pi/daysInYear*jday)
+  df[,sin.var] <- sin(2*pi/daysInYear*jday)
   return(df)
 }
