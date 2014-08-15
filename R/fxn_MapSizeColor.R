@@ -13,12 +13,6 @@
 #' @param lonVar Column name in df to define longitude
 #' @param sizeThresh1 Low threshold value of sizeVar for defining bins
 #' @param sizeThresh2 High  threshold value of sizeVar for defining bins
-#' @param politicalBounds Shapefile of class "SpatialPolygonsDataFrame" for 
-#' defining political boundaries
-#' @param hydroPolygons Shapefile of class "SpatialPolygonsDataFrame" for 
-#' defining hydrologic polygons (lakes)
-#' @param hydroLines shapefile of class "SpatialLinesDataFrame" for 
-#' defining hydrologic lines (rivers/streams)
 #' @param xmin Left longitudinal boundary for plotting
 #' @param xmax Right longitudinal boundary for plotting
 #' @param ymin Bottom latitudinal boundary for plotting
@@ -85,7 +79,6 @@
 #' #Example works best in a landscape view:
 #' pdf("GreatLakesExamplePlotNoLabels.pdf",width=11,height=8)
 #' MapSizeColor(df,colorVar,sizeVar,latVar,lonVar,sizeThresh1,sizeThresh2,
-#'              politicalBounds,hydroPolygons,hydroLines,
 #'              xmin,xmax,ymin,ymax,xleft=xleft,xright=xright,ytop=ytop,
 #'              ybottom=ybottom,mainTitle=mainTitle,includeLabels=FALSE,
 #'              LegCex=LegCex,titlePos=titlePos)
@@ -105,7 +98,6 @@
 #' #Example works best in a landscape view:
 #' pdf("GreatLakesExamplePlot.pdf",width=11,height=8)
 #' MapSizeColor(df,colorVar,sizeVar,latVar,lonVar,sizeThresh1,sizeThresh2,
-#'              politicalBounds,hydroPolygons,hydroLines,
 #'              xmin,xmax,ymin,ymax,xleft=xleft,xright=xright,ytop=ytop,ybottom=ybottom,mainTitle=mainTitle,includeLabels=TRUE,
 #'              labels=labelVar, offsetLat=offsetLatVar, offsetLon=offsetLonVar,offsetLineLat=offsetLineLatVar,
 #'              offsetLineLon=offsetLineLonVar,LegCex=LegCex,titlePos=titlePos)
@@ -114,7 +106,6 @@
 #'\dontrun{shell.exec("GreatLakesExamplePlot.pdf")}
 MapSizeColor <- function(df,colorVar,sizeVar,latVar,lonVar,
                          sizeThresh1,sizeThresh2,
-                         politicalBounds,hydroPolygons,hydroLines,
                          xmin,xmax,ymin,ymax,
                          col1="tan",col2="orange3",col3="orangered1",col4="orangered4",
                          xleft,xright,ytop,ybottom,mainTitle="",units=2,includeLabels,
@@ -130,7 +121,7 @@ MapSizeColor <- function(df,colorVar,sizeVar,latVar,lonVar,
   binCol <- c(col2,col3,col4)
   plotSymbol <- 21 
   plotSize <- ifelse(df[,sizeVar] < sizeThresh1,1,1.5)
-  plotSize <- ifelse(df[,sizeVar] >sizeThresh2,2,plotSize)
+  plotSize <- ifelse(df[,sizeVar] > sizeThresh2,2,plotSize)
   
   fillCol <- rep(col1,dim(df)[1])
   
@@ -158,10 +149,11 @@ MapSizeColor <- function(df,colorVar,sizeVar,latVar,lonVar,
          #       title=expression(bold("Number of Samples")),
          pch=c(21),pt.cex=c(1,1.5,2),bg="white",pt.bg="orange3",cex=LegCex+.1)
   binThresh <- round(binThresh,3)
+
   legendText= c(paste("<",binThresh[1]),
                 paste(binThresh[1],"-",binThresh[2]),
                 paste(binThresh[2],"-",binThresh[3]),
-                paste(binThresh[3],"-",round(max(df[,colorVar]),3)))
+                paste(binThresh[3],"-",round(max(df[,colorVar],na.rm=TRUE),3)))
   legendCol = binCol
   startText <- c((xleft+xright)/2,ytop-0.3)
   text("Size of symbol",x=startText[1],y=startText[2],font=2,cex=legendTextCex)

@@ -4,11 +4,11 @@
 \title{Mapping data with variable size and color to define spatial data}
 \usage{
 MapSizeColor(df, colorVar, sizeVar, latVar, lonVar, sizeThresh1, sizeThresh2,
-  politicalBounds, hydroPolygons, hydroLines, xmin, xmax, ymin, ymax,
-  col1 = "tan", col2 = "orange3", col3 = "orangered1",
-  col4 = "orangered4", xleft, xright, ytop, ybottom, mainTitle = "",
-  units = 2, includeLabels, labels = "", offsetLat = "", offsetLon = "",
-  offsetLineLat = "", offsetLineLon = "", LegCex = 0.9, titlePos = -4)
+  xmin, xmax, ymin, ymax, col1 = "tan", col2 = "orange3",
+  col3 = "orangered1", col4 = "orangered4", xleft, xright, ytop, ybottom,
+  mainTitle = "", units = 2, includeLabels, labels = "", offsetLat = "",
+  offsetLon = "", offsetLineLat = "", offsetLineLon = "", LegCex = 0.9,
+  titlePos = -4)
 }
 \arguments{
 \item{df}{Dataframe with 4 required columns that have data to define symbol size, color,
@@ -27,15 +27,6 @@ point of lines pointing to the labels if needed}
 \item{sizeThresh1}{Low threshold value of sizeVar for defining bins}
 
 \item{sizeThresh2}{High  threshold value of sizeVar for defining bins}
-
-\item{politicalBounds}{Shapefile of class "SpatialPolygonsDataFrame" for
-defining political boundaries}
-
-\item{hydroPolygons}{Shapefile of class "SpatialPolygonsDataFrame" for
-defining hydrologic polygons (lakes)}
-
-\item{hydroLines}{shapefile of class "SpatialLinesDataFrame" for
-defining hydrologic lines (rivers/streams)}
 
 \item{xmin}{Left longitudinal boundary for plotting}
 
@@ -124,7 +115,6 @@ titlePos <- -2
 #Example works best in a landscape view:
 pdf("GreatLakesExamplePlotNoLabels.pdf",width=11,height=8)
 MapSizeColor(df,colorVar,sizeVar,latVar,lonVar,sizeThresh1,sizeThresh2,
-             politicalBounds,hydroPolygons,hydroLines,
              xmin,xmax,ymin,ymax,xleft=xleft,xright=xright,ytop=ytop,
              ybottom=ybottom,mainTitle=mainTitle,includeLabels=FALSE,
              LegCex=LegCex,titlePos=titlePos)
@@ -144,7 +134,6 @@ offsetLineLonVar <- "offsetLineLon"
 #Example works best in a landscape view:
 pdf("GreatLakesExamplePlot.pdf",width=11,height=8)
 MapSizeColor(df,colorVar,sizeVar,latVar,lonVar,sizeThresh1,sizeThresh2,
-             politicalBounds,hydroPolygons,hydroLines,
              xmin,xmax,ymin,ymax,xleft=xleft,xright=xright,ytop=ytop,ybottom=ybottom,mainTitle=mainTitle,includeLabels=TRUE,
              labels=labelVar, offsetLat=offsetLatVar, offsetLon=offsetLonVar,offsetLineLat=offsetLineLatVar,
              offsetLineLon=offsetLineLonVar,LegCex=LegCex,titlePos=titlePos)
