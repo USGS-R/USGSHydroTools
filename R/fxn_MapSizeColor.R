@@ -112,7 +112,7 @@ MapSizeColor <- function(df,colorVar,sizeVar,latVar,lonVar,
   
   #Choose plot color bins: 
   #Use 0.25, 0.5, and 0.75 quantiles of non-zero values to define bins
-  which(df[,colorVar] != 0)
+
   binThresh <- quantile(df[which(df[,colorVar] != 0),colorVar],c(0.25,0.5,0.75))
   binCol <- c(col2,col3,col4)
   plotSymbol <- 21 
@@ -137,46 +137,50 @@ MapSizeColor <- function(df,colorVar,sizeVar,latVar,lonVar,
   points(df[,lonVar], df[,latVar],pch=plotSymbol, col="black",cex=plotSize,bg=fillCol)
   mtext(mainTitle,side=3,line=titlePos,outer=TRUE,font=2,cex=1.3)
   
+  plotRegion <- par("usr")
+  plotHeight <- plotRegion[4] - plotRegion[3]
+
   legendTextCex <- LegCex
 
-  leg1 <- legend(x=xleft+0.2,y=ytop-0.5,c(paste("1-",sizeThresh1," samples",sep=""),
-                                  paste((sizeThresh1+1),"-",sizeThresh2," samples",sep=""),
-                                  paste("> ",sizeThresh2," samples",sep="")),
-         title=expression(bold("Size of symbol\nindicates number\nof samples")),
+  leg1 <- legend(x=xleft,y=ytop,c(paste("1-",sizeThresh1,sep=""),
+                                  paste((sizeThresh1+1),"-",sizeThresh2,sep=""),
+                                  paste("> ",sizeThresh2,sep="")),
+         title=expression(bold(atop("Size indicates","number of samples"))),
          pch=c(21),pt.cex=c(1,1.5,2),pt.bg="orange3",cex=LegCex,bty="n")
+  
   binThresh <- round(binThresh,3)
 
-  legendText= c(paste("<",binThresh[1]),
+  legendText <- c(paste("<",binThresh[1]),
                 paste(binThresh[1],"-",binThresh[2]),
                 paste(binThresh[2],"-",binThresh[3]),
                 paste(">",binThresh[3]))
-  legendCol = binCol
+  legendCol <- binCol
 
-  if(units==1) concText <- expression(bold(paste("Color of symbol\nindicates\nconcentration (","mg/L)",sep="")))
-  if(units==2) concText <- expression(bold(paste("Color of symbol\nindicates\nconcentration (",mu,"g/L)",sep="")))
-  if(units==3) concText <- expression(bold(paste("Color of symbol\nindicates\nconcentration (","ng/L)",sep="")))
-  if(units==4) concText <- expression(bold(paste("Color of symbol\nindicates\nconcentration (","pg/L)",sep="")))
-  if(units==5) concText <- expression(bold(paste("Color of symbol\nindicates\nconcentration (","mg/kg)",sep="")))
-  if(units==6) concText <- expression(bold(paste("Color of symbol\nindicates\nconcentration (",mu,"g/kg)",sep="")))
-  if(units==7) concText <- expression(bold(paste("Color of symbol\nindicates\nconcentration (","ng/kg)",sep="")))
-  if(units==8) concText <- expression(bold(paste("Color of symbol\nindicates\nconcentration (","pg/kg)",sep=""))) 
+  if(units==1) concText <- expression(bold(atop("Color indicates","concentration ("*"mg/L)")))
+  if(units==2) concText <- expression(bold(atop("Color indicates","concentration ("*mu*"g/L)")))
+  if(units==3) concText <- expression(bold(atop("Color indicates","concentration ("*"ng/L)")))
+  if(units==4) concText <- expression(bold(atop("Color indicates","concentration ("*"pg/L)")))
+  if(units==5) concText <- expression(bold(atop("Color indicates","concentration ("*"mg/kg)")))
+  if(units==6) concText <- expression(bold(atop("Color indicates","concentration ("*mu*"g/kg)")))
+  if(units==7) concText <- expression(bold(atop("Color indicates","concentration ("*"ng/kg)")))
+  if(units==8) concText <- expression(bold(atop("Color indicates","concentration ("*"pg/kg)"))) 
 
-  leg2 <- legend(x=xleft+0.2,y=ytop-1.8,legendText,pt.bg=c("tan",binCol),pch=plotSymbol,bg="white",
+  leg2 <- legend(x=xleft,y=(leg1$rect[["top"]] - leg1$rect[["h"]])-.05*(plotHeight),legendText,pt.bg=c("tan",binCol),pch=plotSymbol,bg="white",
          cex=LegCex, pt.cex=1.5, title=concText,bty="n") #pt.cex=legendTextCex
 
-  leg2Top <- leg1$rect[["top"]]+.5
-  leg2Bottom <- leg2$rect[["top"]] - leg2$rect[["h"]] 
-  leg2Left <- leg2$rect[["left"]]
-  leg2Right <- leg2Left + leg2$rect[["w"]]
+  legTop <- leg1$rect[["top"]]+.05*(plotHeight)
+  legBottom <- leg2$rect[["top"]] - leg2$rect[["h"]] 
+  legLeft <- min(leg2$rect[["left"]],leg1$rect[["left"]])
+  legRight <- max(c(leg2$rect[["left"]] + leg2$rect[["w"]],leg1$rect[["left"]] + leg1$rect[["w"]]))
+  
+  rect(legLeft,  legBottom,  legRight, legTop, col="white" ) 
 
-  rect(leg2Left,  leg2Bottom,  leg2Right, leg2Top,col="white" ) 
-
-  leg2 <- legend(x=xleft+0.2,y=ytop-1.8,legendText,pt.bg=c("tan",binCol),pch=plotSymbol,
+  leg2 <- legend(x=xleft,y=(leg1$rect[["top"]] - leg1$rect[["h"]])-.05*(plotHeight) ,legendText,pt.bg=c("tan",binCol),pch=plotSymbol,
                  cex=LegCex, pt.cex=c(rep(1.5,length(binCol)+1)), title=concText,bty="n")
-  leg1 <- legend(x=xleft+0.2,y=ytop-0.5,c(paste("1-",sizeThresh1," samples",sep=""),
-                                          paste((sizeThresh1+1),"-",sizeThresh2," samples",sep=""),
-                                          paste("> ",sizeThresh2," samples",sep="")),
-                 title=expression(bold("Size of symbol\nindicates number\nof samples")),
+  leg1 <- legend(x=xleft,y=ytop,c(paste("1-",sizeThresh1,sep=""),
+                                          paste((sizeThresh1+1),"-",sizeThresh2,sep=""),
+                                          paste("> ",sizeThresh2,sep="")),
+                 title=expression(bold(atop("Size indicates","number of samples"))),
                  pch=c(21),pt.cex=c(1,1.5,2),pt.bg="orange3",cex=LegCex,bty="n")
 
 }
