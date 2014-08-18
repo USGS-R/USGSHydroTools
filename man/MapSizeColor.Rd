@@ -4,9 +4,8 @@
 \title{Mapping data with variable size and color to define spatial data}
 \usage{
 MapSizeColor(df, colorVar, sizeVar, latVar, lonVar, sizeThresh1, sizeThresh2,
-  politicalBounds, hydroPolygons, hydroLines, xmin, xmax, ymin, ymax,
-  col1 = "tan", col2 = "orange3", col3 = "orangered1",
-  col4 = "orangered4", xleft, xright, ytop, ybottom, mainTitle = "",
+  xmin, xmax, ymin, ymax, col1 = "tan", col2 = "orange3",
+  col3 = "orangered1", col4 = "orangered4", xleft, ytop, mainTitle = "",
   units = 2, includeLabels, labels = "", offsetLat = "", offsetLon = "",
   offsetLineLat = "", offsetLineLon = "", LegCex = 0.9, titlePos = -4)
 }
@@ -28,15 +27,6 @@ point of lines pointing to the labels if needed}
 
 \item{sizeThresh2}{High  threshold value of sizeVar for defining bins}
 
-\item{politicalBounds}{Shapefile of class "SpatialPolygonsDataFrame" for
-defining political boundaries}
-
-\item{hydroPolygons}{Shapefile of class "SpatialPolygonsDataFrame" for
-defining hydrologic polygons (lakes)}
-
-\item{hydroLines}{shapefile of class "SpatialLinesDataFrame" for
-defining hydrologic lines (rivers/streams)}
-
 \item{xmin}{Left longitudinal boundary for plotting}
 
 \item{xmax}{Right longitudinal boundary for plotting}
@@ -54,10 +44,6 @@ defining hydrologic lines (rivers/streams)}
 \item{col4}{Symbol color for 0.75-1.0 quantile bin}
 
 \item{xleft}{Placement of left side of legend box (min latitude)}
-
-\item{xright}{Placement of right side of legend box (min latitude)}
-
-\item{ybottom}{Placement of bottom side of legend box (min longitude)}
 
 \item{ytop}{Placement of top side of legend box (min longitude)}
 
@@ -109,8 +95,6 @@ xmax <- -72
 ymin <- 40.5
 ymax <- 49.5
 xleft <- -95
-ybottom <- 40.4
-xright <- -90.8
 ytop <- 45.3
 sizeThresh1 <- 2
 sizeThresh2 <- 14
@@ -124,9 +108,8 @@ titlePos <- -2
 #Example works best in a landscape view:
 pdf("GreatLakesExamplePlotNoLabels.pdf",width=11,height=8)
 MapSizeColor(df,colorVar,sizeVar,latVar,lonVar,sizeThresh1,sizeThresh2,
-             politicalBounds,hydroPolygons,hydroLines,
-             xmin,xmax,ymin,ymax,xleft=xleft,xright=xright,ytop=ytop,
-             ybottom=ybottom,mainTitle=mainTitle,includeLabels=FALSE,
+             xmin,xmax,ymin,ymax,xleft=xleft,ytop=ytop,
+             mainTitle=mainTitle,includeLabels=FALSE,
              LegCex=LegCex,titlePos=titlePos)
 dev.off()
 #To view the produced plot, us the following command:
@@ -144,8 +127,7 @@ offsetLineLonVar <- "offsetLineLon"
 #Example works best in a landscape view:
 pdf("GreatLakesExamplePlot.pdf",width=11,height=8)
 MapSizeColor(df,colorVar,sizeVar,latVar,lonVar,sizeThresh1,sizeThresh2,
-             politicalBounds,hydroPolygons,hydroLines,
-             xmin,xmax,ymin,ymax,xleft=xleft,xright=xright,ytop=ytop,ybottom=ybottom,mainTitle=mainTitle,includeLabels=TRUE,
+             xmin,xmax,ymin,ymax,xleft=xleft,ytop=ytop,mainTitle=mainTitle,includeLabels=TRUE,
              labels=labelVar, offsetLat=offsetLatVar, offsetLon=offsetLonVar,offsetLineLat=offsetLineLatVar,
              offsetLineLon=offsetLineLonVar,LegCex=LegCex,titlePos=titlePos)
 dev.off()
