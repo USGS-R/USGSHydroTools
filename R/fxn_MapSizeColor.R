@@ -22,8 +22,6 @@
 #' @param col3 Symbol color for 0.5-0.75 quantile bin
 #' @param col4 Symbol color for 0.75-1.0 quantile bin
 #' @param xleft Placement of left side of legend box (min latitude)
-#' @param xright Placement of right side of legend box (min latitude)
-#' @param ybottom  Placement of bottom side of legend box (min longitude)
 #' @param ytop  Placement of top side of legend box (min longitude)
 #' @param mainTitle Text to be used as the title of the plot
 #' @param units 1-4 are for water concentration: mg/L, ug/L, ng/L, pg/L respectively.
@@ -64,8 +62,6 @@
 #' ymin <- 40.5
 #' ymax <- 49.5
 #' xleft <- -95
-#' ybottom <- 40.4
-#' xright <- -90.8
 #' ytop <- 45.3
 #' sizeThresh1 <- 2
 #' sizeThresh2 <- 14
@@ -79,8 +75,8 @@
 #' #Example works best in a landscape view:
 #' pdf("GreatLakesExamplePlotNoLabels.pdf",width=11,height=8)
 #' MapSizeColor(df,colorVar,sizeVar,latVar,lonVar,sizeThresh1,sizeThresh2,
-#'              xmin,xmax,ymin,ymax,xleft=xleft,xright=xright,ytop=ytop,
-#'              ybottom=ybottom,mainTitle=mainTitle,includeLabels=FALSE,
+#'              xmin,xmax,ymin,ymax,xleft=xleft,ytop=ytop,
+#'              mainTitle=mainTitle,includeLabels=FALSE,
 #'              LegCex=LegCex,titlePos=titlePos)
 #'dev.off()
 #'#To view the produced plot, us the following command:
@@ -98,7 +94,7 @@
 #' #Example works best in a landscape view:
 #' pdf("GreatLakesExamplePlot.pdf",width=11,height=8)
 #' MapSizeColor(df,colorVar,sizeVar,latVar,lonVar,sizeThresh1,sizeThresh2,
-#'              xmin,xmax,ymin,ymax,xleft=xleft,xright=xright,ytop=ytop,ybottom=ybottom,mainTitle=mainTitle,includeLabels=TRUE,
+#'              xmin,xmax,ymin,ymax,xleft=xleft,ytop=ytop,mainTitle=mainTitle,includeLabels=TRUE,
 #'              labels=labelVar, offsetLat=offsetLatVar, offsetLon=offsetLonVar,offsetLineLat=offsetLineLatVar,
 #'              offsetLineLon=offsetLineLonVar,LegCex=LegCex,titlePos=titlePos)
 #'dev.off()
@@ -108,7 +104,7 @@ MapSizeColor <- function(df,colorVar,sizeVar,latVar,lonVar,
                          sizeThresh1,sizeThresh2,
                          xmin,xmax,ymin,ymax,
                          col1="tan",col2="orange3",col3="orangered1",col4="orangered4",
-                         xleft,xright,ytop,ybottom,mainTitle="",units=2,includeLabels,
+                         xleft,ytop,mainTitle="",units=2,includeLabels,
                          labels="",offsetLat="",offsetLon="",offsetLineLat="",offsetLineLon="",LegCex=0.9, titlePos=-4){
   
   #set plot parameters
@@ -142,40 +138,46 @@ MapSizeColor <- function(df,colorVar,sizeVar,latVar,lonVar,
   mtext(mainTitle,side=3,line=titlePos,outer=TRUE,font=2,cex=1.3)
   
   legendTextCex <- LegCex
-  rect(xleft=xleft,ybottom=ybottom,xright=xright,ytop=ytop,col="white",)
-  legend(x=xleft+0.2,y=ytop-0.9,c(paste("1-",sizeThresh1," samples",sep=""),
+
+  leg1 <- legend(x=xleft+0.2,y=ytop-0.5,c(paste("1-",sizeThresh1," samples",sep=""),
                                   paste((sizeThresh1+1),"-",sizeThresh2," samples",sep=""),
-                                  paste("> ",sizeThresh2," samples",sep="")),bty="n",
-         #       title=expression(bold("Number of Samples")),
-         pch=c(21),pt.cex=c(1,1.5,2),bg="white",pt.bg="orange3",cex=LegCex+.1)
+                                  paste("> ",sizeThresh2," samples",sep="")),
+         title=expression(bold("Size of symbol\nindicates number\nof samples")),
+         pch=c(21),pt.cex=c(1,1.5,2),pt.bg="orange3",cex=LegCex,bty="n")
   binThresh <- round(binThresh,3)
 
   legendText= c(paste("<",binThresh[1]),
                 paste(binThresh[1],"-",binThresh[2]),
                 paste(binThresh[2],"-",binThresh[3]),
-                paste(binThresh[3],"-",round(max(df[,colorVar],na.rm=TRUE),3)))
+                paste(">",binThresh[3]))
   legendCol = binCol
-  startText <- c((xleft+xright)/2,ytop-0.3)
-  text("Size of symbol",x=startText[1],y=startText[2],font=2,cex=legendTextCex)
-  text("indicates number",x=startText[1],y=startText[2]-0.3,font=2,cex=legendTextCex)
-  text("of samples",x=startText[1],y=startText[2]-0.6,font=2,cex=legendTextCex)
-  
-  startText <- c((xleft+xright)/2,ytop-2.4)
-  text("Color of symbol",x=startText[1],y=startText[2],font=2,cex=legendTextCex)
-  text("indicates",x=startText[1],y=startText[2]-0.3,font=2,cex=legendTextCex)
-  
-  if(units==1) concText <- expression(bold(paste("concentration (","mg/L)",sep="")))
-  if(units==2) concText <- expression(bold(paste("concentration (",mu,"g/L)",sep="")))
-  if(units==3) concText <- expression(bold(paste("concentration (","ng/L)",sep="")))
-  if(units==4) concText <- expression(bold(paste("concentration (","pg/L)",sep="")))
-  if(units==5) concText <- expression(bold(paste("concentration (","mg/kg)",sep="")))
-  if(units==6) concText <- expression(bold(paste("concentration (",mu,"g/kg)",sep="")))
-  if(units==7) concText <- expression(bold(paste("concentration (","ng/kg)",sep="")))
-  if(units==8) concText <- expression(bold(paste("concentration (","pg/kg)",sep=""))) 
-  
-  text(concText,x=startText[1],y=startText[2]-0.6,font=2,cex=legendTextCex)
-  
-  legend(x=xleft+0.2,y=ytop-3.,legendText,pt.bg=c("tan",binCol),pch=plotSymbol,bg="white",
-         cex=legendTextCex, pt.cex=legendTextCex,bty="n")
+
+  if(units==1) concText <- expression(bold(paste("Color of symbol\nindicates\nconcentration (","mg/L)",sep="")))
+  if(units==2) concText <- expression(bold(paste("Color of symbol\nindicates\nconcentration (",mu,"g/L)",sep="")))
+  if(units==3) concText <- expression(bold(paste("Color of symbol\nindicates\nconcentration (","ng/L)",sep="")))
+  if(units==4) concText <- expression(bold(paste("Color of symbol\nindicates\nconcentration (","pg/L)",sep="")))
+  if(units==5) concText <- expression(bold(paste("Color of symbol\nindicates\nconcentration (","mg/kg)",sep="")))
+  if(units==6) concText <- expression(bold(paste("Color of symbol\nindicates\nconcentration (",mu,"g/kg)",sep="")))
+  if(units==7) concText <- expression(bold(paste("Color of symbol\nindicates\nconcentration (","ng/kg)",sep="")))
+  if(units==8) concText <- expression(bold(paste("Color of symbol\nindicates\nconcentration (","pg/kg)",sep=""))) 
+
+  leg2 <- legend(x=xleft+0.2,y=ytop-1.8,legendText,pt.bg=c("tan",binCol),pch=plotSymbol,bg="white",
+         cex=LegCex, pt.cex=1.5, title=concText,bty="n") #pt.cex=legendTextCex
+
+  leg2Top <- leg1$rect[["top"]]+.5
+  leg2Bottom <- leg2$rect[["top"]] - leg2$rect[["h"]] 
+  leg2Left <- leg2$rect[["left"]]
+  leg2Right <- leg2Left + leg2$rect[["w"]]
+
+  rect(leg2Left,  leg2Bottom,  leg2Right, leg2Top,col="white" ) 
+
+  leg2 <- legend(x=xleft+0.2,y=ytop-1.8,legendText,pt.bg=c("tan",binCol),pch=plotSymbol,
+                 cex=LegCex, pt.cex=c(rep(1.5,length(binCol)+1)), title=concText,bty="n")
+  leg1 <- legend(x=xleft+0.2,y=ytop-0.5,c(paste("1-",sizeThresh1," samples",sep=""),
+                                          paste((sizeThresh1+1),"-",sizeThresh2," samples",sep=""),
+                                          paste("> ",sizeThresh2," samples",sep="")),
+                 title=expression(bold("Size of symbol\nindicates number\nof samples")),
+                 pch=c(21),pt.cex=c(1,1.5,2),pt.bg="orange3",cex=LegCex,bty="n")
+
 }
 
