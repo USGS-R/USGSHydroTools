@@ -12,7 +12,9 @@ Installation
 
 See [https://github.com/USGS-R/dataRetrieval](https://github.com/USGS-R/dataRetrieval) for information on the dependent package dataRetrieval
 
-	install.packages(c("GSHydroTools"),
+Windows user can install the package and it's dependencies using the following command:
+
+	install.packages(c("USGSHydroTools"),
 		repos=c("http://usgs-r.github.com",
 			"http://cran.us.r-project.org",
 			""),
@@ -22,7 +24,7 @@ Mac users will have to work a little harder to install the dependent packages rg
 
 	setRepositories(ind = c(1,6))
 	install.packages(c("rgdal","rgeos"))
-	install.packages(c("GSHydroTools"),
+	install.packages(c("USGSHydroTools"),
 		repos=c("http://usgs-r.github.com",
 			"http://cran.us.r-project.org",
 			""),
