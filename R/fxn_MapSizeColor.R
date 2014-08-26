@@ -7,23 +7,23 @@
 #' latitude, and longitude of points to be plotted, and optionally 5 addtional columns: label names, 
 #' offset for latitude and longitude for labels, and offset of latitude and longitude for the ending
 #' point of lines pointing to the labels if needed
-#' @param colorVar Column name in df to define symbol color
-#' @param sizeVar Column name in df to define symbol size
-#' @param latVar Column name in df to define latitude
-#' @param lonVar Column name in df to define longitude
-#' @param sizeThresh1 Low threshold value of sizeVar for defining bins
-#' @param sizeThresh2 High  threshold value of sizeVar for defining bins
-#' @param xmin Left longitudinal boundary for plotting
-#' @param xmax Right longitudinal boundary for plotting
-#' @param ymin Bottom latitudinal boundary for plotting
-#' @param ymax Top latitudinal boundary for plotting
-#' @param colVector vector of colors
-#' @param xleft Placement of left side of legend box (min latitude)
-#' @param ytop  Placement of top side of legend box (min longitude)
-#' @param mainTitle Text to be used as the title of the plot
-#' @param colText
-#' @param sizeText
-#' @param includeLabels logical, if TRUE labels will be included on plot.
+#' @param colorVar string, column name in df to define symbol color. If NA, all points colored the same, and no color legend is shown.
+#' @param sizeVar string, column name in df to define symbol size. If NA, all points are the same size, and no size legend is shown.
+#' @param latVar string, column name in df to define latitude
+#' @param lonVar string, column name in df to define longitude
+#' @param xmin numeric, left longitudinal boundary for plotting
+#' @param xmax numeric, right longitudinal boundary for plotting
+#' @param ymin numeric , bottom latitudinal boundary for plotting
+#' @param ymax numeric, top latitudinal boundary for plotting
+#' @param colVector vector of colors. Should be one more than the length of colThresh.
+#' @param xleft numeric, placement of left side of legend box (min latitude)
+#' @param ytop  numeric, placement of top side of legend box (min longitude)
+#' @param mainTitle string, text to be used as the title of the plot
+#' @param colText string or expression, text to label the color legend box
+#' @param sizeText string or expression, text to label the size legend box
+#' @param sizeThresh vector of values used to determine size bins.
+#' @param colThresh vector of values used to determine color bins.
+#' @param includeLabels logical, if TRUE labels will be included on plot. Defaults to FALSE.
 #' @param labels String variable in dataframe df with label names
 #' @param offsetLat Variable in dataframe df for the offset from dataLat used 
 #' for label positioning
@@ -37,6 +37,8 @@
 #' pt.cex and cex arguments in legend() and text(). Does not change the size of the
 #' symbols representing number of samples per site. Default is 0.9
 #' @param titlePos position of title as numeric. Assigns the line() argument in mtext(). Default is -4.
+#' @param customPar logical defaults to FALSE. If TRUE, par() should be set by user before calling this function 
+#' (for example, adjusting margins with par(mar=c(5,5,5,5))).
 #' @keywords map spatial size color
 #' @return NULL
 #' @import rgdal
@@ -62,22 +64,25 @@
 #' ytop <- 45.3
 #' sizeThresh1 <- 2
 #' sizeThresh2 <- 14
+#' sizeThresh <- c(sizeThresh1, sizeThresh2)
+#' colThresh <- quantile(df[which(df[,colorVar] != 0),colorVar],c(0.25,0.5,0.75))
 #' LegCex <- 0.9
 #' mainTitle <- "Colors vary by concentration"
 #' titlePos <- -2
+#' colorText <- expression(bold(atop("Colors represent","concentration in ["*mu*"g/L]")))
 #' 
 #' 
 #'# Without labels:
 #' 
 #' #Example works best in a landscape view:
 #' pdf("GreatLakesExamplePlotNoLabels.pdf",width=11,height=8)
-#' MapSizeColor(df,colorVar,sizeVar,latVar,lonVar,sizeThresh1,sizeThresh2,
-#'              xmin,xmax,ymin,ymax,xleft=xleft,ytop=ytop,
-#'              mainTitle=mainTitle,includeLabels=FALSE,
+#' MapSizeColor(df,colorVar,sizeVar,latVar,lonVar,
+#'              sizeThresh,colThresh,
+#'              xmin,xmax,ymin,ymax,
+#'              xleft,ytop,
+#'              mainTitle=mainTitle,
 #'              LegCex=LegCex,titlePos=titlePos)
-#'dev.off()
-#'#To view the produced plot, us the following command:
-#'\dontrun{shell.exec("GreatLakesExamplePlotNoLabels.pdf")}
+#' dev.off()
 #'
 #'# With labels:
 #'
@@ -90,24 +95,31 @@
 #' 
 #' #Example works best in a landscape view:
 #' pdf("GreatLakesExamplePlot.pdf",width=11,height=8)
-#' MapSizeColor(df,colorVar,sizeVar,latVar,lonVar,sizeThresh1,sizeThresh2,
-#'              xmin,xmax,ymin,ymax,xleft=xleft,ytop=ytop,mainTitle=mainTitle,includeLabels=TRUE,
+#' MapSizeColor(df,colorVar,sizeVar,latVar,lonVar,
+#'              sizeThresh,colThresh,
+#'              xmin,xmax,ymin,ymax,
+#'              xleft,ytop,
+#'              mainTitle=mainTitle,includeLabels=TRUE,
 #'              labels=labelVar, offsetLat=offsetLatVar, offsetLon=offsetLonVar,offsetLineLat=offsetLineLatVar,
 #'              offsetLineLon=offsetLineLonVar,LegCex=LegCex,titlePos=titlePos)
 #'dev.off()
-#'#To view the produced plot, us the following command:
+#'#To view the produced plot on a Windows machine, us the following command:
 #'\dontrun{shell.exec("GreatLakesExamplePlot.pdf")}
+#'#To view the produced plot on a Mac, us the following command:
+#'\dontrun{system("open GreatLakesExamplePlot.pdf")}
 MapSizeColor <- function(df,colorVar,sizeVar,latVar,lonVar,
                          sizeThresh,colThresh,
                          xmin,xmax,ymin,ymax,
+                         xleft,ytop,
+                         includeLabels=FALSE,
                          colVector=c("tan","orange3","orangered1","orangered4"),
-                         xleft,ytop,mainTitle="",includeLabels,
+                         mainTitle="",
                          labels="",sizeText="number of samples",colText="Concentration",
                          offsetLat="",offsetLon="",offsetLineLat="",offsetLineLon="",
-                         LegCex=0.9, titlePos=-4){
+                         LegCex=0.9, titlePos=-4,customPar=FALSE){
   
   #set plot parameters
-  par( mar=c(0,0,1,0), new = FALSE,xpd=NA)#,mgp=c(3,0.1,0))
+  if(!customPar) par( mar=c(0,0,1,0), new = FALSE,xpd=NA)#,mgp=c(3,0.1,0))
   
   #Choose plot color bins: 
   #Use 0.25, 0.5, and 0.75 quantiles of non-zero values to define bins
@@ -119,7 +131,7 @@ MapSizeColor <- function(df,colorVar,sizeVar,latVar,lonVar,
     
     for (i in 1:length(colThresh)) fillCol <- ifelse(df[,colorVar] > colThresh[i],binCol[i],fillCol)
    
-    legendText <- c(paste("<",colThresh[1])) 
+    legendText <- c(paste("<=",colThresh[1])) 
     for(i in 2:length(colThresh)-1){
       legendText <- c(legendText, paste(colThresh[i],"-",colThresh[i+1]))
     }
@@ -133,7 +145,7 @@ MapSizeColor <- function(df,colorVar,sizeVar,latVar,lonVar,
     binSize <- seq(1,2,length=length(sizeThresh)+1)[-1]
     for (i in 1:length(sizeThresh)) plotSize <- ifelse(df[,sizeVar] > sizeThresh[i],binSize[i],plotSize)
 
-    legSizeText <- c(paste("<",sizeThresh[1])) 
+    legSizeText <- c(paste("<=",sizeThresh[1])) 
     for(i in 2:length(sizeThresh)-1){
       legSizeText <- c(legSizeText, paste(sizeThresh[i],"-",sizeThresh[i+1]))
     }
@@ -163,6 +175,14 @@ MapSizeColor <- function(df,colorVar,sizeVar,latVar,lonVar,
 
   legendTextCex <- LegCex
 
+  # How many lines over 1 for size title?
+  titleLines <- ifelse(length(grep("\n",sizeText)) == 0, 0, grep("\n",sizeText))
+  titleLines <- titleLines + ifelse(length(grep("atop",sizeText)) == 0, 0, grep("atop",sizeText))
+  
+  # How many lines over 1 for color title?
+  titleColLines <- ifelse(length(grep("\n",colText)) == 0, 0, grep("\n",colText))
+  titleColLines <- titleColLines + ifelse(length(grep("atop",colText)) == 0, 0, grep("atop",colText))
+  
   if(!is.na(sizeVar)){
     leg1 <- legend(x=xleft,y=ytop,legSizeText,
            title=sizeText,
@@ -177,7 +197,7 @@ MapSizeColor <- function(df,colorVar,sizeVar,latVar,lonVar,
   
   if(!is.na(colorVar)){
     
-    leg2 <- legend(x=xleft,y=(leg1$rect[["top"]] - leg1$rect[["h"]])-.05*(plotHeight),
+    leg2 <- legend(x=xleft,y=(leg1$rect[["top"]] - leg1$rect[["h"]])-titleColLines*.05*(plotHeight),
                    legendText,pt.bg=c("tan",binCol),pch=plotSymbol,bg="white",
                    cex=LegCex, pt.cex=1.5, title=colText,bty="n") #pt.cex=legendTextCex
     
@@ -189,8 +209,7 @@ MapSizeColor <- function(df,colorVar,sizeVar,latVar,lonVar,
     leg2$rect[["w"]] <- leg1$rect[["w"]] 
   }
 
-  
-  legTop <- leg1$rect[["top"]]+.05*(plotHeight)
+  legTop <- leg1$rect[["top"]]+titleLines*.05*(plotHeight)
   legBottom <- leg2$rect[["top"]] - leg2$rect[["h"]] 
   legLeft <- min(leg2$rect[["left"]],leg1$rect[["left"]])
   legRight <- max(c(leg2$rect[["left"]] + leg2$rect[["w"]],leg1$rect[["left"]] + leg1$rect[["w"]]))
@@ -198,7 +217,8 @@ MapSizeColor <- function(df,colorVar,sizeVar,latVar,lonVar,
   rect(legLeft,  legBottom,  legRight, legTop, col="white" ) 
 
   if(!is.na(colorVar)){
-    leg2 <- legend(x=xleft,y=(leg1$rect[["top"]] - leg1$rect[["h"]])-.05*(plotHeight) ,legendText,pt.bg=c("tan",binCol),pch=plotSymbol,
+    leg2 <- legend(x=xleft,y=(leg1$rect[["top"]] - leg1$rect[["h"]])-titleColLines*.05*(plotHeight),
+                   legendText,pt.bg=c("tan",binCol),pch=plotSymbol,
                    cex=LegCex, pt.cex=c(rep(1.5,length(binCol)+1)), title=colText,bty="n")
   }
   
