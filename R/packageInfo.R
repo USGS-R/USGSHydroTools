@@ -89,6 +89,16 @@ NULL
 #' @keywords instantaneous
 NULL
 
+#' Example event dates and times.
+#'
+#' Example event begin and end dates and times to define a sampled hydrograph
+#'
+#' @name events
+#' @docType data
+#' @author Steve Corsi \email{srcorsi@@usgs.gov}
+#' @keywords hydrograph event dates
+NULL
+
 #' Example HYSEP output data.
 #'
 #' Example HYSEP output data. Needs more info.
