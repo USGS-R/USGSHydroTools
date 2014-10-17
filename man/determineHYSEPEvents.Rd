@@ -27,13 +27,13 @@ site <- "04085427"
 sampleDates <- sampleDates
 Start_extend <- as.character(as.Date(min(sampleDates$ActivityStartDateGiven, na.rm=TRUE))-60)
 End_extend <- as.character(as.Date(max(sampleDates$ActivityStartDateGiven, na.rm=TRUE))+60)
-Daily <- getDVData(site,'00060', Start_extend, End_extend,convert=FALSE)
+Daily <- getNWISDaily(site,'00060', Start_extend, End_extend,convert=FALSE)
 sampleDates <- findSampleQ(site, sampleDates, Daily)
 startEnd <- getMaxStartEnd(Daily)
 Start <- startEnd$Start
 End <- startEnd$End
 naFreeDaily <- Daily[!is.na(Daily$Q),]
-INFO <- getSiteFileData(site)
+INFO <- getNWISSiteInfo(site)
 DA_mi <- as.numeric(INFO$drain.area.va)
 HYSEPReturn <- exampleHYSEP
 sampleDates <- determineHYSEPEvents(HYSEPReturn, sampleDates,0.8)
