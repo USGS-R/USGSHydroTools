@@ -39,6 +39,10 @@
 #' @param titlePos position of title as numeric. Assigns the line() argument in mtext(). Default is -4.
 #' @param customPar logical defaults to FALSE. If TRUE, par() should be set by user before calling this function 
 #' (for example, adjusting margins with par(mar=c(5,5,5,5))).
+#' @param colBinText string vector used to create legend text for color distributions. If NA (default), the 
+#' function will create the text based on colThresh
+#' @param sizeBinText string vector used to create legend text for size distributions. If NA (default), the 
+#' function will create the text based on sizeThresh
 #' @keywords map spatial size color
 #' @return NULL
 #' @import rgdal
@@ -66,6 +70,7 @@
 #' sizeThresh2 <- 14
 #' sizeThresh <- c(sizeThresh1, sizeThresh2)
 #' colThresh <- quantile(df[which(df[,colorVar] != 0),colorVar],c(0.25,0.5,0.75))
+#' colThresh <- round(colThresh, digits=2)
 #' LegCex <- 0.9
 #' mainTitle <- "Colors vary by concentration"
 #' titlePos <- -2
@@ -75,14 +80,14 @@
 #'# Without labels:
 #' 
 #' #Example works best in a landscape view:
-#' pdf("GreatLakesExamplePlotNoLabels.pdf",width=11,height=8)
+#' #pdf("GreatLakesExamplePlotNoLabels.pdf",width=11,height=8)
 #' MapSizeColor(df,colorVar,sizeVar,latVar,lonVar,
 #'              sizeThresh,colThresh,
 #'              xmin,xmax,ymin,ymax,
 #'              xleft,ytop,
 #'              mainTitle=mainTitle,
 #'              LegCex=LegCex,titlePos=titlePos)
-#' dev.off()
+#' #dev.off()
 #'
 #'# With labels:
 #'
@@ -116,40 +121,79 @@ MapSizeColor <- function(df,colorVar,sizeVar,latVar,lonVar,
                          mainTitle="",
                          labels="",sizeText="number of samples",colText="Concentration",
                          offsetLat="",offsetLon="",offsetLineLat="",offsetLineLon="",
-                         LegCex=0.9, titlePos=-4,customPar=FALSE){
+                         LegCex=0.9, titlePos=-4,customPar=FALSE,
+                         colBinText=NA,sizeBinText=NA){
   
   #set plot parameters
   if(!customPar) par( mar=c(0,0,1,0), new = FALSE,xpd=NA)#,mgp=c(3,0.1,0))
-  
-  #Choose plot color bins: 
-  #Use 0.25, 0.5, and 0.75 quantiles of non-zero values to define bins
-  
-  fillCol <- rep(colVector[1],nrow(df))
-  
+    
   if(!is.na(colorVar)){
-    binCol <- colVector[-1]
     
-    for (i in 1:length(colThresh)) fillCol <- ifelse(df[,colorVar] > colThresh[i],binCol[i],fillCol)
-   
-    legendText <- c(paste("<=",colThresh[1])) 
-    for(i in 2:length(colThresh)-1){
-      legendText <- c(legendText, paste(colThresh[i],"-",colThresh[i+1]))
+    if(all(is.na(colBinText))){
+      legendText <- c(paste("<=",colThresh[1])) 
+      for(i in 2:length(colThresh)-1){
+        legendText <- c(legendText, paste(colThresh[i],"-",colThresh[i+1]))
+      }
+      legendText <- c(legendText,paste(">",colThresh[length(colThresh)]))
+    } else {
+      legendText <- colBinText
     }
-    legendText <- c(legendText,paste(">",colThresh[length(colThresh)]))
     
+    if(is.factor(df[,colorVar])){
+      valToBin <- as.integer(df[,colorVar])
+    } else if (is.numeric(df[,colorVar])){
+      valToBin <- df[,colorVar]
+      colThresh <- c(-Inf,colThresh,Inf)
+    } else if (is.character(df[,colorVar])){
+      colFactor <- as.factor(df[,colorVar])
+      valToBin <- as.integer(colFactor)
+    } else {
+      message("Check type")
+      # more conditions?
+      valToBin <- df[,colorVar]
+    }
+    
+    bins <- cut(valToBin,colThresh)
+    colTransform <- setNames(colVector,levels(bins))
+    df$fillCol <- colTransform[bins]
+    
+    #Reorder dataframe so unique colors are last (and on top of map)
+    df <- df[order(bins,decreasing=TRUE),]
+        
   }
   
   plotSize <- rep(1,nrow(df))
   if(!is.na(sizeVar)){
     
-    binSize <- seq(1,2,length=length(sizeThresh)+1)[-1]
-    for (i in 1:length(sizeThresh)) plotSize <- ifelse(df[,sizeVar] > sizeThresh[i],binSize[i],plotSize)
-
-    legSizeText <- c(paste("<=",sizeThresh[1])) 
-    for(i in 2:length(sizeThresh)-1){
-      legSizeText <- c(legSizeText, paste(sizeThresh[i],"-",sizeThresh[i+1]))
+    if(all(is.na(sizeBinText))){
+      legSizeText <- c(paste("<=",sizeThresh[1])) 
+      for(i in 2:length(sizeThresh)-1){
+        legSizeText <- c(legSizeText, paste(sizeThresh[i],"-",sizeThresh[i+1]))
+      }
+      legSizeText <- c(legSizeText,paste(">",sizeThresh[length(sizeThresh)]))
+    } else {
+      legSizeText <- sizeBinText
     }
-    legSizeText <- c(legSizeText,paste(">",sizeThresh[length(sizeThresh)]))
+    
+    if(is.factor(df[,sizeVar])){
+      valToBinSize <- as.integer(df[,sizeVar])
+    } else if (is.numeric(df[,sizeVar])){
+      valToBinSize <- df[,sizeVar]
+      sizeThresh <- c(-Inf,sizeThresh,Inf)
+    } else if (is.character(df[,sizeVar])){
+      sizeFactor <- as.factor(df[,sizeVar])
+      valToBinSize <- as.integer(sizeFactor)
+    } else {
+      message("Check type")
+      # more conditions?
+      valToBinSize <- df[,sizeVar]
+    }
+     
+    plotSize <- seq(1,2,length=length(sizeThresh)+1)[-1]
+    binsSize <- cut(valToBinSize,sizeThresh)
+    sizeTransform <- setNames(plotSize,levels(binsSize))
+    df$plotSize <- sizeTransform[binsSize]
+    
   } else {
     plotSize <- 1
   }
@@ -167,7 +211,7 @@ MapSizeColor <- function(df,colorVar,sizeVar,latVar,lonVar,
               cex=0.75)
   }
   
-  points(df[,lonVar], df[,latVar],pch=plotSymbol, col="black",cex=plotSize,bg=fillCol)
+  points(df[,lonVar], df[,latVar],pch=plotSymbol, col="black",cex=plotSize,bg=df$fillCol)
   mtext(mainTitle,side=3,line=titlePos,outer=TRUE,font=2,cex=1.3)
   
   plotRegion <- par("usr")
@@ -186,7 +230,7 @@ MapSizeColor <- function(df,colorVar,sizeVar,latVar,lonVar,
   if(!is.na(sizeVar)){
     leg1 <- legend(x=xleft,y=ytop,legSizeText,
            title=sizeText,
-           pch=c(21),pt.cex=c(1,1.5,2),pt.bg=colVector[2],cex=LegCex,bty="n")
+           pch=c(21),pt.cex=c(1,1.5,2),pt.bg=colVector[1],cex=LegCex,bty="n")
   } else {
     leg1 <- list()
     leg1$rect[["top"]] <- ytop
@@ -198,7 +242,7 @@ MapSizeColor <- function(df,colorVar,sizeVar,latVar,lonVar,
   if(!is.na(colorVar)){
     
     leg2 <- legend(x=xleft,y=(leg1$rect[["top"]] - leg1$rect[["h"]])-titleColLines*.05*(plotHeight),
-                   legendText,pt.bg=c("tan",binCol),pch=plotSymbol,bg="white",
+                   legendText,pt.bg=colVector,pch=plotSymbol,bg="white",
                    cex=LegCex, pt.cex=1.5, title=colText,bty="n") #pt.cex=legendTextCex
     
   } else {
@@ -218,14 +262,14 @@ MapSizeColor <- function(df,colorVar,sizeVar,latVar,lonVar,
 
   if(!is.na(colorVar)){
     leg2 <- legend(x=xleft,y=(leg1$rect[["top"]] - leg1$rect[["h"]])-titleColLines*.05*(plotHeight),
-                   legendText,pt.bg=c("tan",binCol),pch=plotSymbol,
-                   cex=LegCex, pt.cex=c(rep(1.5,length(binCol)+1)), title=colText,bty="n")
+                   legendText,pt.bg=colVector,pch=plotSymbol,
+                   cex=LegCex, pt.cex=c(rep(1.5,length(colVector))), title=colText,bty="n")
   }
   
   if(!is.na(sizeVar)){
     leg1 <- legend(x=xleft,y=ytop,legSizeText,
                    title=sizeText,
-                   pch=c(21),pt.cex=c(1,1.5,2),pt.bg="orange3",cex=LegCex,bty="n")
+                   pch=c(21),pt.cex=c(1,1.5,2),pt.bg=colVector[1],cex=LegCex,bty="n")
   }
 
 }

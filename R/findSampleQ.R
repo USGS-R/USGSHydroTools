@@ -17,22 +17,22 @@
 #' sampleDates <- sampleDates
 #' Start_extend <- as.character(as.Date(min(sampleDates$ActivityStartDateGiven, na.rm=TRUE))-60)
 #' End_extend <- as.character(as.Date(max(sampleDates$ActivityStartDateGiven, na.rm=TRUE))+60)
-#' Daily <- getDVData(site,'00060', Start_extend, End_extend,convert=FALSE)
+#' Daily <- getNWISDaily(site,'00060', Start_extend, End_extend,convert=FALSE)
 #' sampleDates <- findSampleQ(site, sampleDates, Daily)
 findSampleQ <- function(site, sampleDates,localDaily){
-  whatDischarge <- getDataAvailability(site)
+  whatDischarge <- getNWISDataAvailability(site)
   whatDischarge <-  whatDischarge[whatDischarge$parameter_cd == "00060", ]  
   
   Start <- as.character(as.Date(min(sampleDates$ActivityStartDateGiven, na.rm=TRUE)))
   End <- as.character(as.Date(max(sampleDates$ActivityStartDateGiven, na.rm=TRUE)))
   
   if ("uv" %in% whatDischarge$service){
-    instantFlow <- retrieveNWISunitData(site,"00060",Start,End)
+    instantFlow <- getNWISunitData(site,"00060",Start,End)
     instantFlow <- renameColumns(instantFlow)
-    instantFlow$dateTime <- as.POSIXct(strptime(instantFlow$dateTime, format="%Y-%m-%d %H:%M:%S"), tz="UTC")
+#     instantFlow$dateTime <- as.POSIXct(strptime(instantFlow$dateTime, format="%Y-%m-%d %H:%M:%S"), tz="UTC")
     
     sampleDates <- mergeNearest(sampleDates, "ActivityStartDateGiven",all.left=TRUE,
-                                right=instantFlow, dates.right="dateTime",max.diff="3 hours")
+                                right=instantFlow, dates.right="datetime",max.diff="3 hours")
     row.names(sampleDates) <- NULL
     sampleDates$Discharge_cubic_feet_per_second_cd <- as.character(sampleDates$Discharge_cubic_feet_per_second_cd)
     ivGap <- sampleDates[is.na(sampleDates$Discharge_cubic_feet_per_second),]
