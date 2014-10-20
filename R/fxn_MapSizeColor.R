@@ -183,14 +183,23 @@ MapSizeColor <- function(df,colorVar,sizeVar,latVar,lonVar,
   }
   
   plotSize <- rep(1,nrow(df))
-  if(!is.na(sizeVar)){
+  if(!is.na(sizeVar)){    
     
     if(all(is.na(sizeBinText))){
-      legSizeText <- c(paste("<=",sizeThresh[1])) 
-      for(i in 2:length(sizeThresh)-1){
-        legSizeText <- c(legSizeText, paste(sizeThresh[i],"-",sizeThresh[i+1]))
+      if(is.numeric(df[,sizeVar])){
+        legSizeText <- c(paste("<=",sizeThresh[1])) 
+        for(i in 2:length(sizeThresh)-1){
+          legSizeText <- c(legSizeText, paste(sizeThresh[i],"-",sizeThresh[i+1]))
+        }
+        legSizeText <- c(legSizeText,paste(">",sizeThresh[length(sizeThresh)]))
+      } else if(is.character(df[,sizeVar])){
+        factorData <- factor(df[,sizeVar])
+        legSizeText <- levels(factorData)
+      } else if(is.factor(df[,sizeVar])){
+        legSizeText <- levels(df[,sizeVar])
+      } else {
+        message("Check type")
       }
-      legSizeText <- c(legSizeText,paste(">",sizeThresh[length(sizeThresh)]))
     } else {
       legSizeText <- sizeBinText
     }
@@ -205,7 +214,7 @@ MapSizeColor <- function(df,colorVar,sizeVar,latVar,lonVar,
     } else if (is.character(df[,sizeVar])){
       sizeFactor <- as.factor(df[,sizeVar])
       valToBinSize <- as.integer(sizeFactor)
-      sizeThresh <- 1:length(levels(df[,sizeVar]))
+      sizeThresh <- 1:length(levels(sizeFactor))
       sizeThresh <- c(-Inf,sizeThresh)
       
       legSizeText <- levels(sizeFactor)
@@ -240,7 +249,7 @@ MapSizeColor <- function(df,colorVar,sizeVar,latVar,lonVar,
               cex=0.75)
   }
   
-  points(df[,lonVar], df[,latVar],pch=plotSymbol, col="black",cex=plotSize,bg=df$fillCol)
+  points(df[,lonVar], df[,latVar],pch=plotSymbol, col="black",cex=df$plotSize,bg=df$fillCol)
   mtext(mainTitle,side=3,line=titlePos,outer=TRUE,font=2,cex=1.3)
   
   plotRegion <- par("usr")
@@ -259,7 +268,7 @@ MapSizeColor <- function(df,colorVar,sizeVar,latVar,lonVar,
   if(!is.na(sizeVar)){
     leg1 <- legend(x=xleft,y=ytop,legSizeText,
            title=sizeText,
-           pch=c(21),pt.cex=c(1,1.5,2),pt.bg=colVector[1],cex=LegCex,bty="n")
+           pch=c(21),pt.cex=sizeTransform,pt.bg=colVector[1],cex=LegCex,bty="n")
   } else {
     leg1 <- list()
     leg1$rect[["top"]] <- ytop
