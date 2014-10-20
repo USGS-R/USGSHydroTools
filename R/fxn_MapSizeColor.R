@@ -178,7 +178,7 @@ MapSizeColor <- function(df,colorVar,sizeVar,latVar,lonVar,
     df$fillCol <- colTransform[bins]
     
     #Reorder dataframe so unique colors are last (and on top of map)
-    df <- df[order(bins,decreasing=TRUE),]
+#     df <- df[order(bins,decreasing=TRUE),]
         
   }
   
