@@ -130,28 +130,48 @@ MapSizeColor <- function(df,colorVar,sizeVar,latVar,lonVar,
   if(!is.na(colorVar)){
     
     if(all(is.na(colBinText))){
-      legendText <- c(paste("<=",colThresh[1])) 
-      for(i in 2:length(colThresh)-1){
-        legendText <- c(legendText, paste(colThresh[i],"-",colThresh[i+1]))
+      if(is.numeric(df[,colorVar])){
+        legendText <- c(paste("<=",colThresh[1])) 
+        for(i in 2:length(colThresh)-1){
+          legendText <- c(legendText, paste(colThresh[i],"-",colThresh[i+1]))
+        }
+        legendText <- c(legendText,paste(">",colThresh[length(colThresh)]))
+      } else if(is.character(df[,colorVar])){
+        factorData <- factor(df[,colorVar])
+        legendText <- levels(factorData)
+      } else if(is.factor(df[,colorVar])){
+        legendText <- levels(df[,colorVar])
+      } else {
+        message("Check type")
       }
-      legendText <- c(legendText,paste(">",colThresh[length(colThresh)]))
     } else {
       legendText <- colBinText
     }
     
     if(is.factor(df[,colorVar])){
       valToBin <- as.integer(df[,colorVar])
+      colThresh <- 1:length(levels(df[,colorVar]))
+      colThresh <- c(-Inf,colThresh)
     } else if (is.numeric(df[,colorVar])){
-      valToBin <- df[,colorVar]
       colThresh <- c(-Inf,colThresh,Inf)
+      valToBin <- df[,colorVar]
+      
     } else if (is.character(df[,colorVar])){
-      colFactor <- as.factor(df[,colorVar])
+      colFactor <- as.factor(df[,colorVar])   
       valToBin <- as.integer(colFactor)
+      legendText <- levels(colFactor)
+      colThresh <- 1:length(levels(colFactor))
+      colThresh <- c(-Inf,colThresh)
+      if(any(legendText != colBinText) & !all(is.na(colBinText))){
+        message("Color legend corresponds to levels associated with colVar, igoring colBinText request")
+      }
+      
     } else {
-      message("Check type")
+#       message("Check type")
       # more conditions?
       valToBin <- df[,colorVar]
     }
+
     
     bins <- cut(valToBin,colThresh)
     colTransform <- setNames(colVector,levels(bins))
@@ -177,12 +197,21 @@ MapSizeColor <- function(df,colorVar,sizeVar,latVar,lonVar,
     
     if(is.factor(df[,sizeVar])){
       valToBinSize <- as.integer(df[,sizeVar])
+      sizeThresh <- 1:length(levels(df[,sizeVar]))
+      sizeThresh <- c(-Inf,sizeThresh)
     } else if (is.numeric(df[,sizeVar])){
       valToBinSize <- df[,sizeVar]
       sizeThresh <- c(-Inf,sizeThresh,Inf)
     } else if (is.character(df[,sizeVar])){
       sizeFactor <- as.factor(df[,sizeVar])
       valToBinSize <- as.integer(sizeFactor)
+      sizeThresh <- 1:length(levels(df[,sizeVar]))
+      sizeThresh <- c(-Inf,sizeThresh)
+      
+      legSizeText <- levels(sizeFactor)
+      if(any(legSizeText != sizeBinText) & !all(is.na(sizeBinText))){
+        message("Size legend corresponds to levels associated with sizeVar, igoring sizeBinText request")
+      }
     } else {
       message("Check type")
       # more conditions?
