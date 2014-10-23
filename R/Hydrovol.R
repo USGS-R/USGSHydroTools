@@ -28,7 +28,7 @@ Hydrovol <- function(dfQ, Q="Q", time="pdate", df.dates, bdate="bpdate",edate="e
   
   for (i in 1:nrow(df.dates)){
     
-    if(is.na(df.dates[i,'EventStartDateTime'])){
+    if(is.na(df.dates[i,bdate])){
       event.vol[i] <- NA
       event.max[i] <- NA
       next
