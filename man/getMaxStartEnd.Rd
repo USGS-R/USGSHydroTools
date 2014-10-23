@@ -22,7 +22,7 @@ site <- "04085427"
 sampleDates <- sampleDates
 Start_extend <- as.character(as.Date(min(sampleDates$ActivityStartDateGiven, na.rm=TRUE))-60)
 End_extend <- as.character(as.Date(max(sampleDates$ActivityStartDateGiven, na.rm=TRUE))+60)
-Daily <- getDVData(site,'00060', Start_extend, End_extend,convert=FALSE)
+Daily <- getNWISDaily(site,'00060', Start_extend, End_extend,convert=FALSE)
 startEnd <- getMaxStartEnd(Daily)
 Start <- startEnd$Start
 End <- startEnd$End

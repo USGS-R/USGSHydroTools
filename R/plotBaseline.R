@@ -3,8 +3,8 @@
 #' Plot output of flow, with daily and instantaneous flow (when available). 
 #'
 #' @param sampleDates dataframe with two columns "Discharge_cubic_feet_per_second" and "maxSampleTime"
-#' @param Daily dataframe from getDVData function in the dataRetrieval package
-#' @param INFO dataframe from getMetaData function in dataRetrieval package. Alternatively, a dataframe with a column "station.nm"
+#' @param Daily dataframe from getNWISDaily function in the dataRetrieval package
+#' @param INFO dataframe from getNWISInfo function in dataRetrieval package. Alternatively, a dataframe with a column "station.nm"
 #' @param site string USGS site identification
 #' @param baseflowColumns string. Names of columns in the sampleDates dataframe with "Baseflow" or "Event" indicators.
 #' @param HYSEPReturn dataframe with one column Dates, and at least 1 column of baseflow
@@ -13,7 +13,7 @@
 #' @param showLegend logical. Whether or not to print legend
 #' @param plotTitle logical. Whether or not to print title
 #' @param instantFlow dataframe returned from retrieveUnitNWISData. If none available, NA.
-#' @param whatDischarge dataframe returned from getDataAvailability
+#' @param whatDischarge dataframe returned from getNWISDataAvailability
 #' @export
 #' @examples
 #' library(dataRetrieval)
@@ -21,26 +21,25 @@
 #' sampleDates <- sampleDates
 #' Start_extend <- as.character(as.Date(min(sampleDates$ActivityStartDateGiven, na.rm=TRUE))-60)
 #' End_extend <- as.character(as.Date(max(sampleDates$ActivityStartDateGiven, na.rm=TRUE))+60)
-#' Daily <- getDVData(site,'00060', Start_extend, End_extend,convert=FALSE)
+#' Daily <- getNWISDaily(site,'00060', Start_extend, End_extend,convert=FALSE)
 #' sampleDates <- findSampleQ(site, sampleDates, Daily)
 #' startEnd <- getMaxStartEnd(Daily)
 #' Start <- startEnd$Start
 #' End <- startEnd$End
 #' naFreeDaily <- Daily[!is.na(Daily$Q),]
-#' INFO <- getSiteFileData(site)
+#' INFO <- getNWISSiteInfo(site)
 #' DA_mi <- as.numeric(INFO$drain.area.va)
 #' HYSEPReturn <- exampleHYSEP
 #' sampleDates <- determineHYSEPEvents(HYSEPReturn, sampleDates,0.8)
-#' whatDischarge <- getDataAvailability(site)
+#' whatDischarge <- getNWISDataAvailability(site)
 #' whatDischarge <-  whatDischarge[whatDischarge$parameter_cd == "00060", ]
 #' Start <- as.character(as.Date(min(sampleDates$ActivityStartDateGiven, na.rm=TRUE)))
 #' End <- as.character(as.Date(max(sampleDates$ActivityStartDateGiven, na.rm=TRUE)))
 #' 
 #' if ("uv" %in% whatDischarge$service){
 #'   if(whatDischarge$startDate[whatDischarge$service == "uv"] < End){
-#'     instantFlow <- retrieveNWISunitData(site,"00060",Start,End)
+#'     instantFlow <- getNWISunitData(site,"00060",Start,End)
 #'     instantFlow <- renameColumns(instantFlow)
-#'     instantFlow$dateTime <- as.POSIXct(strptime(instantFlow$dateTime, format="%Y-%m-%d %H:%M:%S"), tz="UTC")
 #'   }
 #' }
 #' plotBaseflow(sampleDates,Daily,INFO,site,HYSEPReturn,
@@ -73,7 +72,7 @@ plotBaseflow <- function(sampleDates,Daily,INFO,site,HYSEPReturn,
        xlab= xLabelText, ylab="Discharge[cfs]", xaxt=xaxtText, tck = 0.02)
   if ("uv" %in% whatDischarge$service){
     if(whatDischarge$startDate[whatDischarge$service == "uv"] < End){
-      lines(instantFlow$dateTime, instantFlow$Discharge_cubic_feet_per_second, col="azure4")
+      lines(instantFlow$datetime, instantFlow$Discharge_cubic_feet_per_second, col="azure4")
     }
   } 
   polygon(as.POSIXct(c(HYSEPReturn$Dates[1], HYSEPReturn$Dates,HYSEPReturn$Dates[length(HYSEPReturn$Dates)])), c(0,HYSEPReturn[[HYSEPcolNames[1]]],0), col="beige")

@@ -8,7 +8,8 @@ MapSizeColor(df, colorVar, sizeVar, latVar, lonVar, sizeThresh, colThresh, xmin,
   "orange3", "orangered1", "orangered4"), mainTitle = "", labels = "",
   sizeText = "number of samples", colText = "Concentration",
   offsetLat = "", offsetLon = "", offsetLineLat = "",
-  offsetLineLon = "", LegCex = 0.9, titlePos = -4, customPar = FALSE)
+  offsetLineLon = "", LegCex = 0.9, titlePos = -4, customPar = FALSE,
+  colBinText = NA, sizeBinText = NA)
 }
 \arguments{
 \item{df}{Dataframe with 4 required columns that have data to define symbol size, color,
@@ -72,6 +73,12 @@ symbols representing number of samples per site. Default is 0.9}
 
 \item{customPar}{logical defaults to FALSE. If TRUE, par() should be set by user before calling this function
 (for example, adjusting margins with par(mar=c(5,5,5,5))).}
+
+\item{colBinText}{string vector used to create legend text for color distributions. If NA (default), the
+function will create the text based on colThresh}
+
+\item{sizeBinText}{string vector used to create legend text for size distributions. If NA (default), the
+function will create the text based on sizeThresh}
 }
 \description{
 Mapping routine that displays spatial data variability by size and color differences.
@@ -99,6 +106,7 @@ sizeThresh1 <- 2
 sizeThresh2 <- 14
 sizeThresh <- c(sizeThresh1, sizeThresh2)
 colThresh <- quantile(df[which(df[,colorVar] != 0),colorVar],c(0.25,0.5,0.75))
+colThresh <- round(colThresh, digits=2)
 LegCex <- 0.9
 mainTitle <- "Colors vary by concentration"
 titlePos <- -2
@@ -108,14 +116,14 @@ colorText <- expression(bold(atop("Colors represent","concentration in ["*mu*"g/
 # Without labels:
 
 #Example works best in a landscape view:
-pdf("GreatLakesExamplePlotNoLabels.pdf",width=11,height=8)
+#pdf("GreatLakesExamplePlotNoLabels.pdf",width=11,height=8)
 MapSizeColor(df,colorVar,sizeVar,latVar,lonVar,
              sizeThresh,colThresh,
              xmin,xmax,ymin,ymax,
              xleft,ytop,
              mainTitle=mainTitle,
              LegCex=LegCex,titlePos=titlePos)
-dev.off()
+#dev.off()
 
 # With labels:
 
