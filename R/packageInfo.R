@@ -130,4 +130,12 @@ NULL
 #' @docType data
 #' @keywords station data
 NULL
-
+#' Example data for correlations
+#'
+#' Example data with response and predictor variables
+#'
+#' @name dfOptical
+#' @docType data
+#' @author Steve Corsi \email{srcorsi@@usgs.gov}
+#' @keywords correlation
+NULL
