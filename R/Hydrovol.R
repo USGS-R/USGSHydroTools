@@ -24,14 +24,22 @@ Hydrovol <- function(dfQ, Q="Q", time="pdate", df.dates, bdate="bpdate",edate="e
   # Compute volumes and max for each hydrograph defined in the df.dates dataframe
   event.vol <- numeric()
   event.max <- numeric()
+  dfQ <- dfQ[order(dfQ[,time]),]
+  
   for (i in 1:nrow(df.dates)){
     
+    if(is.na(df.dates[i,'EventStartDateTime'])){
+      event.vol[i] <- NA
+      event.max[i] <- NA
+      next
+    }
     #Determine rows with range of times from last time step before hydrograph to one time step
     #after hydrograph ends and subset that time series
-    begin.row <- max(which(dfQ[,time]<=df.dates[i,bdate]))
-    end.row <- min(which(dfQ[,time]>=df.dates[i,edate]))
-    subdfQ <- dfQ[begin.row:end.row,]
-    
+     begin.row <- max(which(dfQ[,time]<=df.dates[i,bdate]))
+     end.row <- min(which(dfQ[,time]>=df.dates[i,edate]))
+     subdfQ <- dfQ[begin.row:end.row,]
+#     
+
     sub.rows <- nrow(subdfQ)
     if(sub.rows<3) {
       event.vol[i] <- NA
