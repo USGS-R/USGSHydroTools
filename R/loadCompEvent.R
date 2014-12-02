@@ -32,9 +32,10 @@
 LoadCompEvent <- function(df.samples,Conc,sample.time,Conc2liters,
                           df.Q,Q,Q.time,Q2liters,
                           df.events,event.bdate,event.edate){
-
+  
   numEvents <- dim(df.events)[1]
   event.loads <- numeric()
+  n.samples <- numeric()
   
   for (j in 1:numEvents){
     # j<-1
@@ -55,26 +56,29 @@ LoadCompEvent <- function(df.samples,Conc,sample.time,Conc2liters,
         epdate <- mean(sub.df.samples[,sample.time][i:(i+1)])
       }else{bpdate <- c(bpdate,mean(sub.df.samples[,sample.time][(i-1):i]))
       }
-      if(i==n){
-        #estimate end time for last sample to be 1/2 of the time between the
-        #last sample and the penultimate sample added to the last sample
-        epdate <- c(epdate,event.end)
-      }else{
-        if(i!=1){
-          epdate <- c(epdate,mean(sub.df.samples[,sample.time][i:(i+1)]))
+      if(n>1){
+        if(i==n){
+          #estimate end time for last sample to be 1/2 of the time between the
+          #last sample and the penultimate sample added to the last sample
+          epdate <- c(epdate,event.end)
+        }else{
+          if(i!=1){
+            epdate <- c(epdate,mean(sub.df.samples[,sample.time][i:(i+1)]))
+          }
         }
-      }
+      }else{epdate <- event.end}
     }
     
     sub.df.samples <- cbind(sub.df.samples,bpdate)
     sub.df.samples <- cbind(sub.df.samples,epdate)
     sub.df.samples <- Hydrovol(dfQ=df.Q,Q=Q,time=Q.time,
-                           df.dates=sub.df.samples,bdate="bpdate",edate="epdate",
-                           volume="volume",Qmax="Qmax",duration="duration")
+                               df.dates=sub.df.samples,bdate="bpdate",edate="epdate",
+                               volume="volume",Qmax="Qmax",duration="duration")
     if(j==1) {df.samples.hydro <- sub.df.samples
-              }else df.samples.hydro <- rbind(df.samples.hydro,sub.df.samples)
+    }else df.samples.hydro <- rbind(df.samples.hydro,sub.df.samples)
+    n.samples <- c(n.samples,n)
   }
-
+  
   df.samples.hydro$loads <- (df.samples.hydro[,Conc] * Conc2liters) * (df.samples.hydro$volume * Q2liters)
   event.loads <- aggregate(loads~event,data=df.samples.hydro,sum)[2]
   event.volumes <- aggregate(volume~event,data=df.samples.hydro,sum)[2]
@@ -83,7 +87,8 @@ LoadCompEvent <- function(df.samples,Conc,sample.time,Conc2liters,
   names(event.loads) <- paste("Load.",Conc,sep="")
   names(mean.conc) <- paste("FW.Mean.C.",Conc,sep="")
   
-  df.load <- cbind(df.events,data.frame(load=event.loads,concentration=mean.conc))
+  df.load <- cbind(df.events,data.frame(load=event.loads,concentration=mean.conc,numSamples=n.samples))
   return(df.load)
 }
+
 
