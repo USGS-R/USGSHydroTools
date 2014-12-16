@@ -57,7 +57,7 @@ plotHydroConc <- function(Q,QVars,QDateVars,smooth,sites,Conc,CVars,CDateVar,CVa
   
   for (i in 1:nrow(dates)) {
     
-    ####  Plot Q for all 4 sites on first Graph  ####
+    ####  Plot Q for all sites on first Graph  ####
     
     xlim=c(dates[i,eventDates[1]] - leftBuffer*24*3600,dates[i,eventDates[2]] + rightBuffer*24*3600)
     
