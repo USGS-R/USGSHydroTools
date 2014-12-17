@@ -6,24 +6,23 @@ Installation
 
 See [https://github.com/USGS-R/dataRetrieval](https://github.com/USGS-R/dataRetrieval) for information on the dependent package dataRetrieval
 
-Windows user can install the package and it's dependencies using the following command:
+Windows user can install the package dependencies using the following command:
+```r
+install.packagtes(c("rgdal","rgeos","sp","dataRetrieval","raster"))
+```
 
-	install.packages(c("USGSHydroTools"),
-		repos=c("http://usgs-r.github.com",
-			"http://cran.us.r-project.org",
-			""),
-		dependencies=TRUE)
-		
 Mac users will have to work a little harder to install the dependent packages rgdal and rgeos. The latest instructions are:
+```r
+setRepositories(ind = c(1,6))
+install.packages(c("rgdal","rgeos","sp","dataRetrieval","raster"))
+```	
 
-	setRepositories(ind = c(1,6))
-	install.packages(c("rgdal","rgeos"))
-	install.packages(c("USGSHydroTools"),
-		repos=c("http://usgs-r.github.com",
-			"http://cran.us.r-project.org",
-			""),
-		dependencies=TRUE)	
-
+Once those are installed, use the package `devtools` to install via gitHub:
+```r
+library(devtools)
+install_github("USGS-R/smwrBase")
+install_github("USGS-R/USGSHydroTools")
+```
 
 Disclaimer
 ----------
