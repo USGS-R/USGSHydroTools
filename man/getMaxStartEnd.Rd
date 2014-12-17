@@ -3,10 +3,14 @@
 \alias{getMaxStartEnd}
 \title{Find maximum start and end dates from Daily dataframe}
 \usage{
-getMaxStartEnd(localDaily)
+getMaxStartEnd(localDaily, value = "Flow", date = "Date")
 }
 \arguments{
 \item{localDaily}{dataframe returned from dataRetrieval}
+
+\item{value}{character name of discharge column}
+
+\item{date}{character name of date column}
 }
 \value{
 named list with Start and End values
@@ -22,7 +26,8 @@ site <- "04085427"
 sampleDates <- sampleDates
 Start_extend <- as.character(as.Date(min(sampleDates$ActivityStartDateGiven, na.rm=TRUE))-60)
 End_extend <- as.character(as.Date(max(sampleDates$ActivityStartDateGiven, na.rm=TRUE))+60)
-Daily <- getNWISDaily(site,'00060', Start_extend, End_extend,convert=FALSE)
+Daily <- readNWISdv(site,'00060', Start_extend, End_extend)
+Daily <- renameNWISColumns(Daily)
 startEnd <- getMaxStartEnd(Daily)
 Start <- startEnd$Start
 End <- startEnd$End

@@ -67,7 +67,8 @@
 #' pdf("GreatLakesExamplePlot.pdf",width=11,height=8)
 #' MapLocations(df,latVar,lonVar,
 #'              xmin,xmax,ymin,ymax,mainTitle=mainTitle,includeLabels=TRUE,
-#'              labels=labelVar, offsetLat=offsetLatVar, offsetLon=offsetLonVar,offsetLineLat=offsetLineLatVar,
+#'              labels=labelVar, offsetLat=offsetLatVar, 
+#'              offsetLon=offsetLonVar,offsetLineLat=offsetLineLatVar,
 #'              offsetLineLon=offsetLineLonVar,titlePos=titlePos)
 #'dev.off()
 #'#To view the produced plot, us the following command:

@@ -69,9 +69,11 @@
 #' 
 #' #Example works best in a landscape view:
 #' pdf("GreatLakesExamplePlotNoLabels.pdf",width=11,height=8)
-#' MapColor(df,colorVar,latVar,lonVar,
-#'          xmin,xmax,ymin,ymax,xleft=xleft,xright=xright,ytop=ytop,ybottom=ybottom,mainTitle=mainTitle,
-#'          includeLabels=FALSE,DL=DL, LegCex=LegCex,titlePos=titlePos)
+#' MapColor(df,colorVar, latVar, lonVar,
+#'          xmin,xmax,ymin,ymax,
+#'          xleft=xleft, xright=xright, ytop=ytop, ybottom=ybottom,
+#'          mainTitle=mainTitle,
+#'          includeLabels=FALSE, DL=DL, LegCex=LegCex, titlePos=titlePos)
 #'dev.off()
 #'#To view the produced plot, us the following command:
 #'\dontrun{shell.exec("GreatLakesExamplePlotNoLabels.pdf")}
@@ -87,9 +89,12 @@
 #' #Example works best in a landscape view:
 #' pdf("GreatLakesExamplePlot.pdf",width=11,height=8)
 #' MapColor(df,colorVar,latVar,lonVar,
-#'          xmin,xmax,ymin,ymax,xleft=xleft,xright=xright,ytop=ytop,ybottom=ybottom,mainTitle=mainTitle,includeLabels=TRUE,
-#'          labels=labelVar, offsetLat=offsetLatVar, offsetLon=offsetLonVar,offsetLineLat=offsetLineLatVar,
-#'              offsetLineLon=offsetLineLonVar,DL=DL,LegCex=LegCex,titlePos=titlePos)
+#'          xmin,xmax,ymin,ymax,
+#'          xleft=xleft,xright=xright,ytop=ytop,ybottom=ybottom,
+#'          mainTitle=mainTitle, includeLabels=TRUE,
+#'          labels=labelVar, offsetLat=offsetLatVar, 
+#'          offsetLon=offsetLonVar, offsetLineLat=offsetLineLatVar,
+#'          offsetLineLon=offsetLineLonVar, DL=DL, LegCex=LegCex, titlePos=titlePos)
 #'dev.off()
 #'#To view the produced plot, us the following command:
 #'\dontrun{shell.exec("GreatLakesExamplePlot.pdf")}

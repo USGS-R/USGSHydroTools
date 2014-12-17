@@ -3,7 +3,7 @@
 \alias{findSampleQ}
 \title{Find flow for sample times}
 \usage{
-findSampleQ(site, sampleDates, localDaily)
+findSampleQ(site, sampleDates, localDaily, value = "Flow")
 }
 \arguments{
 \item{site}{string USGS identification number}
@@ -11,6 +11,8 @@ findSampleQ(site, sampleDates, localDaily)
 \item{sampleDates}{dataframe with two columns "ActivityStartDateGiven" and "ActivityEndDateGiven"}
 
 \item{localDaily}{dataframe returned from dataRetrieval}
+
+\item{value}{character name of discharge column}
 }
 \value{
 sampleDates
@@ -26,7 +28,8 @@ site <- "04085427"
 sampleDates <- sampleDates
 Start_extend <- as.character(as.Date(min(sampleDates$ActivityStartDateGiven, na.rm=TRUE))-60)
 End_extend <- as.character(as.Date(max(sampleDates$ActivityStartDateGiven, na.rm=TRUE))+60)
-Daily <- getNWISDaily(site,'00060', Start_extend, End_extend,convert=FALSE)
+Daily <- readNWISdv(site,'00060', Start_extend, End_extend)
+Daily <- renameNWISColumns(Daily)
 sampleDates <- findSampleQ(site, sampleDates, Daily)
 }
 

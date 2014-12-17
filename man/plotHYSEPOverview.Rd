@@ -35,14 +35,15 @@ site <- "04085427"
 sampleDates <- sampleDates
 Start_extend <- as.character(as.Date(min(sampleDates$ActivityStartDateGiven, na.rm=TRUE))-60)
 End_extend <- as.character(as.Date(max(sampleDates$ActivityStartDateGiven, na.rm=TRUE))+60)
-Daily <- getNWISDaily(site,'00060', Start_extend, End_extend,convert=FALSE)
+Daily <- readNWISdv(site,'00060', Start_extend, End_extend)
+Daily <- renameNWISColumns(Daily)
 sampleDates <- findSampleQ(site, sampleDates, Daily)
 startEnd <- getMaxStartEnd(Daily)
 Start <- startEnd$Start
 End <- startEnd$End
-naFreeDaily <- Daily[!is.na(Daily$Q),]
-INFO <- getNWISSiteInfo(site)
-DA_mi <- as.numeric(INFO$drain.area.va)
+naFreeDaily <- Daily[!is.na(Daily$Flow),]
+INFO <- readNWISsite(site)
+DA_mi <- as.numeric(INFO$drain_area_va)
 HYSEPReturn <- exampleHYSEP
 sampleDates <- determineHYSEPEvents(HYSEPReturn, sampleDates,0.8)
 plotHYSEPOverview(sampleDates,Daily,INFO,site,HYSEPReturn)

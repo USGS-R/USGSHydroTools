@@ -7,14 +7,17 @@
 #' @param sampleID character variable name for the IDs for compositing samples (multiple samples will have the same ID)
 #' @param parms vector Parameters to composite
 #' @param volume character variable name for the volume, defaults to "Evolume" 
-#' @param btime character variable name for the beginning of event times for each sample
-#' @param etime character variable name for the ending of event times for each sample
+#' @param bdate character variable name for the beginning of event times for each sample
+#' @param edate character variable name for the ending of event times for each sample
 #' @param codes a vector of character variable names for the values that should be pasted together into one string when combining samples (lab IDs are common here)
 #' @examples
 #' flowData <- flowData
 #' FIBdata <- FIBdata
-#' FIBcomposData <- Hydrovol(dfQ=flowData,Q="Q",time="pdate",df.dates=FIBdata,bdate="SSdate",edate="SEdate")
-#' WQcompos(df.samples=FIBcomposData,sampleID="SampleID",parms=c("Ecoli","Enterococci"),volume="event.vol",bdate="SSdate",edate="SEdate",codes="SampleID")
+#' FIBcomposData <- Hydrovol(dfQ=flowData,Q="Q",time="pdate",
+#'        df.dates=FIBdata,bdate="SSdate",edate="SEdate")
+#' WQcompos(df.samples=FIBcomposData,sampleID="SampleID",
+#'        parms=c("Ecoli","Enterococci"), volume="event.vol",
+#'        bdate="SSdate",edate="SEdate",codes="SampleID")
 #' @return IDdf dataframe
 #' @export
 

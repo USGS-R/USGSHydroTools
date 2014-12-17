@@ -42,7 +42,9 @@
 #' mainTitle <- "OC Pesticides"
 #' pdf("GreatLakesPlot.pdf", width=11, height=8)
 #' MapColor(df,colorVar,latVar,lonVar,
-#'           xmin,xmax,ymin,ymax,xleft=xleft,xright=xright,ytop=ytop,ybottom=ybottom,mainTitle=mainTitle,includeLabels=FALSE,
+#'           xmin,xmax,ymin,ymax,
+#'           xleft=xleft,xright=xright,ytop=ytop,ybottom=ybottom,
+#'           mainTitle=mainTitle,includeLabels=FALSE,
 #'           DL=DL,LegCex=LegCex,titlePos=titlePos)
 #' MapLabels(df=SI,labels="Site",dataLat="lat",dataLon="lon",
 #'   offsetLat="offsetLat",offsetLon="offsetLon",

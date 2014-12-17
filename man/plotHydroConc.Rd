@@ -56,13 +56,13 @@ event. This is the hydrograph segment that the samples are intended to represent
 between consecutive data points from the Conc dataframe in the second graph
 panel}
 
+\item{Qylab}{y-axis label for the first graph panel}
+
 \item{Cylab}{y-axis label for the second graph panel}
 
 \item{title1}{Line 1 of plot title}
 
 \item{title2}{Line 2 of plot title}
-
-\item{Qlyab}{y-axis label for the first graph panel}
 }
 \description{
 Function to generate a two panel graph with hydrograph(s) in the
@@ -70,6 +70,6 @@ top panel and concentration or other water quality parameter (e.g. flux)
 in the lower panel with corresponding date axes for the top and bottom panels
 }
 \examples{
-ADD EXAMPLE HERE
+#Add example
 }
 
