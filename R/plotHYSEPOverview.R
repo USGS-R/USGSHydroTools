@@ -45,8 +45,10 @@ plotHYSEPOverview <- function(sampleDates,Daily,INFO,site,HYSEPReturn,
   Start <- as.character(as.Date(min(sampleDates$ActivityStartDateGiven, na.rm=TRUE)))
   End <- as.character(as.Date(max(sampleDates$ActivityStartDateGiven, na.rm=TRUE)))
   
-  if ("uv" %in% whatDischarge$service){
-    if(whatDischarge$startDate[whatDischarge$service == "uv"] < End){
+  instantFlow <- NA
+  
+  if ("uv" %in% whatDischarge$data_type_cd){
+    if(whatDischarge$begin_date[whatDischarge$data_type_cd == "uv"] < End){
       instantFlow <- readNWISuv(site,"00060",Start,End)
       instantFlow <- renameNWISColumns(instantFlow)
 #       instantFlow$dateTime <- as.POSIXct(strptime(instantFlow$dateTime, format="%Y-%m-%d %H:%M:%S"), tz="UTC")

@@ -76,7 +76,9 @@ plotBaseflow <- function(sampleDates,Daily,INFO,site,HYSEPReturn,
        xlab= xLabelText, ylab="Discharge[cfs]", xaxt=xaxtText, tck = 0.02)
   if ("uv" %in% whatDischarge$data_type_cd){
     if(whatDischarge$begin_date[whatDischarge$data_type_cd == "uv"] < End){
-      lines(instantFlow$dateTime, instantFlow[,valueInst], col="azure4")
+      if(all(!is.na(instantFlow))){
+        lines(instantFlow$dateTime, instantFlow[,valueInst], col="azure4")
+      }      
     }
   } 
   polygon(as.POSIXct(c(HYSEPReturn$Dates[1], HYSEPReturn$Dates,HYSEPReturn$Dates[length(HYSEPReturn$Dates)])), c(0,HYSEPReturn[[HYSEPcolNames[1]]],0), col="beige")
