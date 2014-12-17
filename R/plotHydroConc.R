@@ -33,18 +33,19 @@
 #'@param concLines Boolean variable to signify whether a line should be drawn 
 #'between consecutive data points from the Conc dataframe in the second graph 
 #'panel
-#'@param Qlyab y-axis label for the first graph panel
+#'@param Qylab y-axis label for the first graph panel
 #'@param Cylab y-axis label for the second graph panel
 #'@param title1 Line 1 of plot title
 #'@param title2 Line 2 of plot title
 #'@export
 #'@examples
-#'ADD EXAMPLE HERE
+#'#Add example
 #'
-
-
-plotHydroConc <- function(Q,QVars,QDateVars,smooth,sites,Conc,CVars,CDateVar,CVarsDisplay,dates,sampDates,eventDates,Qcols,Ccols,
-                          leftBuffer,rightBuffer,concLines=TRUE,Qylab="Discharge (cfs)",Cylab="Concentration",
+plotHydroConc <- function(Q,QVars,QDateVars,smooth,sites,
+                          Conc,CVars,CDateVar,CVarsDisplay,dates,
+                          sampDates,eventDates,Qcols,Ccols,
+                          leftBuffer,rightBuffer,concLines=TRUE,
+                          Qylab="Discharge (cfs)",Cylab="Concentration",
                           title1="Flow",title2="and concentration"){
   
   # Define plot layout: panel 1 for Q and panel 2 for FIB

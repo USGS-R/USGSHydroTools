@@ -32,7 +32,11 @@ plotBaseflow(sampleDates, Daily, INFO, site, HYSEPReturn,
 
 \item{instantFlow}{dataframe returned from retrieveUnitNWISData. If none available, NA.}
 
-\item{whatDischarge}{dataframe returned from getNWISDataAvailability}
+\item{whatDischarge}{dataframe returned from \code{\link[dataRetrieval]{whatNWISdata}}}
+
+\item{value}{character name of discharge column in Daily}
+
+\item{valueInst}{character name of discharge column in instantFlow}
 }
 \description{
 Plot output of flow, with daily and instantaneous flow (when available).
@@ -50,7 +54,7 @@ startEnd <- getMaxStartEnd(Daily)
 Start <- startEnd$Start
 End <- startEnd$End
 naFreeDaily <- Daily[!is.na(Daily$Flow),]
-INFO <- getNWISSiteInfo(site)
+INFO <- readNWISsite(site)
 DA_mi <- as.numeric(INFO$drain_area_va)
 HYSEPReturn <- exampleHYSEP
 sampleDates <- determineHYSEPEvents(HYSEPReturn, sampleDates,0.8)
