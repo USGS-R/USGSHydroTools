@@ -17,14 +17,15 @@
 #' sampleDates <- sampleDates
 #' Start_extend <- as.character(as.Date(min(sampleDates$ActivityStartDateGiven, na.rm=TRUE))-60)
 #' End_extend <- as.character(as.Date(max(sampleDates$ActivityStartDateGiven, na.rm=TRUE))+60)
-#' Daily <- getNWISDaily(site,'00060', Start_extend, End_extend,convert=FALSE)
+#' Daily <- readNWISdv(site,'00060', Start_extend, End_extend)
+#' Daily <- renameNWISColumns(Daily)
 #' sampleDates <- findSampleQ(site, sampleDates, Daily)
 #' startEnd <- getMaxStartEnd(Daily)
 #' Start <- startEnd$Start
 #' End <- startEnd$End
-#' naFreeDaily <- Daily[!is.na(Daily$Q),]
-#' INFO <- getNWISSiteInfo(site)
-#' DA_mi <- as.numeric(INFO$drain.area.va)
+#' naFreeDaily <- Daily[!is.na(Daily$Flow),]
+#' INFO <- readNWISsite(site)
+#' DA_mi <- as.numeric(INFO$drain_area_va)
 #' HYSEPReturn <- exampleHYSEP
 #' sampleDates <- determineHYSEPEvents(HYSEPReturn, sampleDates,0.8)
 #' plotHYSEPOverview(sampleDates,Daily,INFO,site,HYSEPReturn)
@@ -33,16 +34,23 @@ plotHYSEPOverview <- function(sampleDates,Daily,INFO,site,HYSEPReturn,
                                             "flowConditionHYSEP_Sliding"),
                               HYSEPcolNames = c("LocalMin","Fixed","Sliding")){
   
-  whatDischarge <- getNWISDataAvailability(site)
-  whatDischarge <-  whatDischarge[whatDischarge$parameter_cd == "00060", ]  
+  whatDischarge <- whatNWISdata(site)
+  whatDischarge <-  whatDischarge[whatDischarge$parm_cd == "00060", ]  
+  
+  tz <- attr(sampleDates$ActivityStartDateGiven, "tzone")
+  attributes(sampleDates$ActivityStartDateGiven)$tzone <- "UTC"
+  tzEnd <- attr(sampleDates$ActivityEndDateGiven, "tzone")
+  attributes(sampleDates$ActivityEndDateGiven)$tzone <- "UTC"
   
   Start <- as.character(as.Date(min(sampleDates$ActivityStartDateGiven, na.rm=TRUE)))
   End <- as.character(as.Date(max(sampleDates$ActivityStartDateGiven, na.rm=TRUE)))
   
-  if ("uv" %in% whatDischarge$service){
-    if(whatDischarge$startDate[whatDischarge$service == "uv"] < End){
-      instantFlow <- getNWISunitData(site,"00060",Start,End)
-      instantFlow <- renameColumns(instantFlow)
+  instantFlow <- NA
+  
+  if ("uv" %in% whatDischarge$data_type_cd){
+    if(whatDischarge$begin_date[whatDischarge$data_type_cd == "uv"] < End){
+      instantFlow <- readNWISuv(site,"00060",Start,End)
+      instantFlow <- renameNWISColumns(instantFlow)
 #       instantFlow$dateTime <- as.POSIXct(strptime(instantFlow$dateTime, format="%Y-%m-%d %H:%M:%S"), tz="UTC")
     }
   }

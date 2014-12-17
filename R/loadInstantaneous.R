@@ -16,7 +16,9 @@
 #' @examples
 #' WQdata <- WQdata
 #' flowData <- flowData
-#' LoadInstantaneous(df.samples=WQdata,Conc="Total_P",sample.time="dateTime",Conc2liters=1,df.Q=flowData,Q="Q",Q.time="pdate",Q2liters=28.3168466)
+#' LoadInstantaneous(df.samples=WQdata, Conc="Total_P",
+#'          sample.time="dateTime", Conc2liters=1, 
+#'          df.Q=flowData, Q="Q", Q.time="pdate", Q2liters=28.3168466)
 #' @export
 #' @return df.load
 LoadInstantaneous <- function(df.samples,Conc,sample.time,Conc2liters,df.Q,Q,Q.time,Q2liters){

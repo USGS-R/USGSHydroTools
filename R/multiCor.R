@@ -13,11 +13,9 @@
 #' @examples
 #' data <- dfOptical
 #' multiCor(data,"logEColi",names(data)[-1],"spearman")
-
-
 multiCor <- function(df,response,IVs,method="spearman"){
   z <- as.matrix(cor(df[,response],df[,IVs],use="complete.obs",method=method))
   z <- as.matrix(z[,order(abs(z),decreasing = TRUE)])
-  returen(z)
+  return(z)
 }
 

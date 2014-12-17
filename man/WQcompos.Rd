@@ -3,16 +3,22 @@
 \alias{WQcompos}
 \title{Combine multiple samples into one composite sample (loads and concentrations)}
 \usage{
-WQcompos(df.samples, sampleID, parms, volume = "Evolume")
+WQcompos(df.samples, sampleID, parms, volume = "Evolume", bdate, edate, codes)
 }
 \arguments{
 \item{df.samples}{dataframe with sample results and volumes}
 
-\item{sampleID}{string IDs for compositing samples (multiple samples will have the same ID)}
+\item{sampleID}{character variable name for the IDs for compositing samples (multiple samples will have the same ID)}
 
 \item{parms}{vector Parameters to composite}
 
-\item{volume}{string, defaults to "Evolume"}
+\item{volume}{character variable name for the volume, defaults to "Evolume"}
+
+\item{bdate}{character variable name for the beginning of event times for each sample}
+
+\item{edate}{character variable name for the ending of event times for each sample}
+
+\item{codes}{a vector of character variable names for the values that should be pasted together into one string when combining samples (lab IDs are common here)}
 }
 \value{
 IDdf dataframe
@@ -24,7 +30,10 @@ the result is a volume-weighted concentration and summation of volumes
 \examples{
 flowData <- flowData
 FIBdata <- FIBdata
-FIBcomposData <- Hydrovol(dfQ=flowData,Q="Q",time="pdate",df.dates=FIBdata,bdate="SSdate",edate="SEdate")
-WQcompos(df.samples=FIBcomposData,sampleID="SampleID",parms=c("Ecoli","Enterococci"),volume="event.vol")
+FIBcomposData <- Hydrovol(dfQ=flowData,Q="Q",time="pdate",
+       df.dates=FIBdata,bdate="SSdate",edate="SEdate")
+WQcompos(df.samples=FIBcomposData,sampleID="SampleID",
+       parms=c("Ecoli","Enterococci"), volume="event.vol",
+       bdate="SSdate",edate="SEdate",codes="SampleID")
 }
 

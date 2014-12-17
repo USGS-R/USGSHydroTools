@@ -6,7 +6,8 @@
 plotBaseflow(sampleDates, Daily, INFO, site, HYSEPReturn,
   baseflowColumns = "flowConditionHYSEP_localMin",
   HYSEPcolNames = "LocalMin", xlabel = TRUE, showLegend = TRUE,
-  plotTitle = TRUE, instantFlow = NA, whatDischarge)
+  plotTitle = TRUE, instantFlow = NA, whatDischarge, value = "Flow",
+  valueInst = "Flow_Inst")
 }
 \arguments{
 \item{sampleDates}{dataframe with two columns "Discharge_cubic_feet_per_second" and "maxSampleTime"}
@@ -31,7 +32,11 @@ plotBaseflow(sampleDates, Daily, INFO, site, HYSEPReturn,
 
 \item{instantFlow}{dataframe returned from retrieveUnitNWISData. If none available, NA.}
 
-\item{whatDischarge}{dataframe returned from getNWISDataAvailability}
+\item{whatDischarge}{dataframe returned from \code{\link[dataRetrieval]{whatNWISdata}}}
+
+\item{value}{character name of discharge column in Daily}
+
+\item{valueInst}{character name of discharge column in instantFlow}
 }
 \description{
 Plot output of flow, with daily and instantaneous flow (when available).
@@ -42,25 +47,26 @@ site <- "04085427"
 sampleDates <- sampleDates
 Start_extend <- as.character(as.Date(min(sampleDates$ActivityStartDateGiven, na.rm=TRUE))-60)
 End_extend <- as.character(as.Date(max(sampleDates$ActivityStartDateGiven, na.rm=TRUE))+60)
-Daily <- getNWISDaily(site,'00060', Start_extend, End_extend,convert=FALSE)
+Daily <- readNWISdv(site,'00060', Start_extend, End_extend)
+Daily <- renameNWISColumns(Daily)
 sampleDates <- findSampleQ(site, sampleDates, Daily)
 startEnd <- getMaxStartEnd(Daily)
 Start <- startEnd$Start
 End <- startEnd$End
-naFreeDaily <- Daily[!is.na(Daily$Q),]
-INFO <- getNWISSiteInfo(site)
-DA_mi <- as.numeric(INFO$drain.area.va)
+naFreeDaily <- Daily[!is.na(Daily$Flow),]
+INFO <- readNWISsite(site)
+DA_mi <- as.numeric(INFO$drain_area_va)
 HYSEPReturn <- exampleHYSEP
 sampleDates <- determineHYSEPEvents(HYSEPReturn, sampleDates,0.8)
-whatDischarge <- getNWISDataAvailability(site)
-whatDischarge <-  whatDischarge[whatDischarge$parameter_cd == "00060", ]
+whatDischarge <- whatNWISdata(site)
+whatDischarge <-  whatDischarge[whatDischarge$parm_cd == "00060", ]
 Start <- as.character(as.Date(min(sampleDates$ActivityStartDateGiven, na.rm=TRUE)))
 End <- as.character(as.Date(max(sampleDates$ActivityStartDateGiven, na.rm=TRUE)))
 
-if ("uv" \%in\% whatDischarge$service){
-  if(whatDischarge$startDate[whatDischarge$service == "uv"] < End){
-    instantFlow <- getNWISunitData(site,"00060",Start,End)
-    instantFlow <- renameColumns(instantFlow)
+if ("uv" \%in\% whatDischarge$data_type_cd){
+  if(whatDischarge$begin_date[whatDischarge$data_type_cd == "uv"] < End){
+    instantFlow <- readNWISuv(site,"00060",Start,End)
+    instantFlow <- renameNWISColumns(instantFlow)
   }
 }
 plotBaseflow(sampleDates,Daily,INFO,site,HYSEPReturn,

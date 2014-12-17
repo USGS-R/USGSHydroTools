@@ -13,7 +13,8 @@
 #' @examples
 #' df <- data.frame(site=c("1","x","2","1","x","2"),
 #'                  conc=c(2,3,4,5,NA,7),
-#'                  dates=as.Date(c("2011-01-01","2011-01-01","2011-01-01","2011-01-02","2011-01-02","2011-01-02")))
+#'                  dates=as.Date(c("2011-01-01","2011-01-01",
+#'                    "2011-01-01","2011-01-02","2011-01-02","2011-01-02")))
 #' sumDF <- summarizedataDF(df, "site", "conc", "dates")
 summarizedataDF <- function(dataDF, colGroup, colValue, colDate){
     

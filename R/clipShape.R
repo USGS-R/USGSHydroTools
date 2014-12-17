@@ -23,6 +23,10 @@
 #' lakeShape <- retList$lakes
 clipShape <- function(xmin,xmax,ymin,ymax){
   
+  shape_hydropoly <- shape_hydropoly
+  shape_polibounds <- shape_polibounds
+  shape_hydroline <- shape_hydroline
+  
   ext <- extent(xmin,xmax,ymin,ymax) 
   clipe <- as(ext, "SpatialPolygons") 
   proj4string(clipe) <- CRS(proj4string(shape_polibounds)) 

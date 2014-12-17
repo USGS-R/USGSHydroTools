@@ -13,7 +13,9 @@
 #' @param showLegend logical. Whether or not to print legend
 #' @param plotTitle logical. Whether or not to print title
 #' @param instantFlow dataframe returned from retrieveUnitNWISData. If none available, NA.
-#' @param whatDischarge dataframe returned from getNWISDataAvailability
+#' @param whatDischarge dataframe returned from \code{\link[dataRetrieval]{whatNWISdata}}
+#' @param value character name of discharge column in Daily
+#' @param valueInst character name of discharge column in instantFlow
 #' @export
 #' @examples
 #' library(dataRetrieval)
@@ -21,25 +23,26 @@
 #' sampleDates <- sampleDates
 #' Start_extend <- as.character(as.Date(min(sampleDates$ActivityStartDateGiven, na.rm=TRUE))-60)
 #' End_extend <- as.character(as.Date(max(sampleDates$ActivityStartDateGiven, na.rm=TRUE))+60)
-#' Daily <- getNWISDaily(site,'00060', Start_extend, End_extend,convert=FALSE)
+#' Daily <- readNWISdv(site,'00060', Start_extend, End_extend)
+#' Daily <- renameNWISColumns(Daily)
 #' sampleDates <- findSampleQ(site, sampleDates, Daily)
 #' startEnd <- getMaxStartEnd(Daily)
 #' Start <- startEnd$Start
 #' End <- startEnd$End
-#' naFreeDaily <- Daily[!is.na(Daily$Q),]
-#' INFO <- getNWISSiteInfo(site)
-#' DA_mi <- as.numeric(INFO$drain.area.va)
+#' naFreeDaily <- Daily[!is.na(Daily$Flow),]
+#' INFO <- readNWISsite(site)
+#' DA_mi <- as.numeric(INFO$drain_area_va)
 #' HYSEPReturn <- exampleHYSEP
 #' sampleDates <- determineHYSEPEvents(HYSEPReturn, sampleDates,0.8)
-#' whatDischarge <- getNWISDataAvailability(site)
-#' whatDischarge <-  whatDischarge[whatDischarge$parameter_cd == "00060", ]
+#' whatDischarge <- whatNWISdata(site)
+#' whatDischarge <-  whatDischarge[whatDischarge$parm_cd == "00060", ]
 #' Start <- as.character(as.Date(min(sampleDates$ActivityStartDateGiven, na.rm=TRUE)))
 #' End <- as.character(as.Date(max(sampleDates$ActivityStartDateGiven, na.rm=TRUE)))
 #' 
-#' if ("uv" %in% whatDischarge$service){
-#'   if(whatDischarge$startDate[whatDischarge$service == "uv"] < End){
-#'     instantFlow <- getNWISunitData(site,"00060",Start,End)
-#'     instantFlow <- renameColumns(instantFlow)
+#' if ("uv" %in% whatDischarge$data_type_cd){
+#'   if(whatDischarge$begin_date[whatDischarge$data_type_cd == "uv"] < End){
+#'     instantFlow <- readNWISuv(site,"00060",Start,End)
+#'     instantFlow <- renameNWISColumns(instantFlow)
 #'   }
 #' }
 #' plotBaseflow(sampleDates,Daily,INFO,site,HYSEPReturn,
@@ -50,7 +53,8 @@ plotBaseflow <- function(sampleDates,Daily,INFO,site,HYSEPReturn,
                               baseflowColumns="flowConditionHYSEP_localMin",
                               HYSEPcolNames = "LocalMin",
                               xlabel=TRUE, showLegend=TRUE,plotTitle=TRUE,
-                              instantFlow=NA,whatDischarge){
+                              instantFlow=NA,whatDischarge,
+                              value="Flow",valueInst="Flow_Inst"){
     
   Start <- as.character(as.Date(min(sampleDates$ActivityStartDateGiven, na.rm=TRUE)))
   End <- as.character(as.Date(max(sampleDates$ActivityStartDateGiven, na.rm=TRUE)))
@@ -68,20 +72,22 @@ plotBaseflow <- function(sampleDates,Daily,INFO,site,HYSEPReturn,
   
   composites <- sampleDates[!is.na(sampleDates$ActivityEndDateGiven),]
   
-  plot(as.POSIXct(Daily$Date), Daily$Q, type="l",ylim=c(0,max(Daily$Q,na.rm=TRUE)),
+  plot(as.POSIXct(Daily$Date), Daily[,value], type="l",ylim=c(0,max(Daily[,value],na.rm=TRUE)),
        xlab= xLabelText, ylab="Discharge[cfs]", xaxt=xaxtText, tck = 0.02)
-  if ("uv" %in% whatDischarge$service){
-    if(whatDischarge$startDate[whatDischarge$service == "uv"] < End){
-      lines(instantFlow$datetime, instantFlow$Discharge_cubic_feet_per_second, col="azure4")
+  if ("uv" %in% whatDischarge$data_type_cd){
+    if(whatDischarge$begin_date[whatDischarge$data_type_cd == "uv"] < End){
+      if(all(!is.na(instantFlow))){
+        lines(instantFlow$dateTime, instantFlow[,valueInst], col="azure4")
+      }      
     }
   } 
   polygon(as.POSIXct(c(HYSEPReturn$Dates[1], HYSEPReturn$Dates,HYSEPReturn$Dates[length(HYSEPReturn$Dates)])), c(0,HYSEPReturn[[HYSEPcolNames[1]]],0), col="beige")
   
   points(sampleDates$maxSampleTime[sampleDates[baseflowColumns] == "Event"], 
-         sampleDates$Discharge_cubic_feet_per_second[sampleDates[baseflowColumns[1]] == "Event"],
+         sampleDates[sampleDates[baseflowColumns[1]] == "Event",value],
          pch=16,col="red",cex=1)
   points(sampleDates$maxSampleTime[sampleDates[baseflowColumns] == "Baseflow"], 
-         sampleDates$Discharge_cubic_feet_per_second[sampleDates[baseflowColumns[1]] == "Baseflow"],
+         sampleDates[sampleDates[baseflowColumns[1]] == "Baseflow",value],
          pch=16,col="blue",cex=1)
   text(grconvertX(0.9, from = "npc", to = "user"), grconvertY(0.9, from = "npc", to = "user"), HYSEPcolNames[1])
   axis(1,labels=FALSE, at=as.POSIXct(Daily$Date)[indexForX],tck = 0.02)
@@ -103,13 +109,13 @@ plotBaseflow <- function(sampleDates,Daily,INFO,site,HYSEPReturn,
   }
   
   if(nrow(composites) > 0){
-    segments(composites$ActivityStartDateGiven, composites$Discharge_cubic_feet_per_second, 
-             composites$ActivityEndDateGiven, composites$Discharge_cubic_feet_per_second)
+    segments(composites$ActivityStartDateGiven, composites[,value], 
+             composites$ActivityEndDateGiven, composites[,value])
     delta = 0.01*(par('usr')[4] - par('usr')[3])
-    segments(composites$ActivityStartDateGiven, composites$Discharge_cubic_feet_per_second+delta, 
-             composites$ActivityStartDateGiven, composites$Discharge_cubic_feet_per_second-delta)
-    segments(composites$ActivityEndDateGiven, composites$Discharge_cubic_feet_per_second+delta, 
-             composites$ActivityEndDateGiven, composites$Discharge_cubic_feet_per_second-delta)
+    segments(composites$ActivityStartDateGiven, composites[,value]+delta, 
+             composites$ActivityStartDateGiven, composites[,value]-delta)
+    segments(composites$ActivityEndDateGiven, composites[,value]+delta, 
+             composites$ActivityEndDateGiven, composites[,value]-delta)
   }
 
   

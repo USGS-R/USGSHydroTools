@@ -105,7 +105,8 @@
 #'              xmin,xmax,ymin,ymax,
 #'              xleft,ytop,
 #'              mainTitle=mainTitle,includeLabels=TRUE,
-#'              labels=labelVar, offsetLat=offsetLatVar, offsetLon=offsetLonVar,offsetLineLat=offsetLineLatVar,
+#'              labels=labelVar, offsetLat=offsetLatVar, 
+#'              offsetLon=offsetLonVar,offsetLineLat=offsetLineLatVar,
 #'              offsetLineLon=offsetLineLonVar,LegCex=LegCex,titlePos=titlePos)
 #'dev.off()
 #'#To view the produced plot on a Windows machine, us the following command:

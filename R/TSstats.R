@@ -41,7 +41,9 @@
 #' @examples
 #' flowData <- flowData
 #' sampleData <- sampleData
-#' TSstats(df=flowData,date="pdate",varnames="Q",dates=sampleData,starttime="Hbpdate",times=c(1,3,6,12,24),units="hrs",stats.return=c("mean","max","sd"),out.varname="Q")
+#' TSstats(df=flowData,date="pdate",varnames="Q",
+#'         dates=sampleData,starttime="Hbpdate",times=c(1,3,6,12,24),
+#'         units="hrs",stats.return=c("mean","max","sd"),out.varname="Q")
 #' @export
 TSstats <- function(df,                     #Unit values file
                     date="date",            #Date column in POSIX format in unit values file
