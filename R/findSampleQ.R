@@ -10,7 +10,7 @@
 #' @param value character name of discharge column
 #' @return sampleDates
 #' @import dataRetrieval
-#' @import USGSwsBase
+#' @importFrom smwrBase mergeNearest
 #' @export
 #' @examples
 #' library(dataRetrieval)
