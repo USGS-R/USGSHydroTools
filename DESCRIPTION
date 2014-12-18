@@ -20,7 +20,7 @@ Imports:
     rgdal,
     sp,
     dataRetrieval (>= 2.0.1),
-    USGSwsBase (>= 0.9.0),
+    smwrBase,
     raster,
     rgeos
 Suggests:
