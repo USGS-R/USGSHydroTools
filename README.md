@@ -19,7 +19,7 @@ install.packages(c("rgdal","rgeos","sp","dataRetrieval","raster"))
 
 Once those are installed, use the package `devtools` to install via gitHub:
 ```r
-install.packages("smwrBase", repo="http://usgs-r.github.com")
+install.packages("smwrBase", repos=c("https://owi.usgs.gov/R",getOption("repos")))
 library(devtools)
 install_github("USGS-R/USGSHydroTools")
 ```
