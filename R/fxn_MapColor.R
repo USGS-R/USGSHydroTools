@@ -39,6 +39,30 @@
 #' @param DL numeric vector of detection limits
 #' @param titlePos position of title as numeric. Assigns the line() argument in mtext(). 
 #' @keywords map spatial color
+#' @importFrom graphics abline
+#' @importFrom graphics axis
+#' @importFrom graphics axis.POSIXct
+#' @importFrom graphics grconvertX
+#' @importFrom graphics grconvertY
+#' @importFrom graphics layout
+#' @importFrom graphics legend
+#' @importFrom graphics lines
+#' @importFrom graphics mtext
+#' @importFrom graphics par
+#' @importFrom graphics points
+#' @importFrom graphics polygon
+#' @importFrom graphics rect
+#' @importFrom graphics segments
+#' @importFrom graphics text
+#' @importFrom graphics title
+#' @importFrom methods as
+#' @importFrom stats aggregate
+#' @importFrom stats cor
+#' @importFrom stats lowess
+#' @importFrom stats median
+#' @importFrom stats quantile
+#' @importFrom stats sd
+#' @importFrom stats setNames
 #' @return NULL
 #' @import rgdal
 #' @import sp
