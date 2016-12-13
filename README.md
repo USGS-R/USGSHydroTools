@@ -17,12 +17,43 @@ setRepositories(ind = c(1,6))
 install.packages(c("rgdal","rgeos","sp","dataRetrieval","raster"))
 ```	
 
-Once those are installed, use the package `devtools` to install via gitHub:
-```r
-install.packages("smwrBase", repos=c("https://owi.usgs.gov/R",getOption("repos")))
-library(devtools)
-install_github("USGS-R/USGSHydroTools")
-```
+##Package Installation
+To install the `USGSHydroTools` package:
+
+1. Install R (version 3.0 or greater) from: [https://cran.r-project.org/](https://cran.r-project.org/)
+
+2. Install RStudio from: [https://www.rstudio.com/products/rstudio/download/](https://www.rstudio.com/products/rstudio/download/)
+
+3. Add the USGS R repository to your "Rprofile" to get automatic updates. Run the following code:
+  
+  ```r
+  rprofile_path = file.path(Sys.getenv("HOME"), ".Rprofile")
+  write('\noptions(repos=c(getOption(\'repos\'),
+    CRAN=\'https://cloud.r-project.org\',
+    USGS=\'https://owi.usgs.gov/R\'))\n',
+      rprofile_path, 
+      append =  TRUE)
+
+  cat('Your Rprofile has been updated to include GRAN.
+    Please restart R for changes to take effect.')
+  ```
+
+4. Restart R!
+
+5. In the RStudio "Console" window (usually left or lower-left), run the following command:
+
+  ```r
+  install.packages("USGSHydroTools")
+  ```
+  
+
+6. Update often. Next time you update your packages, `USGSHydroTools` will automatically update:
+
+   ![update](images/update.png)
+
+7. Make sure to keep your version of R up-to-date. CRAN and the USGS repository will only update packages for the most recent version of R, and one version behind that.
+
+
 
 Disclaimer
 ----------
