@@ -29,8 +29,9 @@ direct flow graphing (useful for sites impacted by seiche)}
 \item{CVars}{vector of strings that represent the variables in Conc to include
 in the graphs in the second panel}
 
-\item{CDateVar}{column name in Conc for sample dates and times in POSIXct
-#'@param CVarsDisplay variable names from CVars to be displayed on the legend}
+\item{CDateVar}{column name in Conc for sample dates and times in POSIXct}
+
+\item{CVarsDisplay}{variable names from CVars to be displayed on the legend}
 
 \item{dates}{dataframe with beginning and ending sample dates and times 
 and beginning and ending hydrograph dates and times}

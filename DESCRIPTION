@@ -1,6 +1,6 @@
 Package: USGSHydroTools
 Type: Package
-Title: Collection of functions for hydrological analysis.
+Title: Collection of functions for hydrological analysis
 Version: 1.2.1
 Date: 2014-12-18
 Author: Steve Corsi

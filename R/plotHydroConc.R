@@ -17,7 +17,7 @@
 #'@param CVars vector of strings that represent the variables in Conc to include
 #'in the graphs in the second panel
 #'@param CDateVar column name in Conc for sample dates and times in POSIXct
-#'#'@param CVarsDisplay variable names from CVars to be displayed on the legend
+#'@param CVarsDisplay variable names from CVars to be displayed on the legend
 #'@param dates dataframe with beginning and ending sample dates and times 
 #'and beginning and ending hydrograph dates and times
 #'@param sampDates vector of length two that contains strings representing
