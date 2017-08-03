@@ -72,4 +72,3 @@ dev.off()
 # To see the created pdf, use the following commend:
 \dontrun{shell.exec("GreatLakesPlot.pdf")}
 }
-

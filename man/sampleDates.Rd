@@ -11,4 +11,3 @@ Example sample dates data.
 Steve Corsi \email{srcorsi@usgs.gov}
 }
 \keyword{instantaneous}
-

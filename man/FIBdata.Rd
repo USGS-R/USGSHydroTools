@@ -12,4 +12,3 @@ Steve Corsi \email{srcorsi@usgs.gov}
 }
 \keyword{bacteria}
 \keyword{data}
-

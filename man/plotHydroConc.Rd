@@ -73,4 +73,3 @@ in the lower panel with corresponding date axes for the top and bottom panels
 #Add example
 
 }
-

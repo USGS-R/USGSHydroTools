@@ -37,4 +37,3 @@ WQcompos(df.samples=FIBcomposData,sampleID="SampleID",
        parms=c("Ecoli","Enterococci"), volume="event.vol",
        bdate="SSdate",edate="SEdate",codes="SampleID")
 }
-

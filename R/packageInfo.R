@@ -1,3 +1,12 @@
+.onAttach <- function(libname, pkgname) {
+  packageStartupMessage(paste(strwrap(
+    'USGS Research Package: 
+    https://owi.usgs.gov/R/packages.html#research
+    Report issues and ask questions:
+    https://github.com/USGS-R/USGSHydroTools/issues'),
+    collapse='\n'))
+}
+
 #' Example sample data.
 #'
 #' Example sample data. Needs more info.

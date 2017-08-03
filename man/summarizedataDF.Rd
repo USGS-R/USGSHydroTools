@@ -30,4 +30,3 @@ df <- data.frame(site=c("1","x","2","1","x","2"),
                    "2011-01-01","2011-01-02","2011-01-02","2011-01-02")))
 sumDF <- summarizedataDF(df, "site", "conc", "dates")
 }
-

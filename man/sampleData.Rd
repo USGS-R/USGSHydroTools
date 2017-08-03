@@ -11,4 +11,3 @@ Example sample data. Needs more info.
 Steve Corsi \email{srcorsi@usgs.gov}
 }
 \keyword{discrete}
-

@@ -11,4 +11,3 @@ Example HYSEP output data. Needs more info.
 Steve Corsi \email{srcorsi@usgs.gov}
 }
 \keyword{instantaneous}
-

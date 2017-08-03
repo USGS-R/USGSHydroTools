@@ -50,4 +50,3 @@ LoadCompEvent(df.samples=WQdata,Conc="Total_P",sample.time="dateTime",Conc2liter
 df.Q=flowData,Q="Q",Q.time="pdate",Q2liters=28.3168466,
 df.events=events,event.bdate="pbdate",event.edate="pedate")
 }
-

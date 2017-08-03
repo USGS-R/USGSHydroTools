@@ -49,4 +49,3 @@ HYSEPReturn <- exampleHYSEP
 sampleDates <- determineHYSEPEvents(HYSEPReturn, sampleDates,0.8)
 plotHYSEPOverview(sampleDates,Daily,INFO,site,HYSEPReturn)
 }
-

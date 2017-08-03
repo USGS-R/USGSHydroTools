@@ -25,4 +25,3 @@ Collection of functions for hydrological analysis.
 \author{
 Steve Corsi \email{srcorsi@usgs.gov}
 }
-

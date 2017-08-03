@@ -33,4 +33,3 @@ startEnd <- getMaxStartEnd(Daily)
 Start <- startEnd$Start
 End <- startEnd$End
 }
-

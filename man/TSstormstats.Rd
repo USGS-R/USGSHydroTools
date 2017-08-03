@@ -60,4 +60,3 @@ TSstormstats(df=flowData,date="pdate",varname="Q",
       dates=sampleData,starttime="Hbpdate",endtime="Hepdate",
       stats.return=c("mean","max","sd"),out.varname="Q")
 }
-

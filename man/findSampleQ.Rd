@@ -33,4 +33,3 @@ Daily <- readNWISdv(site,'00060', Start_extend, End_extend)
 Daily <- renameNWISColumns(Daily)
 sampleDates <- findSampleQ(site, sampleDates, Daily)
 }
-
