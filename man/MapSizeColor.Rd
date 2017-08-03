@@ -155,4 +155,3 @@ dev.off()
 \keyword{map}
 \keyword{size}
 \keyword{spatial}
-

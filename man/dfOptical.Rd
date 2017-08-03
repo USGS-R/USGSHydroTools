@@ -11,4 +11,3 @@ Example data with response and predictor variables
 Steve Corsi \email{srcorsi@usgs.gov}
 }
 \keyword{correlation}
-

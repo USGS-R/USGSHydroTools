@@ -11,4 +11,3 @@ Example instantaneous (unit value) flow data from Menomonee River at Wauwatosa, 
 Steve Corsi \email{srcorsi@usgs.gov}
 }
 \keyword{instantaneous}
-

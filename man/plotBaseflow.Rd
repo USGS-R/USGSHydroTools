@@ -75,4 +75,3 @@ plotBaseflow(sampleDates,Daily,INFO,site,HYSEPReturn,
              HYSEPcolNames = "LocalMin",plotTitle=TRUE,
              instantFlow=instantFlow,whatDischarge=whatDischarge,xlabel=FALSE)
 }
-

@@ -13,4 +13,3 @@ Steve Corsi \email{srcorsi@usgs.gov}
 \keyword{data}
 \keyword{quality}
 \keyword{water}
-

@@ -31,4 +31,3 @@ polShape <- retList$politicalBoundary
 riverShape <- retList$rivers
 lakeShape <- retList$lakes
 }
-

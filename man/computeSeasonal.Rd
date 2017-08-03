@@ -24,4 +24,3 @@ sampleData <- sampleData
 sampleData$bpdate <- as.POSIXlt(sampleData$Hbpdate) #convert from POSIXct to POSIXlt
 computeSeasonal(df=sampleData,date="bpdate",return.var="bdate")
 }
-

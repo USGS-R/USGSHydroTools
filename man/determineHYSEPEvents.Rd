@@ -43,4 +43,3 @@ DA_mi <- INFO$drain_area_va
 HYSEPReturn <- exampleHYSEP
 sampleDates <- determineHYSEPEvents(HYSEPReturn, sampleDates,0.8)
 }
-

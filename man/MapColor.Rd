@@ -135,4 +135,3 @@ dev.off()
 \keyword{color}
 \keyword{map}
 \keyword{spatial}
-

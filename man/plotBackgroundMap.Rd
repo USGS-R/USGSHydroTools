@@ -23,4 +23,3 @@ ymax <- 43+20/60 #MMSD
 retList <- clipShape(xmin,xmax,ymin,ymax)
 plotBackgroundMap(retList)
 }
-

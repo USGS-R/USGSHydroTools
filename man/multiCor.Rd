@@ -31,4 +31,3 @@ The output is a dataframe ordered by highest to lowest correlation
 data <- dfOptical
 multiCor(data,"logEColi",names(data)[-1],"spearman")
 }
-

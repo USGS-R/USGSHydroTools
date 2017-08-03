@@ -10,4 +10,3 @@ the labels on a map and lines from the data points to the labels
 }
 \keyword{data}
 \keyword{station}
-
