@@ -111,18 +111,22 @@ TSstats <- function(df,                     #Unit values file
           subdata <- df[which(df[,date]>= dates[i,"parfdate"]
                               & df[,date] < dates[i,starttime]),]
           
-          if(stats.get[,"mean"]) varstats[i,"mean"] <- mean(subdata[,varname],na.rm=T)
-          if(stats.get[,"max"]) varstats[i,"max"] <- max(subdata[,varname],na.rm=T)
-          if(stats.get[,"min"]) varstats[i,"min"] <- min(subdata[,varname],na.rm=T)
-          if(stats.get[,"median"]) varstats[i,"median"] <- median(subdata[,varname],na.rm=T)
-          if(stats.get[,"sum"]) varstats[i,"sum"] <- sum(subdata[,varname],na.rm=T)
-          if(stats.get[,"sd"]) varstats[i,"sd"] <- sd(subdata[,varname],na.rm=T)
-          if(stats.get[,"maxdiff"]) varstats[i,"maxdiff"] <- max(subdata[,varname],na.rm=T)-min(subdata[,varname],na.rm=T)
-          if(stats.get[,"difference"]) varstats[i,"difference"] <- subdata[nrow(subdata),varname] - subdata[1,varname]
+          if(nrow(subdata) > 0){
+            if(stats.get[,"mean"]) varstats[i,"mean"] <- mean(subdata[,varname],na.rm=T)
+            if(stats.get[,"max"]) varstats[i,"max"] <- max(subdata[,varname],na.rm=T)
+            if(stats.get[,"min"]) varstats[i,"min"] <- min(subdata[,varname],na.rm=T)
+            if(stats.get[,"median"]) varstats[i,"median"] <- median(subdata[,varname],na.rm=T)
+            if(stats.get[,"sum"]) varstats[i,"sum"] <- sum(subdata[,varname],na.rm=T)
+            if(stats.get[,"sd"]) varstats[i,"sd"] <- sd(subdata[,varname],na.rm=T)
+            if(stats.get[,"maxdiff"]) varstats[i,"maxdiff"] <- max(subdata[,varname],na.rm=T)-min(subdata[,varname],na.rm=T)
+            if(stats.get[,"difference"]) varstats[i,"difference"] <- subdata[nrow(subdata),varname] - subdata[1,varname]
+          }
         } else {
           if(stats.get[,"nearprev"]) {
             subdata <- df[which(df[,date] < dates[i,starttime]),]
-            varstats[i,"nearprev"] <- (subdata[nrow(subdata),varname])
+            if(nrow(subdata) > 0){
+              varstats[i,"nearprev"] <- (subdata[nrow(subdata),varname])
+            }
           }
           
           if(stats.get[,"nearest"]){
