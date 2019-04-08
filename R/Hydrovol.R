@@ -54,7 +54,7 @@ Hydrovol <- function(dfQ, Q="Q", time="pdate", df.dates, bdate="bpdate",edate="e
       time1 <- subdfQ[1,time]
       time2 <- subdfQ[2,time]
       stime <- df.dates[i,bdate]
-      qest <- (Q2-Q1)*(as.numeric(difftime(stime,time1)))/(as.numeric(difftime(time2,time1)))+Q1
+      qest <- (Q2-Q1)*(as.numeric(difftime(stime,time1, units = 'mins')))/(as.numeric(difftime(time2,time1, units = 'mins')))+Q1
       
       subdfQ[1,Q] <- qest
       subdfQ[1,time] <- df.dates[i,bdate]
@@ -67,7 +67,7 @@ Hydrovol <- function(dfQ, Q="Q", time="pdate", df.dates, bdate="bpdate",edate="e
       time1 <- subdfQ[(sub.rows-1),time]
       time2 <- subdfQ[sub.rows,time]
       stime <- df.dates[i,edate]
-      qest <- (Q2-Q1)*(as.numeric(difftime(stime,time1)))/(as.numeric(difftime(time2,time1)))+Q1
+      qest <- (Q2-Q1)*(as.numeric(difftime(stime,time1, units = 'mins')))/(as.numeric(difftime(time2,time1, units = 'mins')))+Q1
       
       subdfQ[sub.rows,Q] <- qest
       subdfQ[sub.rows,time] <- df.dates[i,edate]
