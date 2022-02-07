@@ -42,6 +42,7 @@
 #'@importFrom graphics axis
 #'@importFrom graphics axis.POSIXct
 #' @importFrom graphics grconvertX
+#' @importFrom graphics grconvertY
 #' @importFrom graphics layout
 #' @importFrom graphics legend
 #' @importFrom graphics lines

@@ -37,13 +37,12 @@ sampleDates dataframe
 Plot sliding, fixed, and local_min output of flow, with daily and instantaneous flow (when available).
 }
 \examples{
-library(dataRetrieval)
 site <- "04085427"
 sampleDates <- sampleDates
 Start_extend <- as.character(as.Date(min(sampleDates$ActivityStartDateGiven, na.rm=TRUE))-60)
 End_extend <- as.character(as.Date(max(sampleDates$ActivityStartDateGiven, na.rm=TRUE))+60)
-Daily <- readNWISdv(site,'00060', Start_extend, End_extend)
-Daily <- renameNWISColumns(Daily)
+Daily <- dataRetrieval::readNWISdv(site,'00060', Start_extend, End_extend)
+Daily <- dataRetrieval::renameNWISColumns(Daily)
 sampleDates <- findSampleQ(site, sampleDates, Daily)
 startEnd <- getMaxStartEnd(Daily)
 Start <- startEnd$Start

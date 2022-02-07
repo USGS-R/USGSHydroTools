@@ -9,20 +9,17 @@
 #' @param localDaily dataframe returned from dataRetrieval
 #' @param value character name of discharge column
 #' @return sampleDates
-#' @import dataRetrieval
-#' @importFrom smwrBase mergeNearest
 #' @export
 #' @examples
-#' library(dataRetrieval)
 #' site <- "04085427"
 #' sampleDates <- sampleDates
 #' Start_extend <- as.character(as.Date(min(sampleDates$ActivityStartDateGiven, na.rm=TRUE))-60)
 #' End_extend <- as.character(as.Date(max(sampleDates$ActivityStartDateGiven, na.rm=TRUE))+60)
-#' Daily <- readNWISdv(site,'00060', Start_extend, End_extend)
-#' Daily <- renameNWISColumns(Daily)
+#' Daily <- dataRetrieval::readNWISdv(site,'00060', Start_extend, End_extend)
+#' Daily <- dataRetrieval::renameNWISColumns(Daily)
 #' sampleDates <- findSampleQ(site, sampleDates, Daily)
 findSampleQ <- function(site, sampleDates,localDaily,value="Flow"){
-  whatDischarge <- whatNWISdata(site)
+  whatDischarge <- dataRetrieval::whatNWISdata(siteNumber = site)
   whatDischarge <-  whatDischarge[whatDischarge$parm_cd == "00060", ]  
   
   Start <- as.character(as.Date(min(sampleDates$ActivityStartDateGiven, na.rm=TRUE)))
@@ -34,10 +31,10 @@ findSampleQ <- function(site, sampleDates,localDaily,value="Flow"){
   attributes(sampleDates$ActivityEndDateGiven)$tzone <- "UTC"
 
   if ("uv" %in% whatDischarge$data_type_cd){
-    instantFlow <- readNWISuv(site,"00060",Start,End)
-    instantFlow <- renameNWISColumns(instantFlow)
+    instantFlow <- dataRetrieval::readNWISuv(site,"00060",Start,End)
+    instantFlow <- dataRetrieval::renameNWISColumns(instantFlow)
     
-    sampleDates <- mergeNearest(sampleDates, "ActivityStartDateGiven",all.left=TRUE,
+    sampleDates <- smwrBase::mergeNearest(sampleDates, "ActivityStartDateGiven",all.left=TRUE,
                                 right=instantFlow, dates.right="dateTime",max.diff="3 hours")
     row.names(sampleDates) <- NULL
 
@@ -45,7 +42,7 @@ findSampleQ <- function(site, sampleDates,localDaily,value="Flow"){
     ivGap$Date <- as.Date(ivGap$ActivityStartDateGiven)
     
     if(nrow(ivGap) > 0){
-      ivGap <- mergeNearest(ivGap, "Date", all.left=TRUE,
+      ivGap <- smwrBase::mergeNearest(ivGap, "Date", all.left=TRUE,
                             right=localDaily, dates.right="Date",max.diff="3 hours")
       ivGapIndex <- which(is.na(sampleDates[,"Flow_Inst"]))
       sampleDates[ivGapIndex,value] <- ivGap$Flow_Inst
@@ -54,7 +51,7 @@ findSampleQ <- function(site, sampleDates,localDaily,value="Flow"){
   } else {
     #Not tested:
     sampleDates$Date <- as.Date(sampleDates$ActivityStartDateGiven)
-    sampleDates <- mergeNearest(sampleDates, "Date", all.left=TRUE,
+    sampleDates <- smwrBase::mergeNearest(sampleDates, "Date", all.left=TRUE,
                                 right=localDaily, dates.right="Date",max.diff="3 hours")
 #     sampleDates$Date <- as.Date(sampleDates$Date.left)
     sampleDates[,value] <- sampleDates$Q
