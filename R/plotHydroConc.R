@@ -38,6 +38,20 @@
 #'@param title1 Line 1 of plot title
 #'@param title2 Line 2 of plot title
 #'@export
+#'@importFrom graphics abline
+#'@importFrom graphics axis
+#'@importFrom graphics axis.POSIXct
+#' @importFrom graphics grconvertX
+#' @importFrom graphics layout
+#' @importFrom graphics legend
+#' @importFrom graphics lines
+#' @importFrom graphics mtext
+#' @importFrom graphics par
+#' @importFrom graphics points
+#' @importFrom graphics polygon
+#' @importFrom graphics segments
+#' @importFrom graphics text
+#' @importFrom graphics title
 #'@examples
 #'#Add example
 #'

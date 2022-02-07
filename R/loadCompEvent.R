@@ -19,6 +19,11 @@
 #' @param df.events dataframe with begin and end dates defining the event period
 #' @param event.bdate character string with name of variable defining beginning date for events in POSIXct format
 #' @param event.edate character string with name of variable defining end date for events in POSIXct format
+#' @importFrom stats aggregate
+#' @importFrom stats cor
+#' @importFrom stats lowess
+#' @importFrom stats median
+#' @importFrom stats sd
 #' @examples
 #' WQdata <- WQdata
 #' flowData <- flowData
