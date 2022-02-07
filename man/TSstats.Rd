@@ -4,10 +4,21 @@
 \alias{TSstats}
 \title{Compute various antecedent summary statistics from time series data for specified windows of time}
 \usage{
-TSstats(df, date = "date", varnames, dates, starttime = "psdate",
-  times = c(1, 2), units = "hours", stats.return = c("mean"),
-  subdfvar = "", subdfvalue = "", subdatesvar = "", subdatesvalue = "",
-  out.varname = "")
+TSstats(
+  df,
+  date = "date",
+  varnames,
+  dates,
+  starttime = "psdate",
+  times = c(1, 2),
+  units = "hours",
+  stats.return = c("mean"),
+  subdfvar = "",
+  subdfvalue = "",
+  subdatesvar = "",
+  subdatesvalue = "",
+  out.varname = ""
+)
 }
 \arguments{
 \item{df}{dataframe Unit values file}

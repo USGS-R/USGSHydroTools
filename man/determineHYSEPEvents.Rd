@@ -4,8 +4,7 @@
 \alias{determineHYSEPEvents}
 \title{Determine baseflow and events from HYSEP output}
 \usage{
-determineHYSEPEvents(HYSEPReturn, sampleDates, percent = 0.8,
-  value = "Flow")
+determineHYSEPEvents(HYSEPReturn, sampleDates, percent = 0.8, value = "Flow")
 }
 \arguments{
 \item{HYSEPReturn}{dataframe returned from hysep function (in DVstats package)}
@@ -26,19 +25,18 @@ is to find input value to use in a call to HYSEP (from package DVstats). If ther
 the function will look for the largest continous gap.
 }
 \examples{
-library(dataRetrieval)
 site <- "04085427"
 sampleDates <- sampleDates
 Start_extend <- as.character(as.Date(min(sampleDates$ActivityStartDateGiven, na.rm=TRUE))-60)
 End_extend <- as.character(as.Date(max(sampleDates$ActivityStartDateGiven, na.rm=TRUE))+60)
-Daily <- readNWISdv(site,'00060', Start_extend, End_extend)
-Daily <- renameNWISColumns(Daily)
+Daily <- dataRetrieval::readNWISdv(site,'00060', Start_extend, End_extend)
+Daily <- dataRetrieval::renameNWISColumns(Daily)
 sampleDates <- findSampleQ(site, sampleDates, Daily)
 startEnd <- getMaxStartEnd(Daily)
 Start <- startEnd$Start
 End <- startEnd$End
 naFreeDaily <- Daily[!is.na(Daily$Flow),]
-INFO <- readNWISsite(site)
+INFO <- dataRetrieval::readNWISsite(site)
 DA_mi <- INFO$drain_area_va
 HYSEPReturn <- exampleHYSEP
 sampleDates <- determineHYSEPEvents(HYSEPReturn, sampleDates,0.8)

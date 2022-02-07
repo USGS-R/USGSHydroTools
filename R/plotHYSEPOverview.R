@@ -12,19 +12,18 @@
 #' @return sampleDates dataframe 
 #' @export
 #' @examples
-#' library(dataRetrieval)
 #' site <- "04085427"
 #' sampleDates <- sampleDates
 #' Start_extend <- as.character(as.Date(min(sampleDates$ActivityStartDateGiven, na.rm=TRUE))-60)
 #' End_extend <- as.character(as.Date(max(sampleDates$ActivityStartDateGiven, na.rm=TRUE))+60)
-#' Daily <- readNWISdv(site,'00060', Start_extend, End_extend)
-#' Daily <- renameNWISColumns(Daily)
+#' Daily <- dataRetrieval::readNWISdv(site,'00060', Start_extend, End_extend)
+#' Daily <- dataRetrieval::renameNWISColumns(Daily)
 #' sampleDates <- findSampleQ(site, sampleDates, Daily)
 #' startEnd <- getMaxStartEnd(Daily)
 #' Start <- startEnd$Start
 #' End <- startEnd$End
 #' naFreeDaily <- Daily[!is.na(Daily$Flow),]
-#' INFO <- readNWISsite(site)
+#' INFO <- dataRetrieval::readNWISsite(siteNumber = site)
 #' DA_mi <- as.numeric(INFO$drain_area_va)
 #' HYSEPReturn <- exampleHYSEP
 #' sampleDates <- determineHYSEPEvents(HYSEPReturn, sampleDates,0.8)
@@ -34,7 +33,7 @@ plotHYSEPOverview <- function(sampleDates,Daily,INFO,site,HYSEPReturn,
                                             "flowConditionHYSEP_Sliding"),
                               HYSEPcolNames = c("LocalMin","Fixed","Sliding")){
   
-  whatDischarge <- whatNWISdata(site)
+  whatDischarge <- dataRetrieval::whatNWISdata(siteNumber = site)
   whatDischarge <-  whatDischarge[whatDischarge$parm_cd == "00060", ]  
   
   tz <- attr(sampleDates$ActivityStartDateGiven, "tzone")
@@ -47,10 +46,10 @@ plotHYSEPOverview <- function(sampleDates,Daily,INFO,site,HYSEPReturn,
   
   instantFlow <- NA
   
-  if ("uv" %in% whatDischarge$data_type_cd){
-    if(whatDischarge$begin_date[whatDischarge$data_type_cd == "uv"] < End){
-      instantFlow <- readNWISuv(site,"00060",Start,End)
-      instantFlow <- renameNWISColumns(instantFlow)
+  if (any("uv" %in% whatDischarge$data_type_cd, na.rm = TRUE)){
+    if(any(whatDischarge$begin_date[whatDischarge$data_type_cd == "uv"] < End, na.rm = TRUE)){
+      instantFlow <- dataRetrieval::readNWISuv(site,"00060",Start,End)
+      instantFlow <- dataRetrieval::renameNWISColumns(instantFlow)
 #       instantFlow$dateTime <- as.POSIXct(strptime(instantFlow$dateTime, format="%Y-%m-%d %H:%M:%S"), tz="UTC")
     }
   }

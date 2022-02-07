@@ -5,7 +5,7 @@
 
 |Linux|Test Coverage| USGS Status |
 |----------|------------|------------|
-| [![travis](https://travis-ci.org/USGS-R/USGSHydroTools.svg?branch=master)](https://travis-ci.org/USGS-R/USGSHydroTools)|[![Coverage Status](https://coveralls.io/repos/github/USGS-R/USGSHydroTools/badge.svg?branch=master)](https://coveralls.io/github/USGS-R/USGSHydroTools?branch=master)|[![status](https://img.shields.io/badge/USGS-Research-blue.svg)](https://owi.usgs.gov/R/packages.html#research)|
+[![Coverage Status](https://coveralls.io/repos/github/USGS-R/USGSHydroTools/badge.svg?branch=master)](https://coveralls.io/github/USGS-R/USGSHydroTools?branch=master)|[![status](https://img.shields.io/badge/USGS-Research-blue.svg)](https://owi.usgs.gov/R/packages.html#research)|
 
 ### Reporting bugs
 

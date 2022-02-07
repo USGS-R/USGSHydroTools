@@ -4,10 +4,20 @@
 \alias{TSstormstats}
 \title{Compute various time-series summary statistics between specified time periods}
 \usage{
-TSstormstats(df, date = "pdate", varname, dates, starttime = "Ebpdate",
-  endtime = "Eepdate", stats.return = c("mean"), subdfvar = "",
-  subdfvalue = "", subdatesvar = "", subdatesvalue = "",
-  out.varname = "")
+TSstormstats(
+  df,
+  date = "pdate",
+  varname,
+  dates,
+  starttime = "Ebpdate",
+  endtime = "Eepdate",
+  stats.return = c("mean"),
+  subdfvar = "",
+  subdfvalue = "",
+  subdatesvar = "",
+  subdatesvalue = "",
+  out.varname = ""
+)
 }
 \arguments{
 \item{df}{dataframe with unit values values and date/time in POSIX}

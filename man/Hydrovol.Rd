@@ -4,9 +4,17 @@
 \alias{Hydrovol}
 \title{Hydrovol}
 \usage{
-Hydrovol(dfQ, Q = "Q", time = "pdate", df.dates, bdate = "bpdate",
-  edate = "epdate", volume = "event.vol", Qmax = "Qmax",
-  duration = "Eduration")
+Hydrovol(
+  dfQ,
+  Q = "Q",
+  time = "pdate",
+  df.dates,
+  bdate = "bpdate",
+  edate = "epdate",
+  volume = "event.vol",
+  Qmax = "Qmax",
+  duration = "Eduration"
+)
 }
 \arguments{
 \item{dfQ}{dataframe with Q and time}

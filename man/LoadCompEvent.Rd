@@ -4,8 +4,19 @@
 \alias{LoadCompEvent}
 \title{LoadCompEvent}
 \usage{
-LoadCompEvent(df.samples, Conc, sample.time, Conc2liters, df.Q, Q, Q.time,
-  Q2liters, df.events, event.bdate, event.edate)
+LoadCompEvent(
+  df.samples,
+  Conc,
+  sample.time,
+  Conc2liters,
+  df.Q,
+  Q,
+  Q.time,
+  Q2liters,
+  df.events,
+  event.bdate,
+  event.edate
+)
 }
 \arguments{
 \item{df.samples}{dataframe with discrete sample results and dates/times}

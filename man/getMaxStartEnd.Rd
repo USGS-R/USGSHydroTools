@@ -22,13 +22,12 @@ is to find input value to use in a call to HYSEP (from package DVStats). If ther
 the function will look for the largest continous gap.
 }
 \examples{
-library(dataRetrieval)
 site <- "04085427"
 sampleDates <- sampleDates
 Start_extend <- as.character(as.Date(min(sampleDates$ActivityStartDateGiven, na.rm=TRUE))-60)
 End_extend <- as.character(as.Date(max(sampleDates$ActivityStartDateGiven, na.rm=TRUE))+60)
-Daily <- readNWISdv(site,'00060', Start_extend, End_extend)
-Daily <- renameNWISColumns(Daily)
+Daily <- dataRetrieval::readNWISdv(site,'00060', Start_extend, End_extend)
+Daily <- dataRetrieval::renameNWISColumns(Daily)
 startEnd <- getMaxStartEnd(Daily)
 Start <- startEnd$Start
 End <- startEnd$End
