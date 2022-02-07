@@ -23,7 +23,7 @@
 #' Start <- startEnd$Start
 #' End <- startEnd$End
 #' naFreeDaily <- Daily[!is.na(Daily$Flow),]
-#' INFO <- readNWISsite(site)
+#' INFO <- dataRetrieval::readNWISsite(siteNumber = site)
 #' DA_mi <- as.numeric(INFO$drain_area_va)
 #' HYSEPReturn <- exampleHYSEP
 #' sampleDates <- determineHYSEPEvents(HYSEPReturn, sampleDates,0.8)
