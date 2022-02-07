@@ -4,10 +4,29 @@
 \alias{plotHydroConc}
 \title{plotHydroConc}
 \usage{
-plotHydroConc(Q, QVars, QDateVars, smooth, sites, Conc, CVars, CDateVar,
-  CVarsDisplay, dates, sampDates, eventDates, Qcols, Ccols, leftBuffer,
-  rightBuffer, concLines = TRUE, Qylab = "Discharge (cfs)",
-  Cylab = "Concentration", title1 = "Flow", title2 = "and concentration")
+plotHydroConc(
+  Q,
+  QVars,
+  QDateVars,
+  smooth,
+  sites,
+  Conc,
+  CVars,
+  CDateVar,
+  CVarsDisplay,
+  dates,
+  sampDates,
+  eventDates,
+  Qcols,
+  Ccols,
+  leftBuffer,
+  rightBuffer,
+  concLines = TRUE,
+  Qylab = "Discharge (cfs)",
+  Cylab = "Concentration",
+  title1 = "Flow",
+  title2 = "and concentration"
+)
 }
 \arguments{
 \item{Q}{dataframe list with flow variables and POSIXct date variables. The 

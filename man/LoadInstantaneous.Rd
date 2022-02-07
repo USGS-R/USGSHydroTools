@@ -4,8 +4,16 @@
 \alias{LoadInstantaneous}
 \title{LoadInstantaneous}
 \usage{
-LoadInstantaneous(df.samples, Conc, sample.time, Conc2liters, df.Q, Q, Q.time,
-  Q2liters)
+LoadInstantaneous(
+  df.samples,
+  Conc,
+  sample.time,
+  Conc2liters,
+  df.Q,
+  Q,
+  Q.time,
+  Q2liters
+)
 }
 \arguments{
 \item{df.samples}{dataframe with discrete sample results and dates/times}

@@ -4,11 +4,22 @@
 \alias{plotBaseflow}
 \title{Plot baseflow/event plot}
 \usage{
-plotBaseflow(sampleDates, Daily, INFO, site, HYSEPReturn,
+plotBaseflow(
+  sampleDates,
+  Daily,
+  INFO,
+  site,
+  HYSEPReturn,
   baseflowColumns = "flowConditionHYSEP_localMin",
-  HYSEPcolNames = "LocalMin", xlabel = TRUE, showLegend = TRUE,
-  plotTitle = TRUE, instantFlow = NA, whatDischarge, value = "Flow",
-  valueInst = "Flow_Inst")
+  HYSEPcolNames = "LocalMin",
+  xlabel = TRUE,
+  showLegend = TRUE,
+  plotTitle = TRUE,
+  instantFlow = NA,
+  whatDischarge,
+  value = "Flow",
+  valueInst = "Flow_Inst"
+)
 }
 \arguments{
 \item{sampleDates}{dataframe with two columns "Discharge_cubic_feet_per_second" and "maxSampleTime"}

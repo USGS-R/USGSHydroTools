@@ -4,10 +4,16 @@
 \alias{plotHYSEPOverview}
 \title{Plot 3 baseflow/event plots from hysep output}
 \usage{
-plotHYSEPOverview(sampleDates, Daily, INFO, site, HYSEPReturn,
-  baseflowColumns = c("flowConditionHYSEP_localMin",
-  "flowConditionHYSEP_Fixed", "flowConditionHYSEP_Sliding"),
-  HYSEPcolNames = c("LocalMin", "Fixed", "Sliding"))
+plotHYSEPOverview(
+  sampleDates,
+  Daily,
+  INFO,
+  site,
+  HYSEPReturn,
+  baseflowColumns = c("flowConditionHYSEP_localMin", "flowConditionHYSEP_Fixed",
+    "flowConditionHYSEP_Sliding"),
+  HYSEPcolNames = c("LocalMin", "Fixed", "Sliding")
+)
 }
 \arguments{
 \item{sampleDates}{dataframe with two columns "Discharge_cubic_feet_per_second" and "maxSampleTime"}

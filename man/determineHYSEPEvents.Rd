@@ -4,8 +4,7 @@
 \alias{determineHYSEPEvents}
 \title{Determine baseflow and events from HYSEP output}
 \usage{
-determineHYSEPEvents(HYSEPReturn, sampleDates, percent = 0.8,
-  value = "Flow")
+determineHYSEPEvents(HYSEPReturn, sampleDates, percent = 0.8, value = "Flow")
 }
 \arguments{
 \item{HYSEPReturn}{dataframe returned from hysep function (in DVstats package)}
